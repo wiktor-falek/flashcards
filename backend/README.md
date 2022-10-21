@@ -27,8 +27,14 @@ This url is sent as in an confirmation email, confirms email when requested
 
 # API v1
 
-TODO: ADD DOCUMENTATION FOR ALL ROUTES
-
+## GET `/api/v1/character`
+TODO
 
 ## POST `/api/v1/character`
+TODO
 
+## UPDATE `/api/v1/character/:id`
+TODO
+
+## DELETE `/api/v1/character/:id`
+TODO
