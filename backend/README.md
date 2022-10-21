@@ -1,7 +1,8 @@
 # Auth
+TODO: specify min and max length for body/params
 
 ## POST `/auth/login`
-Authenticates an user, creates sessionId and sets a 
+Authenticates an user, creates sessionId and sends
 cookie with sessionId and username
 ### Body 
 ```
@@ -12,7 +13,7 @@ password: string
 <br>
 
 ## POST `/auth/register`
-Creates an user if username is available, and specified email is not already verified
+Creates an user if username is available, and specified email is not already verified by another user
 ### Body
 ```
 username: string
@@ -23,7 +24,8 @@ email: string
 <br>
 
 ## GET `/auth/verify/:token`
-This url is sent as in an confirmation email, confirms email when requested
+This url is sent to user email on registration.
+When requested confirms the users email.
 
 # API v1
 

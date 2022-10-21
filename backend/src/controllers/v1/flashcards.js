@@ -2,7 +2,9 @@ import { Router } from "express";
 import { body, param, validationResult } from "express-validator";
 
 import User from "../../db/models/User.js";
+import flashcardSchema from "../../db/schemas/flashcardSchema.js";
 import logger from "../../../logger.js";
+import { ObjectID, ObjectId } from "mongodb";
 
 const router = Router();
 
@@ -37,22 +39,40 @@ router.post(
     const { front, back, code } = req.body;
     console.log({ front, back, code });
 
-    // query
+    const flashcard = { front, back, code };
 
-    res.status(200).json({ front, back, code });
+    let validatedFlashcard;
+    try {
+      validatedFlashcard = flashcardSchema.validate(flashcard).value;
+      validatedFlashcard._id = new ObjectId();
+    } catch (e) {
+      logger.error(`Flashcard validation error, ${e}`);
+      return res.status(400).json({ error: "Invalid flashcard data" });
+    }
+
+    const result = await User.collection.updateOne(
+      { _id: userId },
+      { $push: { flashcards: validatedFlashcard } }
+    );
+
+    if (!result.acknowledged) {
+      return res.status(400).json({ error: "Failed to create a flashcard" });
+    }
+
+    res.status(200).json(validatedFlashcard);
   }
 );
 
-router.update(
+router.patch(
   "/flashcard/:id",
   param("id").isString().isLength({ min: 24, max: 24 }),
   // body validation
-async (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    //
+    // TODO
   }
 );
 
@@ -64,7 +84,23 @@ router.delete(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    //
+
+    const { userId } = res.locals;
+
+    const flashcardId = req.params.id;
+
+    console.log(flashcardId, typeof flashcardId);
+
+    const result = await User.collection.updateOne(
+      { _id: userId },
+      { $pull: { flashcards: { _id: ObjectId(flashcardId) } } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(400).json({ error: "This flash card doesn't exist already" });
+    }
+
+    res.status(200).json({ flashcardId });
   }
 );
 

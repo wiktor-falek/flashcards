@@ -45,7 +45,7 @@ const authorize = async (req, res, next) => {
   // pass user data to succeeding middlewares
   res.locals.username = user.account.username;
   res.locals.sessionId = user.account.sessionId;
-  res.locals.userId = user._id;
+  res.locals.userId = user._id; // this is of type ObjectId not string!!!
 
   return next();
 };
