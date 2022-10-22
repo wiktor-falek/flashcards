@@ -1,35 +1,58 @@
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+main, header {
+  max-width: 800px;
+  padding: 0px 20px
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 70px;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+h1, .subheading {
+  max-width: 800px;
 }
 
-@media (min-width: 1024px) {
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.3em;
+  word-spacing: -3px !important;
+  color: #ff7896;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.subheading {
+  font-size: 1.2rem;
+  color: #e44f71;
+  margin-top: -10px;
+  margin-bottom: 30px;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+@media screen and (min-width: 601px) {
   body {
-    display: flex;
-    place-items: center;
+    line-height: 1.6;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  p {
+    font-size: 1.2rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .subheading {
+    font-size: 1.6rem;
+    word-wrap: break-word;
+  }
+
+  .padding-top {
+    padding-top: 60px;
   }
 }
