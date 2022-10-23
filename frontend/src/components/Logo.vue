@@ -4,20 +4,17 @@
     <div class="card idx-2"></div>
     <div class="card idx-3"></div>
   </div>
-
-  <div class="logo logo--transparent">
-    <div class="card idx-1"></div>
-    <div class="card idx-2"></div>
-    <div class="card idx-3"></div>
-  </div>
 </template>
 
 <style scoped>
 .logo {
-  /* remove !important to scatter the cards lmao
-    on serious note this gets set to 'display: block' otherwise
-  */
   display: flex !important;
+  min-height: 80px;
+  width: 95px;
+  align-items: center; 
+  padding-top: 5px;
+  padding-left: 20px;
+  margin-right: -10px;
 }
 
 .card {

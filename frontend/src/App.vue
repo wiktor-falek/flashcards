@@ -14,11 +14,9 @@ import Logo from "./components/Logo.vue";
 <style scoped>
 header {
   max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+  height: 120px;
+  display: flex;
+  align-items: center;
 }
 
 nav {

@@ -13,7 +13,7 @@ header {
 }
 
 header > * {
-  margin: 0 !important;
+  margin: 0;
 }
 
 h1, .subheading {
@@ -23,7 +23,7 @@ h1, .subheading {
 h1 {
   font-size: 1.6rem;
   line-height: 1.3em;
-  word-spacing: -3px !important;
+  word-spacing: -3px;
   color: #ff7896;
   margin-top: 30px;
   margin-bottom: 15px;

@@ -2,73 +2,90 @@
 
 <template>
   <main>
-    <h1>Learn effectively with Flashcards</h1>
-    <p class="subheading">
-      Improve your study routine and retain information with ease
-    </p>
+    <section>
+      <h1>Learn effectively with Flashcards</h1>
+      <p class="subheading">
+        Improve your study routine and retain information with ease
+      </p>
 
-    <a class="button" href="#">Get Started</a>
+      <a class="button" href="#">Get Started</a>
+    </section>
 
-    <h1>Why use flashcards?</h1>
-    <p>
-      Flashcards, when used correctly, are a proven method of engaging in active
-      recall, which helps you retain your study material for longer.
-    </p>
+    <section>
+      <h1>Why use flashcards?</h1>
+      <p>
+        Flashcards, when used correctly, are a proven method of engaging in
+        active recall, which helps you retain your study material for longer.
+      </p>
 
-    <p>
-      The goal of this app is to simplify the process of
-      <a href="https://simple.wikipedia.org/wiki/Spaced_repetition"
-        >spaced repetition</a
-      >.
-    </p>
+      <p>
+        The goal of this app is to simplify the process of
+        <a href="https://simple.wikipedia.org/wiki/Spaced_repetition"
+          >spaced repetition</a
+        >.
+      </p>
+    </section>
 
-    <h1>How it works</h1>
+    <section>
+      <h1>How it works</h1>
 
-    <p>
-      After learning a concept create a flashcard with a question at the front
-      and an answer at the back, you also have an option to include a code
-      snippet.
-    </p>
+      <p>
+        After learning a concept create a flashcard with a question at the front
+        and an answer at the back, you also have an option to include a code
+        snippet.
+      </p>
 
-    <p>
-      When a flashcard shows up during your learning session, try to answer the
-      question. Check if it matches the answer. Ideally you should aim to repeat
-      this process at least three times.
-    </p>
+      <p>
+        When a flashcard shows up during your learning session, try to answer
+        the question. Check if it matches the answer. Ideally you should aim to
+        repeat this process at least three times.
+      </p>
 
-    <p>
-      If you feel confident about the topic, mark the flashcard as memorized. It
-      won't be presented to you anymore, but it still will be available in
-      Completed Collection.
-    </p>
+      <p>
+        If you feel confident about the topic, mark the flashcard as memorized.
+        It won't be presented to you anymore, but it still will be available in
+        Completed Collection.
+      </p>
+    </section>
 
-    <h1>Main Features</h1>
-    <ul>
-      <li>
-        <p>Code snippets with highlighting.</p>
-      </li>
-      <li>
-        <p>Sorting by your custom tags.</p>
-      </li>
-      <li>
-        <p>Lorem ipsum dolor sit amet.</p>
-      </li>
-    </ul>
+    <section>
+      <h1>Main Features</h1>
+      <ul>
+        <li>
+          <p>Code snippets with highlighting.</p>
+        </li>
+        <li>
+          <p>Sorting by your custom tags.</p>
+        </li>
+        <li>
+          <p>Lorem ipsum dolor sit amet.</p>
+        </li>
+      </ul>
+    </section>
 
-    <h1>Open source</h1>
-    <p class="subheading">This project is fully open source</p>
+    <section>
+      <h1>Open source</h1>
+      <p class="subheading">This project is fully open source</p>
 
-    <p>Feel free to contribute to the project or maybe even self host it.</p>
+      <p>
+        Feel free to contribute to the project, fork it or maybe even self host
+        it.
+      </p>
 
-    <a class="button" href="https://github.com/wiktor-falek/flashcards"
-      >Github</a
-    >
+      <a class="button" href="https://github.com/wiktor-falek/flashcards"
+        >Github</a
+      >
+    </section>
   </main>
 
   <footer>Wiktor Falek - All rights reserved</footer>
 </template>
 
 <style scoped>
+section {
+  margin-bottom: 60px;
+}
+
 footer {
   margin-top: 200px;
   width: 100%;
