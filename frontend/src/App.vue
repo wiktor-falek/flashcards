@@ -1,10 +1,11 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import Logo from "./components/Logo.vue";
 </script>
 
 <template>
   <header>
-   <p>Logo</p>
+   <Logo />
   </header>
 
   <RouterView />

@@ -12,7 +12,7 @@
     <h1>Why use flashcards?</h1>
     <p>
       Flashcards, when used correctly, are a proven method of engaging in active
-      recall, which helps with retaining study material.
+      recall, which helps you retain your study material for longer.
     </p>
 
     <p>
@@ -22,7 +22,7 @@
       >.
     </p>
 
-    <h1>How this works?</h1>
+    <h1>How it works</h1>
 
     <p>
       After learning a concept create a flashcard with a question at the front
@@ -60,8 +60,6 @@
 
     <p>Feel free to contribute to the project or maybe even self host it.</p>
 
-    <p>Click here to visit the Github repository.</p>
-
     <a class="button" href="https://github.com/wiktor-falek/flashcards"
       >Github</a
     >
@@ -71,8 +69,13 @@
 </template>
 
 <style scoped>
-main {
-  padding-bottom: 300px;
+footer {
+  margin-top: 200px;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button,
