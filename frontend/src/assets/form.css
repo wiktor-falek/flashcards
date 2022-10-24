@@ -1,0 +1,43 @@
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: var(--font-color-dark);
+  font-size: 1.6rem;
+}
+
+h1 {
+  margin: auto;
+  color: var(--font-color-dark)
+}
+
+input {
+  height: 35px;
+  border-radius: 0px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(0.25turn, var(--color-primary), var(--color-secondary));
+  border-image-slice: 1;
+  background-color: transparent;
+  font-size: 1.4rem;
+}
+
+input {
+  margin-bottom: 30px;
+}
+
+label {
+  margin-bottom: 10px !important;
+  font-size: 1.2rem;
+  visibility: hidden;
+}
+
+button {
+  font-size: 24px;
+  margin: auto;
+}
+
+.link {
+  font-size: 1.2rem;
+  margin: 0;
+}

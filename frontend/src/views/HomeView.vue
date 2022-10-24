@@ -1,6 +1,13 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from "vue-router";
+import Logo from "../components/Logo.vue";
+</script>
 
 <template>
+  <header>
+    <Logo />
+  </header>
+
   <main>
     <section>
       <h1>Learn effectively with Flashcards</h1>
@@ -8,7 +15,7 @@
         Improve your study routine and retain information with ease
       </p>
 
-      <a class="button" href="#">Get Started</a>
+      <RouterLink class="button" to="/signin">Get Started</RouterLink>
     </section>
 
     <section>
@@ -95,32 +102,46 @@ footer {
   justify-content: center;
 }
 
-button,
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  padding: 10px;
-  height: 55px;
-  width: 220px;
-  border: 2px solid #d33f64;
-  color: #d33f64;
-  background: transparent;
-  white-space: nowrap;
-  transition: all 0.05s linear;
-  font-size: 1.2rem;
-  font-weight: bold;
+.subheading {
+  color: #e44f71;
 }
 
-button:hover,
-.button:hover {
-  cursor: pointer;
-  transform: scale(1.04);
+p {
+  margin-bottom: 1em;
 }
 
-button:active,
-.button:active {
-  transform: scale(1);
+h1, .subheading {
+  max-width: 800px;
 }
+
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.3em;
+  word-spacing: -3px;
+  color: #ff7896;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+@media screen and (min-width: 601px) {
+  body {
+    line-height: 1.6;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+  h1 {
+    font-size: 2.2rem;
+  }
+  .subheading {
+    font-size: 1.6rem;
+    word-wrap: break-word;
+  }
+
+  .padding-top {
+    padding-top: 60px;
+  }
+}
+
 </style>

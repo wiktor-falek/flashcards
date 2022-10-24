@@ -4,10 +4,6 @@ import Logo from "./components/Logo.vue";
 </script>
 
 <template>
-  <header>
-   <Logo />
-  </header>
-
   <RouterView />
 </template>
 
