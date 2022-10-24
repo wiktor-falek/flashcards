@@ -19,11 +19,11 @@ const isSignInView = ref(true);
 
           <div class="panel__greeting center" v-if="isSignInView">
             <h1>Welcome back</h1>
-            <p class="subheading">Glad to see you again!</p>
+            <p class="subheading">Good to see you again!</p>
           </div>
           <div class="panel__greeting center" v-else>
-            <h1>Welcome!</h1>
-            <p class="subheading">Something something signup view text</p>
+            <h1>Learn with ease</h1>
+            <p class="subheading">Something something very cool project</p>
           </div>
 
           <div class="panel__footer">flashcards.io</div>
@@ -35,6 +35,7 @@ const isSignInView = ref(true);
             <Logo />
             <p class="panel__header__text">Flashcards</p>
           </div>
+          <!-- toggle isSignInView state on link click in SigninForms -->
           <SigninForm v-if="isSignInView" @signinViewToggle="isSignInView = false" />
           <SignupForm v-else @signinViewToggle="isSignInView = true"/>
         </div>
@@ -56,6 +57,7 @@ main {
   display: flex;
   flex-direction: row;
   margin-top: 20%;
+  max-height: 600px;
 }
 
 .panel {

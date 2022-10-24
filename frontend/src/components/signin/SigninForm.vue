@@ -1,14 +1,35 @@
 <script setup>
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onMounted } from "vue";
 
 const props = defineProps([""]);
 
 const username = ref();
 const password = ref();
 
-const onSubmit = (event) => {
+const usernameInput = ref();
+
+onMounted(() => {
+  usernameInput.value.focus();
+})
+
+const onSubmit = async (event) => {
   event.preventDefault();
-  console.log("submitting");
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value,
+    }),
+  };
+  const result = await fetch("http://localhost:3000/auth/login", options);
+
+  const response = await result.json();
+
+  if (result.status === 401) {
+  }
+
+  console.log(result.status, response);
 };
 
 const linkOnClick = (event) => {
@@ -27,6 +48,8 @@ const linkOnClick = (event) => {
       placeholder="username"
       :username="username"
       @input="(event) => (username = event.target.value)"
+      autofocus
+      ref="usernameInput"
     />
 
     <label for="password">Password</label>
@@ -38,8 +61,15 @@ const linkOnClick = (event) => {
       @input="(event) => (password = event.target.value)"
     />
 
+    <button class="link">Forgot password?</button>
+
+    <button type="submit" class="button button--dark">
+      Get Started&nbsp;&nbsp;>
+      <!-- this will be a svg ofc  -->
+    </button>
+
     <button
-      class="link"
+      class="link center"
       @click="
         linkOnClick($event);
         $emit('signinViewToggle');
@@ -47,14 +77,13 @@ const linkOnClick = (event) => {
     >
       Not registered? Sign up
     </button>
-
-    <button type="submit" class="button button--dark">
-      Log in&nbsp;&nbsp;>
-      <!-- this will be a svg ofc  -->
-    </button>
   </form>
 </template>
 
 <style scoped>
 @import "../../assets/form.css";
+
+.center {
+  margin: 0 auto;
+}
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div class="logo">
+  <router-link to="/" class="logo" tabindex="-1">
     <div class="card idx-1"></div>
     <div class="card idx-2"></div>
     <div class="card idx-3"></div>
-  </div>
+  </router-link>
 </template>
 
 <style scoped>
@@ -15,7 +15,9 @@
   padding-top: 5px;
   padding-left: 20px;
   margin-right: -10px;
+  outline: none;
 }
+
 
 .card {
   position: relative;

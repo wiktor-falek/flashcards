@@ -1,14 +1,18 @@
 <script setup>
-import { ref, defineProps } from "vue";
-
-const props = defineProps([""]);
+import { onMounted, ref } from "vue";
 
 const username = ref();
 const password = ref();
+const email = ref();
+
+const usernameInput = ref();
+
+onMounted(() => {
+  usernameInput.value.focus();
+})
 
 const onSubmit = (event) => {
   event.preventDefault();
-  console.log("submitting");
 };
 
 const linkOnClick = (event) => {
@@ -27,6 +31,8 @@ const linkOnClick = (event) => {
       placeholder="username"
       :username="username"
       @input="(event) => (username = event.target.value)"
+      autofocus
+      ref="usernameInput"
     />
 
     <label for="password">Password</label>
@@ -47,8 +53,13 @@ const linkOnClick = (event) => {
       @input="(event) => (email = event.target.value)"
     />
 
+    <button type="submit" class="button button--dark">
+      Register&nbsp;&nbsp;>
+      <!-- this will be a svg ofc  -->
+    </button>
+
     <button
-      class="link"
+      class="link center"
       @click="
         linkOnClick($event);
         $emit('signinViewToggle');
@@ -56,14 +67,13 @@ const linkOnClick = (event) => {
     >
       Already registered? Log in
     </button>
-
-    <button type="submit" class="button button--dark">
-      Log in&nbsp;&nbsp;>
-      <!-- this will be a svg ofc  -->
-    </button>
   </form>
 </template>
 
 <style scoped>
 @import "../../assets/form.css";
+
+.center {
+  margin: 0 auto;
+}
 </style>
