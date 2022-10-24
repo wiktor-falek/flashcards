@@ -34,7 +34,6 @@ const onSubmit = async (event) => {
 
 const linkOnClick = (event) => {
   event.preventDefault();
-  console.log("toggling state");
 };
 </script>
 

@@ -17,7 +17,6 @@ const onSubmit = (event) => {
 
 const linkOnClick = (event) => {
   event.preventDefault();
-  console.log("toggling state");
 };
 </script>
 

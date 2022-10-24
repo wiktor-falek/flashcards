@@ -19,11 +19,11 @@ const isSignInView = ref(true);
 
           <div class="panel__greeting center" v-if="isSignInView">
             <h1>Welcome back</h1>
-            <p class="subheading">Good to see you again!</p>
+            <p class="subheading">Good to see you again</p>
           </div>
           <div class="panel__greeting center" v-else>
             <h1>Learn with ease</h1>
-            <p class="subheading">Something something very cool project</p>
+            <p class="subheading">Take your learning to the next level</p>
           </div>
 
           <div class="panel__footer">flashcards.io</div>
@@ -45,10 +45,18 @@ const isSignInView = ref(true);
 </template>
 
 <style scoped>
+
 main {
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
+
+ /* without htis margin:auto results in uneven because css yes */
   justify-content: center;
+
+  /* and then shit doesn't even work without this because css yes */
+  margin: auto;
   color: var(--font-color-dark);
 }
 
@@ -56,7 +64,6 @@ main {
   background-color: rgb(240, 240, 240);
   display: flex;
   flex-direction: row;
-  margin-top: 20%;
   max-height: 600px;
 }
 
@@ -64,7 +71,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 580px;
+  min-height: 600px;
   min-width: 300px;
   width: 90vw;
   max-width: 400px;
@@ -134,5 +141,6 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 </style>
