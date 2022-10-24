@@ -64,7 +64,7 @@ const linkOnClick = (event) => {
         $emit('signinViewToggle');
       "
     >
-      Already registered? Log in
+      Already registered?
     </button>
   </form>
 </template>

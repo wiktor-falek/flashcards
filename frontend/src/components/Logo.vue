@@ -9,6 +9,7 @@
 <style scoped>
 .logo {
   display: flex !important;
+  text-decoration: none !important; 
   min-height: 80px;
   width: 95px;
   align-items: center; 
