@@ -4,7 +4,7 @@ import User from "../db/models/User.js";
  * queries db for an user with username and sessionId from cookie
  * if unsuccessfull returns status 401 message breaking the middleware chain
  * otherwise passes { username, sessionId, userId } to succeeding middlewares
- * avalidable inside res.locals and calls next
+ * available inside res.locals and calls next
  *
  * EXAMPLE AUTHORIZED ROUTE
  * app.use("/api", authorize, v1: express.Router);
