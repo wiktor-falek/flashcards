@@ -1,7 +1,7 @@
 <script setup>
-import { ref, defineProps, onMounted } from "vue";
-
-const props = defineProps([""]);
+import { ref, onMounted } from "vue";
+import { useAuthStore } from "../../stores/authStore";
+import router from "../../router";
 
 const username = ref();
 const password = ref();
@@ -28,6 +28,14 @@ const onSubmit = async (event) => {
 
   if (result.status === 401) {
   }
+
+  const authStore = useAuthStore();
+  if (result.status === 200) {
+    authStore.setIsAuthenticated(true);
+    router.push("/")
+    
+  }
+  console.log(authStore.isAuthenticated);
 
   console.log(result.status, response);
 };

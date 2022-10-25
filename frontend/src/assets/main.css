@@ -2,7 +2,9 @@
 
 main, header {
   max-width: 800px;
-  padding: 0px 20px
+  padding: 0px 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 header {
