@@ -37,7 +37,6 @@ router.post(
     let { userId } = res.locals;
 
     const { front, back, code } = req.body;
-    console.log({ front, back, code });
 
     const flashcard = { front, back, code };
 
@@ -66,9 +65,11 @@ router.post(
 router.patch(
   "/flashcard/:id",
   param("id").isString().isLength({ min: 24, max: 24 }),
-  body("front").optional().isString().trim().isLength({ min: 1, max: 512 }),
-  body("back").optional().isString().trim().isLength({ min: 1, max: 512 }),
-  body("code").optional().isString().trim().isLength({ min: 0, max: 512 }),
+  body("front").optional().isString().trim().isLength({ min: 1, max: 256 }),
+  body("back").optional().isString().trim().isLength({ min: 1, max: 256 }),
+  body("code").optional().isString().trim().isLength({ min: 1, max: 1024 }),
+  body("reviewedCount").optional().isNumeric(),
+  body("tags.*").optional().isString().trim().isLength({ min: 1, max: 32 }),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -77,12 +78,35 @@ router.patch(
 
     const { userId } = res.locals;
     const flashcardId = req.params.id;
-    const { front, back, code } = req.body;
 
-    if (!front && !back && !code) {
+    const { front, back, code } = req.body;
+    const reviewedCount = parseInt(req.body.reviewedCount);
+
+    // im gonna go insane with this shit
+    let tags = req.body.tags;
+    if (typeof tags === "string") {
+      try {
+        tags = JSON.parse(tags);
+        if (!Array.isArray(tags)) {
+          throw new Error("I love javascript :))))");
+        }
+
+      } catch (e) {
+        return res
+          .status(400)
+          .json({ error: "Field 'tags' must be a valid JSON array of strings." });
+      }
+      for (const item of tags) {
+        if (typeof item !== "string") {
+          return res.status(400).json({ error: "All items of array 'tags' must consist of strings." })
+        }
+      }
+    }
+
+    if (!front && !back && !code && !reviewedCount && !tags) {
       return res.status(400).json({
         error:
-          "Body must contain at least one of fields ('front', 'back', 'code') to update flashcard.",
+          "Body must contain at least one of fields ('front', 'back', 'code', 'reviewedCount', 'tags') to update flashcard.",
       });
     }
 
@@ -90,11 +114,14 @@ router.patch(
       "flashcards.$.front": front,
       "flashcards.$.back": back,
       "flashcards.$.code": code,
+      "flashcards.$.reviewedCount": reviewedCount,
+      "flashcards.$.tags": tags,
     };
 
-    // remove keys from fields where value is undefined
+    // remove keys from fields where value is undefined or null or NaN
     Object.keys(fields).forEach(
-      (key) => fields[key] === undefined && delete fields[key]
+      (key) =>
+        [undefined, null, NaN].includes(fields[key]) && delete fields[key]
     );
 
     const filter = {
@@ -122,7 +149,7 @@ router.patch(
       options
     );
 
-    if (result === null) {
+    if (result.value === null) {
       return res.status(400).json({ error: "Failed to update a flashcard." });
     }
 
@@ -155,7 +182,7 @@ router.delete(
     if (result.modifiedCount === 0) {
       return res
         .status(400)
-        .json({ error: "This flash card doesn't exist already" });
+        .json({ error: `Flashcard with id '${flashcardId}' does not exist.` });
     }
 
     res.status(200).json({ flashcardId });
