@@ -7,11 +7,14 @@ import { login } from "../../api/authApi";
 const username = ref();
 const password = ref();
 
-const usernameInput = ref();
+// because css is such a fucking hassle for this
+const usernameLabelIsVisible = ref(false);
+const passwordLabelIsVisible = ref(false);
 
+const usernameInput = ref();
 onMounted(() => {
   usernameInput.value.focus();
-})
+});
 
 const onSubmit = async (event) => {
   event.preventDefault();
@@ -26,7 +29,7 @@ const onSubmit = async (event) => {
   const authStore = useAuthStore();
   if (result.status === 200) {
     authStore.setIsAuthenticated(true);
-    router.push("/")
+    router.push("/");
   }
   console.log(authStore.isAuthenticated);
 
@@ -41,7 +44,10 @@ const linkOnClick = (event) => {
 <template>
   <form action="POST" @submit="onSubmit($event)">
     <h1>Login</h1>
-    <label for="username">Username</label>
+
+    <label for="username" :class="{ visible: usernameLabelIsVisible }"
+      >Username</label
+    >
     <input
       id="username"
       type="text"
@@ -50,14 +56,18 @@ const linkOnClick = (event) => {
       @input="(event) => (username = event.target.value)"
       autofocus
       ref="usernameInput"
+      @focusin="usernameLabelIsVisible = true"
+      @focusout="usernameLabelIsVisible = false"
     />
 
-    <label for="password">Password</label>
+    <label for="password" :class="{ visible: passwordLabelIsVisible }" >Password</label>
     <input
       id="password"
       type="password"
       placeholder="password"
       :password="password"
+      @focusin="passwordLabelIsVisible = true"
+      @focusout="passwordLabelIsVisible = false"
       @input="(event) => (password = event.target.value)"
     />
 
@@ -85,5 +95,14 @@ const linkOnClick = (event) => {
 
 .center {
   margin: 0 auto;
+}
+
+form label {
+  display: inline-block;
+}
+
+.visible {
+  opacity: 100;
+  transition: opacity 0.15s ease-out;
 }
 </style>
