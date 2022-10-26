@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { register } from "../../api/authApi";
 
 const username = ref();
 const password = ref();
@@ -9,10 +10,18 @@ const usernameInput = ref();
 
 onMounted(() => {
   usernameInput.value.focus();
-})
+});
 
-const onSubmit = (event) => {
+const onSubmit = async (event) => {
   event.preventDefault();
+
+  const result = await register(username.value, password.value, email.value);
+
+  const response = await result.json();
+
+  if (result.status === 200) {
+    console.log("Registered an user");
+  }
 };
 
 const linkOnClick = (event) => {

@@ -17,15 +17,6 @@ const onSubmit = async (event) => {
   event.preventDefault();
 
   const result = await login(username.value, password.value);
-  // const options = {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify({
-  //     username: username.value,
-  //     password: password.value,
-  //   }),
-  // };
-  // const result = await fetch("http://localhost:3000/auth/login", options);
 
   const response = await result.json();
 
