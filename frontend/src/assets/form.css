@@ -51,5 +51,4 @@ button {
 }
 .visible {
   opacity: 100;
-  transition: opacity 0.15s ease-out;
 }
