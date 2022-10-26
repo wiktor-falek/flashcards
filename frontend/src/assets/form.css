@@ -9,7 +9,7 @@ form {
 
 h1 {
   margin: 0px auto;
-  color: var(--font-color-dark)
+  color: var(--font-color-dark);
 }
 
 input {
@@ -17,7 +17,11 @@ input {
   border-radius: 0px;
   border: none;
   border-bottom: 2px solid transparent;
-  border-image: linear-gradient(0.25turn, var(--color-primary), var(--color-secondary));
+  border-image: linear-gradient(
+    0.25turn,
+    var(--color-primary),
+    var(--color-secondary)
+  );
   border-image-slice: 1;
   background-color: transparent;
   font-size: 1.4rem;
@@ -44,4 +48,8 @@ button {
 .link {
   font-size: 1.1rem;
   margin: 0;
+}
+.visible {
+  opacity: 100;
+  transition: opacity 0.15s ease-out;
 }

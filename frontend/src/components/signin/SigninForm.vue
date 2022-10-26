@@ -7,7 +7,6 @@ import { login } from "../../api/authApi";
 const username = ref();
 const password = ref();
 
-// because css is such a fucking hassle for this
 const usernameLabelIsVisible = ref(false);
 const passwordLabelIsVisible = ref(false);
 
@@ -97,12 +96,4 @@ const linkOnClick = (event) => {
   margin: 0 auto;
 }
 
-form label {
-  display: inline-block;
-}
-
-.visible {
-  opacity: 100;
-  transition: opacity 0.15s ease-out;
-}
 </style>

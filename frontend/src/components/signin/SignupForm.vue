@@ -2,14 +2,17 @@
 import { onMounted, ref } from "vue";
 import { register } from "../../api/authApi";
 
+const emit = defineEmits(["signinViewToggle"]);
+
 const username = ref();
 const password = ref();
 const email = ref();
 
+const usernameLabelIsVisible = ref(false);
+const passwordLabelIsVisible = ref(false);
+const emailLabelIsVisible = ref(false);
+
 const usernameInput = ref();
-
-const emit = defineEmits(["signinViewToggle"]);
-
 onMounted(() => {
   usernameInput.value.focus();
 });
@@ -35,7 +38,7 @@ const linkOnClick = (event) => {
 <template>
   <form action="POST" @submit="onSubmit($event)">
     <h1>Register</h1>
-    <label for="username">Username</label>
+    <label for="username" :class="{ visible: usernameLabelIsVisible }">Username</label>
     <input
       id="username"
       type="text"
@@ -44,24 +47,30 @@ const linkOnClick = (event) => {
       @input="(event) => (username = event.target.value)"
       autofocus
       ref="usernameInput"
+      @focusin="usernameLabelIsVisible = true"
+      @focusout="usernameLabelIsVisible = false"
     />
 
-    <label for="password">Password</label>
+    <label for="password" :class="{ visible: passwordLabelIsVisible }">Password</label>
     <input
       id="password"
       type="password"
       placeholder="password"
       :password="password"
       @input="(event) => (password = event.target.value)"
+      @focusin="passwordLabelIsVisible = true"
+      @focusout="passwordLabelIsVisible = false"
     />
 
-    <label for="email">Email</label>
+    <label for="email" :class="{ visible: emailLabelIsVisible }">Email</label>
     <input
       id="email"
       type="email"
       placeholder="email"
       :email="email"
       @input="(event) => (email = event.target.value)"
+      @focusin="emailLabelIsVisible = true"
+      @focusout="emailLabelIsVisible = false"
     />
 
     <button type="submit" class="button button--dark">
