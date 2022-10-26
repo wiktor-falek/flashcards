@@ -89,6 +89,36 @@ import Logo from "../components/Logo.vue";
 </template>
 
 <style scoped>
+
+main, header {
+  max-width: 800px;
+  padding: 0px 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+}
+
+header > * {
+  margin: 0;
+}
+
+.subheading {
+  font-size: 1.1rem;
+  color: var(--font-color-dark);
+  margin-top: -10px;
+  margin-bottom: 30px;
+}
+
+a:not(.button) {
+  color: var(--link-color);
+}
+
 section {
   margin-bottom: 60px;
 }
