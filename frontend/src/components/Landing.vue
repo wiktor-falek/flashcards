@@ -199,4 +199,10 @@ section {
 .show {
   opacity: 1;
 }
+
+@media (prefers-reduced-motion) {
+  section {
+    transition: none;
+  }
+}
 </style>
