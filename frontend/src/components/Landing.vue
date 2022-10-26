@@ -1,6 +1,22 @@
 <script setup>
+import { onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import Logo from "../components/Logo.vue";
+
+const sections = ref();
+onMounted(() => {
+  const observer = new IntersectionObserver((sections) => {
+    for (const entry of sections) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+      }
+    }
+  });
+
+  sections.value.forEach((section) => {
+    observer.observe(section);
+  });
+});
 </script>
 
 <template>
@@ -8,8 +24,8 @@ import Logo from "../components/Logo.vue";
     <Logo />
   </header>
 
-  <main>
-    <section>
+  <main v-for="_ in 1">
+    <section ref="sections">
       <h1>Learn effectively with Flashcards</h1>
       <p class="subheading">
         Improve your study routine and retain information with ease
@@ -18,7 +34,7 @@ import Logo from "../components/Logo.vue";
       <RouterLink class="button" to="/signin">Get Started</RouterLink>
     </section>
 
-    <section>
+    <section ref="sections">
       <h1>Why use flashcards?</h1>
       <p>
         Flashcards, when used correctly, are a proven method of engaging in
@@ -33,7 +49,7 @@ import Logo from "../components/Logo.vue";
       </p>
     </section>
 
-    <section>
+    <section ref="sections">
       <h1>How it works</h1>
 
       <p>
@@ -55,7 +71,7 @@ import Logo from "../components/Logo.vue";
       </p>
     </section>
 
-    <section>
+    <section ref="sections">
       <h1>Main Features</h1>
       <ul>
         <li>
@@ -70,7 +86,7 @@ import Logo from "../components/Logo.vue";
       </ul>
     </section>
 
-    <section>
+    <section ref="sections">
       <h1>Open source</h1>
       <p class="subheading">This project is fully open source</p>
 
@@ -89,8 +105,8 @@ import Logo from "../components/Logo.vue";
 </template>
 
 <style scoped>
-
-main, header {
+main,
+header {
   max-width: 800px;
   padding: 0px 20px;
   margin-left: auto;
@@ -140,7 +156,8 @@ p {
   margin-bottom: 1em;
 }
 
-h1, .subheading {
+h1,
+.subheading {
   max-width: 800px;
 }
 
@@ -174,4 +191,12 @@ h1 {
   }
 }
 
+section {
+  opacity: 0;
+  transition: all 1s;
+}
+
+.show {
+  opacity: 1;
+}
 </style>
