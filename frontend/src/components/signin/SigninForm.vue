@@ -27,7 +27,6 @@ const onSubmit = async (event) => {
   if (result.status === 200) {
     authStore.setIsAuthenticated(true);
     router.push("/")
-    
   }
   console.log(authStore.isAuthenticated);
 

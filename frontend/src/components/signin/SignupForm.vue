@@ -8,6 +8,8 @@ const email = ref();
 
 const usernameInput = ref();
 
+const emit = defineEmits(["signinViewToggle"]);
+
 onMounted(() => {
   usernameInput.value.focus();
 });
@@ -21,6 +23,7 @@ const onSubmit = async (event) => {
 
   if (result.status === 200) {
     console.log("Registered an user");
+    emit("signinViewToggle"); // 'redirect' to signin
   }
 };
 
