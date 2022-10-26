@@ -1,15 +1,19 @@
-function request(method, endpoint, body = {}) {
+function request(method, endpoint, body = null) {
   const options = {
     method,
-    body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
   };
+
+  if (body !== null) {
+    options.body = JSON.stringify(body);
+  }
 
   return fetch(endpoint, options);
 }
 
-export function get(endpoint, body) {
-  return request("GET", endpoint, body);
+export function get(endpoint) {
+  return request("GET", endpoint);
 }
 
 export function post(endpoint, body) {
