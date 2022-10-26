@@ -20,13 +20,10 @@ const app = express();
 
 // MIDDLEWARE
 app.use(
-  // cors({
-  //   origin: "http://localhost:5173",
-  //   optionsSuccessStatus: 200,
-  //   credentials: true,
-  // })
   cors({
-    origin: "*"
+    origin: "http://localhost:5173",
+    optionsSuccessStatus: 200,
+    credentials: true,
   })
 );
 app.use(express.urlencoded({ extended: false }));
