@@ -1,6 +1,9 @@
 <script setup>
 import { defineProps, defineEmits, ref } from "vue";
 import { createNewFlashcard } from "../../api/flashcardApi.js";
+import { useFlashcardStore } from "../../stores/flashcardStore";
+
+const flashcardStore = useFlashcardStore();
 
 const props = defineProps(["displayModal"]);
 const emit = defineEmits(["closeModal"]);
@@ -21,8 +24,7 @@ const createFlashcard = async () => {
   const response = await createNewFlashcard(f, b, c);
 
   const result = await response.json();
-  console.log(result);
-  // push the flashcards to flashcardStore
+  flashcardStore.flashcards.push(result);
 
   emit("closeModal");
 };
@@ -63,6 +65,8 @@ const createFlashcard = async () => {
   --width: 350px;
   width: var(--width);
   left: calc(50% - (var(--width) / 2));
+  top: 20%;
+  background-color: rgb(20, 20, 20);
 }
 
 textarea {
