@@ -41,7 +41,7 @@ const createFlashcard = async () => {
     <label for="code">Code (optional)</label>
     <textarea name="code" id="code" rows="4" v-model="code"></textarea>
 
-    <button class="button" @click="createFlashcard"></button>
+    <button class="button" @click="createFlashcard">Create Flashcard</button>
   </div>
 
   <div class="overlay" v-if="displayModal" @click="$emit('closeModal')"></div>
@@ -59,6 +59,10 @@ const createFlashcard = async () => {
 }
 
 .modal {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: center;
   z-index: 101;
   border: 1px solid grey;
   position: absolute;
