@@ -3,10 +3,13 @@ import { onMounted, ref } from "vue";
 import Logo from "../components/Logo.vue";
 import { getAllFlashcards } from "../api/flashcardApi.js";
 import { useAuthStore } from "../stores/authStore.js";
+import { useFlashcardStore } from "../stores/flashcardStore.js";
 import router from "../router";
 import CreateCardModal from "./modals/CreateCardModal.vue";
+import ActiveCollection from "./collections/ActiveCollection.vue";
 
 const authStore = useAuthStore();
+const flashcardStore = useFlashcardStore();
 
 const displayModal = ref(false);
 
@@ -19,8 +22,14 @@ onMounted(async () => {
     return router.push("/signin");
   }
 
-  const result = await response.json();
-  console.log(result);
+  if (response.status === 200) {
+    const result = await response.json();
+    const flashcards = result.flashcards;
+    console.log(flashcards);
+
+    flashcardStore.flashcards = flashcards;
+    console.log(flashcardStore.flashcards);
+  }
 });
 </script>
 
@@ -34,6 +43,8 @@ onMounted(async () => {
       Create flashcard
     </button>
   </main>
+
+  <ActiveCollection />
 
   <CreateCardModal
     :displayModal="displayModal"
