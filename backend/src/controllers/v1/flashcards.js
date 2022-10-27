@@ -38,8 +38,8 @@ router.post(
 
     const { front, back, code } = req.body;
 
-    const flashcard = { front, back, code };
-
+    const flashcard = { front, back, code, reviewedCount: 0 };
+    
     let validatedFlashcard;
     try {
       validatedFlashcard = flashcardSchema.validate(flashcard).value;
