@@ -29,14 +29,21 @@ When requested confirms the users email.
 
 # API v1
 
-## GET `/api/v1/character`
+## GET `/api/v1/flashcard`
+`Responds with an array of all flashcards`
+
+## POST `/api/v1/flashcard`
+`Creates a new flashcard and returns it`
+
+| Body   | Required?    | Type   | minLen | maxLen |
+| :---:  | :---:        | :---:  | :---:  | :---:  |
+| front  | Yes          | string | 1      | 512    |
+| back   | Yes          | string | 1      | 512    |
+| code   | No           | string | 1      | 512    |
+
+
+## PATCH `/api/v1/flashcard/:id`
 TODO
 
-## POST `/api/v1/character`
-TODO
-
-## UPDATE `/api/v1/character/:id`
-TODO
-
-## DELETE `/api/v1/character/:id`
+## DELETE `/api/v1/flashcard/:id`
 TODO
