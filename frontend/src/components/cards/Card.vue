@@ -1,6 +1,6 @@
 <script setup>
-import { defineProps, ref } from "vue";
-// const props = defineProps(["front, back, code, reviewedCount, id"]);
+import { ref } from "vue";
+
 const props = defineProps(["flashcard"]);
 
 const isFrontSide = ref(true);
@@ -8,7 +8,10 @@ const isFrontSide = ref(true);
 
 <template>
   <div class="card" v-if="isFrontSide">
-    <h1>Front</h1>
+    <div class="card__top">
+      <div class="tag">Algorithm</div>
+      <div class="tag">Dynamic</div>
+    </div>
     <p>{{ flashcard.front }}</p>
 
     <div class="card__bottom">
@@ -21,7 +24,10 @@ const isFrontSide = ref(true);
   </div>
 
   <div class="card" v-if="!isFrontSide">
-    <h1>Back</h1>
+    <div class="card__top">
+      <button>Answer</button>
+      <button>Code</button>
+    </div>
     <p>{{ flashcard.back }}</p>
 
     <div class="card__bottom">
@@ -42,8 +48,9 @@ const isFrontSide = ref(true);
   width: 100%;
   max-width: 250px;
   aspect-ratio: 6/9;
-  border: 2px solid orange;
-  background-color: rgb(40, 40, 40);
+  padding: 5px;
+  border: 1px solid #4f4f4f;
+  background-color: #181818;
   margin: 0px auto;
 }
 
@@ -52,6 +59,18 @@ const isFrontSide = ref(true);
   width: 48px;
   height: 48px;
   font-size: 20px;
+}
+
+.card__top {
+  display: flex;
+  height: 50px;
+  width: 100%;
+}
+
+.card__top button {
+  width: 100%;
+  border: none;
+  padding: 0;
 }
 
 .card__bottom {

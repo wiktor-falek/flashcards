@@ -52,4 +52,8 @@ onMounted(async () => {
   />
 </template>
 
-<style scoped></style>
+<style scoped>
+.button {
+  margin: 15px auto;
+}
+</style>
