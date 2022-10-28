@@ -8,6 +8,7 @@ h1 {
   all: unset;
   color: #3391ff;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .link:focus {
@@ -40,13 +41,13 @@ h1 {
   color: var(--color-background);
 }
 
-button:hover,
+.button:hover,
 .button:hover {
   cursor: pointer;
   transform: scale(1.04);
 }
 
-button:active,
+.button:active,
 .button:active {
   transform: scale(1);
 }

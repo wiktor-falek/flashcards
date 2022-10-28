@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { Icon } from "@iconify/vue";
 
 const props = defineProps(["flashcard"]);
 
@@ -16,10 +17,22 @@ const isFrontSide = ref(true);
 
     <div class="card__bottom">
       <button class="card__button--flip" @click="isFrontSide = false">
-        Flip
+        <Icon
+          icon="akar-icons:arrow-counter-clockwise"
+          width="42"
+          height="42"
+          color="grey"
+        />
       </button>
       <p>Reviewed: {{ flashcard.reviewedCount }}</p>
-      <button class="card__button--edit" @click="">Edit</button>
+      <button class="card__button--edit" @click="">
+        <Icon
+          icon="fluent:calendar-edit-16-regular"
+          width="42"
+          height="42"
+          color="grey"
+        />
+      </button>
     </div>
   </div>
 
@@ -32,10 +45,22 @@ const isFrontSide = ref(true);
 
     <div class="card__bottom">
       <button class="card__button--flip" @click="isFrontSide = true">
-        Flip
+        <Icon
+          icon="akar-icons:arrow-counter-clockwise"
+          width="42"
+          height="42"
+          color="grey"
+        />
       </button>
       <p>Reviewed: {{ flashcard.reviewedCount }}</p>
-      <button class="card__button--edit" @click="">Edit</button>
+      <button class="card__button--edit" @click="">
+        <Icon
+          icon="fluent:calendar-edit-16-regular"
+          width="42"
+          height="42"
+          color="grey"
+        />
+      </button>
     </div>
   </div>
 </template>
@@ -71,6 +96,9 @@ const isFrontSide = ref(true);
   width: 100%;
   border: none;
   padding: 0;
+  border-right: 1px solid white;
+  background-color: transparent;
+  color: var(--font-color-light);
 }
 
 .card__bottom {
@@ -79,5 +107,22 @@ const isFrontSide = ref(true);
   width: 100%;
   align-items: center;
   justify-content: space-between;
+}
+
+.card__bottom button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+}
+
+.card__bottom button:focus,
+.card__bottom button:active {
+  outline: none;
+}
+
+.card__bottom button:hover {
+  background-color: rgb(35, 35, 35);
 }
 </style>

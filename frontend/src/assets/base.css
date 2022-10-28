@@ -27,7 +27,7 @@
 body {
   background: radial-gradient(#243b55, #141e30) !important;
   min-height: 100vh;
-  color: #ddd;
+  color: var(--font-color-light);
   line-height: 1.4;
   font-family: "Consolas" -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
