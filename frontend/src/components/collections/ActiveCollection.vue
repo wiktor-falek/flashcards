@@ -7,7 +7,7 @@ const flashcardStore = useFlashcardStore();
 
 <template>
   <div class="collection collection--active">
-    <CardPreview
+    <Card
       v-for="flashcard in flashcardStore.flashcards"
       :flashcard="flashcard"
       :key="flashcard._id"
