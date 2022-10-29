@@ -5,7 +5,7 @@ import { useFlashcardStore } from "../../stores/flashcardStore";
 
 const flashcardStore = useFlashcardStore();
 
-const props = defineProps(["display"]);
+const props = defineProps(["display", "id"]);
 const emit = defineEmits(["closeModal"]);
 
 const front = ref("");
@@ -13,18 +13,25 @@ const back = ref("");
 const code = ref("");
 
 const editFlashcard = async () => {
-  const f = front.value;
-  const b = back.value;
-  const c = code.value;
+  const f = front.value || null;
+  const b = back.value || null;
+  const c = code.value || null;
   console.log(f, b, c);
-  if (!f || !b) {
+  if (!f && !b && !c) {
     // some kind of visual is needed here to indicate missing fields
     return;
   }
-  const response = await updateFlashcard(f, b, c);
+  const response = await updateFlashcard(props.id, f, b, c);
+
+  if (response.status !== 200) {
+    // error msg
+    return;
+  }
 
   const result = await response.json();
-  flashcardStore.flashcards.push(result);
+
+  const flashcard = flashcardStore.flashcards.find((flashcard) => flashcard._id == result._id);
+  flashcard.value = result;
 
   emit("closeModal");
 };
@@ -32,7 +39,7 @@ const editFlashcard = async () => {
 
 <template>
   <div class="modal" v-show="display">
-    <h1>Edit</h1>
+    <h1>Edit {{props.id}}</h1>
     <label for="front">Front</label>
     <textarea name="front" id="front" rows="4" v-model="front"></textarea>
 
@@ -42,7 +49,7 @@ const editFlashcard = async () => {
     <label for="code">Code (optional)</label>
     <textarea name="code" id="code" rows="4" v-model="code"></textarea>
 
-    <button class="button" @click="updateFlashcard">Create Flashcard</button>
+    <button class="button" @click="editFlashcard">Create Flashcard</button>
   </div>
 
   <div class="overlay" v-if="display" @click="$emit('closeModal')"></div>

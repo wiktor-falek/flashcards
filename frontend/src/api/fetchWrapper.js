@@ -21,7 +21,7 @@ export function post(endpoint, body) {
 }
 
 export function patch(endpoint, body) {
-  return request("DELETE", endpoint, body);
+  return request("PATCH", endpoint, body);
 }
 
 export function _delete(endpoint, body) {

@@ -84,6 +84,7 @@ const displayEditCardModal = ref(false);
 
   <EditCardModal
     :display="displayEditCardModal"
+    :id="props.flashcard._id"
     @closeModal="displayEditCardModal = false"
   />
 

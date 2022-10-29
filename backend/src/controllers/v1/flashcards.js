@@ -65,9 +65,9 @@ router.post(
 router.patch(
   "/flashcard/:id",
   param("id").isString().isLength({ min: 24, max: 24 }),
-  body("front").optional().isString().trim().isLength({ min: 1, max: 256 }),
-  body("back").optional().isString().trim().isLength({ min: 1, max: 256 }),
-  body("code").optional().isString().trim().isLength({ min: 1, max: 1024 }),
+  body("front").optional().isString().trim().isLength({ min: 0, max: 256 }),
+  body("back").optional().isString().trim().isLength({ min: 0, max: 256 }),
+  body("code").optional().isString().trim().isLength({ min: 0, max: 1024 }),
   body("reviewedCount").optional().isNumeric(),
   body("tags.*").optional().isString().trim().isLength({ min: 1, max: 32 }),
   async (req, res) => {
@@ -80,6 +80,7 @@ router.patch(
     const flashcardId = req.params.id;
 
     const { front, back, code } = req.body;
+    console.log(req.body, front, back, code);
     const reviewedCount = parseInt(req.body.reviewedCount);
 
     // im gonna go insane with this shit

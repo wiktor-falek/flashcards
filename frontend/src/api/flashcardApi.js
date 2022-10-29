@@ -13,9 +13,21 @@ export const deleteFlashcard = (id) => {
   return _delete(`http://localhost:3000/api/v1/flashcard/${id}`);
 };
 
-export const updateFlashcard = (id, fields) => {
-  // { front, back, code, reviewedCount, tags,}
-  return patch(`http://localhost:3000/api/v1/flashcard/${id}`);
+export const updateFlashcard = (id, front=null, back=null, code=null, reviewedCount=null, tags=null) => {
+  const fields = {
+    front,
+    back,
+    code,
+    reviewedCount,
+    tags,
+  };
+  console.log("before", fields);
+  // filter out invalid values from fields
+  Object.keys(fields).forEach(
+    (key) => [undefined, null].includes(fields[key]) && delete fields[key]
+  );
+
+  console.log("after", fields);
+
+  return patch(`http://localhost:3000/api/v1/flashcard/${id}`, fields);
 };
-
-
