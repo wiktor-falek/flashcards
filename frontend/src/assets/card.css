@@ -1,7 +1,6 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   max-width: 250px;
   aspect-ratio: 6/9;
@@ -16,7 +15,6 @@
   word-wrap: break-word;
 }
 
-
 .card__button--flip,
 .card__button--edit {
   width: 48px;
@@ -29,6 +27,7 @@
   height: 50px;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
 .card__top button {
@@ -39,7 +38,6 @@
   background-color: transparent;
   color: var(--font-color-light);
 }
-
 
 .card__bottom {
   margin-top: auto;
@@ -64,4 +62,17 @@
 
 .card__bottom button:hover {
   background-color: rgb(35, 35, 35);
+}
+
+.card__content--front,
+.card__content--back {
+  text-align: center;
+}
+
+.card__content--code {
+  text-align: left;
+  word-wrap: none;
+  white-space: pre-wrap;
+  max-width: none;
+  overflow: scroll;
 }

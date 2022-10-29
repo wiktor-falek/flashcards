@@ -11,7 +11,7 @@ import ActiveCollection from "./collections/ActiveCollection.vue";
 const authStore = useAuthStore();
 const flashcardStore = useFlashcardStore();
 
-const displayModal = ref(false);
+const displayCreateCardModal = ref(false);
 
 onMounted(async () => {
   const response = await getAllFlashcards();
@@ -39,7 +39,7 @@ onMounted(async () => {
   </header>
 
   <main>
-    <button class="button" @click="displayModal = true">
+    <button class="button" @click="displayCreateCardModal = true">
       Create flashcard
     </button>
   </main>
@@ -47,8 +47,8 @@ onMounted(async () => {
   <ActiveCollection />
 
   <CreateCardModal
-    :displayModal="displayModal"
-    @closeModal="displayModal = false"
+    :display="displayCreateCardModal"
+    @closeModal="displayCreateCardModal = false"
   />
 </template>
 

@@ -1,6 +1,6 @@
 <script setup>
 import { defineEmits, ref } from "vue";
-import { createNewFlashcard } from "../../api/flashcardApi.js";
+import { updateFlashcard } from "../../api/flashcardApi.js";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 
 const flashcardStore = useFlashcardStore();
@@ -12,7 +12,7 @@ const front = ref("");
 const back = ref("");
 const code = ref("");
 
-const createFlashcard = async () => {
+const editFlashcard = async () => {
   const f = front.value;
   const b = back.value;
   const c = code.value;
@@ -21,19 +21,10 @@ const createFlashcard = async () => {
     // some kind of visual is needed here to indicate missing fields
     return;
   }
-  const response = await createNewFlashcard(f, b, c);
-
-  if (!response.status === 200) {
-    return;
-  }
+  const response = await updateFlashcard(f, b, c);
 
   const result = await response.json();
-
   flashcardStore.flashcards.push(result);
-
-  front.value = "";
-  back.value = "";
-  code.value = "";
 
   emit("closeModal");
 };
@@ -41,7 +32,7 @@ const createFlashcard = async () => {
 
 <template>
   <div class="modal" v-show="display">
-    <h1>Create Card</h1>
+    <h1>Edit</h1>
     <label for="front">Front</label>
     <textarea name="front" id="front" rows="4" v-model="front"></textarea>
 
@@ -51,7 +42,7 @@ const createFlashcard = async () => {
     <label for="code">Code (optional)</label>
     <textarea name="code" id="code" rows="4" v-model="code"></textarea>
 
-    <button class="button" @click="createFlashcard">Create Flashcard</button>
+    <button class="button" @click="updateFlashcard">Create Flashcard</button>
   </div>
 
   <div class="overlay" v-if="display" @click="$emit('closeModal')"></div>
