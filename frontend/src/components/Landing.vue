@@ -95,7 +95,7 @@ onMounted(() => {
         it.
       </p>
 
-      <a class="button" href="https://github.com/wiktor-falek/flashcards"
+      <a class="button" href="https://github.com/wiktor-falek/flashcards" target="_blank"
         >Github</a
       >
     </section>
