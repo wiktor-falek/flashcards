@@ -4,10 +4,13 @@ import Card from "../cards/Card.vue";
 import CardPreview from "../cards/CardPreview.vue";
 const flashcardStore = useFlashcardStore();
 
+const emits = defineEmits(["closeActiveCollection"]);
 </script>
 
 <template>
-  <button class="button" @click="$emit('closeActiveCollection')">Go back</button>
+  <button class="button" @click="$emit('closeActiveCollection')">
+    Go back
+  </button>
   <div class="collection collection--active">
     <Card
       v-for="flashcard in flashcardStore.flashcards"
@@ -20,7 +23,7 @@ const flashcardStore = useFlashcardStore();
 <style scoped>
 .collection {
   display: grid;
-  grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 10px;
 }
 </style>
