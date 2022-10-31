@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, ref } from "vue";
+import { ref } from "vue";
 import { updateFlashcard } from "../../api/flashcardApi.js";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 
