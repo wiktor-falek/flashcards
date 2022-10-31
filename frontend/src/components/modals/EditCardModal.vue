@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { updateFlashcard } from "../../api/flashcardApi.js";
+import { deleteFlashcard, updateFlashcard } from "../../api/flashcardApi.js";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 
 const flashcardStore = useFlashcardStore();
@@ -8,7 +8,7 @@ const flashcardStore = useFlashcardStore();
 const props = defineProps(["display", "id"]);
 const emit = defineEmits(["closeModal"]);
 
-const flashcard = ref(flashcardStore.flashcards.find((flashcard) => flashcard._id == props.id));
+const flashcard = ref(flashcardStore.findById(props.id));
 
 const front = ref(flashcard.value.front);
 const back = ref(flashcard.value.back);
@@ -35,12 +35,24 @@ const editFlashcard = async () => {
 
   emit("closeModal");
 };
+
+const removeFlashcard = async () => {
+  if (!props.id) {
+    return;
+  }
+
+  const response = await deleteFlashcard(props.id);
+
+  if (response.status === 200) {
+    emit("closeModal");
+  }
+};
 </script>
 
 <template>
   <div class="modal" v-show="display">
     <h1>Edit</h1>
-    <p>Id: {{props.id}}</p>
+    <p>Id: {{ props.id }}</p>
     <label for="front">Front</label>
     <textarea name="front" id="front" rows="4" v-model="front"></textarea>
 
@@ -51,6 +63,7 @@ const editFlashcard = async () => {
     <textarea name="code" id="code" rows="4" v-model="code"></textarea>
 
     <button class="button" @click="editFlashcard">Update Flashcard</button>
+    <button class="button" @click="removeFlashcard">Delete Flashcard</button>
   </div>
 
   <div class="overlay" v-if="display" @click="$emit('closeModal')"></div>
