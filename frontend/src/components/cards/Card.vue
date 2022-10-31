@@ -96,6 +96,12 @@ const displayEditCardModal = ref(false);
   background-color: rgb(60, 60, 60) !important;
 }
 
+.card__content--code {
+  background-color: rgb(46, 46, 46);
+  border-radius: 5px;
+  padding: 2px;
+}
+
 .selected:active,
 .selected:focus {
   outline: none;
