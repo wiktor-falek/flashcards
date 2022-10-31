@@ -8,9 +8,11 @@ const flashcardStore = useFlashcardStore();
 const props = defineProps(["display", "id"]);
 const emit = defineEmits(["closeModal"]);
 
-const front = ref("");
-const back = ref("");
-const code = ref("");
+const flashcard = ref(flashcardStore.flashcards.find((flashcard) => flashcard._id == props.id));
+
+const front = ref(flashcard.value.front);
+const back = ref(flashcard.value.back);
+const code = ref(flashcard.value.code);
 
 const editFlashcard = async () => {
   const f = front.value || null;
@@ -29,8 +31,6 @@ const editFlashcard = async () => {
   }
 
   const result = await response.json();
-
-  const flashcard = flashcardStore.flashcards.find((flashcard) => flashcard._id == result._id);
   flashcard.value = result;
 
   emit("closeModal");
@@ -39,7 +39,8 @@ const editFlashcard = async () => {
 
 <template>
   <div class="modal" v-show="display">
-    <h1>Edit {{props.id}}</h1>
+    <h1>Edit</h1>
+    <p>Id: {{props.id}}</p>
     <label for="front">Front</label>
     <textarea name="front" id="front" rows="4" v-model="front"></textarea>
 
@@ -49,7 +50,7 @@ const editFlashcard = async () => {
     <label for="code">Code (optional)</label>
     <textarea name="code" id="code" rows="4" v-model="code"></textarea>
 
-    <button class="button" @click="editFlashcard">Create Flashcard</button>
+    <button class="button" @click="editFlashcard">Update Flashcard</button>
   </div>
 
   <div class="overlay" v-if="display" @click="$emit('closeModal')"></div>
