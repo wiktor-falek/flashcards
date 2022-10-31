@@ -26,10 +26,7 @@ onMounted(async () => {
   if (response.status === 200) {
     const result = await response.json();
     const flashcards = result.flashcards;
-    console.log(flashcards);
-
     flashcardStore.flashcards = flashcards;
-    console.log(flashcardStore.flashcards);
   }
 });
 </script>
@@ -52,7 +49,7 @@ onMounted(async () => {
       <button class="button" @click="displayActiveCollection = true">
         Browse Cards
       </button>
-      <button class="button">Practise</button>
+      <router-link class="button" to="/practise">Practise</router-link>
     </div>
   </main>
 

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import SigninView from "../views/SigninView.vue";
+import PractiseView from "../views/PractiseView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +17,11 @@ const router = createRouter({
       name: "signin",
       component: SigninView,
       // component: () => import("../views/SigninView.vue"), annoying piece of shit lazy loading
+    },
+    {
+      path: "/practise",
+      name: "practise",
+      component: PractiseView,
     },
   ],
 });

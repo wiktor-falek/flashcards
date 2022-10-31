@@ -1,23 +1,28 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { deleteFlashcard, updateFlashcard } from "../../api/flashcardApi.js";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 
 const flashcardStore = useFlashcardStore();
 
-const props = defineProps(["display", "id"]);
+const props = defineProps(["id", "flashcard", "display"]);
+
+const front = ref("");
+const back = ref("");
+const code = ref("");
+
+onMounted(() => {
+  front.value = props.flashcard.front;
+  back.value = props.flashcard.back;
+  code.value = props.flashcard.code;
+})
+
 const emit = defineEmits(["closeModal"]);
 
-const flashcard = ref(flashcardStore.findById(props.id));
-
-const front = ref(flashcard.value.front);
-const back = ref(flashcard.value.back);
-const code = ref(flashcard.value.code);
-
 const editFlashcard = async () => {
-  const f = front.value || null;
-  const b = back.value || null;
-  const c = code.value || null;
+  const f = front.value;
+  const b = back.value;
+  const c = code.value;
   console.log(f, b, c);
   if (!f && !b && !c) {
     // some kind of visual is needed here to indicate missing fields
@@ -31,7 +36,8 @@ const editFlashcard = async () => {
   }
 
   const result = await response.json();
-  flashcard.value = result;
+  // props.flashcard.value = result;
+  console.log(result);
 
   emit("closeModal");
 };
@@ -50,17 +56,31 @@ const removeFlashcard = async () => {
 </script>
 
 <template>
-  <div class="modal" v-show="display">
+  <div class="modal" v-show="display" v-if="props.flashcard">
     <h1>Edit</h1>
-    <p>Id: {{ props.id }}</p>
     <label for="front">Front</label>
-    <textarea name="front" id="front" rows="4" v-model="front"></textarea>
+    <textarea
+      name="front"
+      id="front"
+      rows="4"
+      v-model="front"
+    ></textarea>
 
     <label for="back">Back</label>
-    <textarea name="back" id="back" rows="4" v-model="back"></textarea>
+    <textarea
+      name="back"
+      id="back"
+      rows="4"
+      v-model="back"
+    ></textarea>
 
     <label for="code">Code (optional)</label>
-    <textarea name="code" id="code" rows="4" v-model="code"></textarea>
+    <textarea
+      name="code"
+      id="code"
+      rows="4"
+      v-model="code"
+    ></textarea>
 
     <button class="button" @click="editFlashcard">Update Flashcard</button>
     <button class="button" @click="removeFlashcard">Delete Flashcard</button>

@@ -16,7 +16,6 @@ const createFlashcard = async () => {
   const f = front.value;
   const b = back.value;
   const c = code.value;
-  console.log(f, b, c);
   if (!f || !b) {
     // some kind of visual is needed here to indicate missing fields
     return;

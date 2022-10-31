@@ -9,7 +9,6 @@ const isFrontSide = ref(true);
 const isAnswer = ref(true);
 
 const displayEditCardModal = ref(false);
-
 </script>
 
 <template>
@@ -18,7 +17,7 @@ const displayEditCardModal = ref(false);
       <div class="tag">Algorithm</div>
       <div class="tag">Dynamic</div>
     </div>
-    <p class="card__content--front" >{{ flashcard.front }}</p>
+    <p class="card__content--front">{{ flashcard.front }}</p>
 
     <div class="card__bottom">
       <button class="card__button--flip" @click="isFrontSide = false">
@@ -30,7 +29,7 @@ const displayEditCardModal = ref(false);
         />
       </button>
       <p>Reviewed: {{ flashcard.reviewedCount }}</p>
-      <button class="card__button--edit" @click="displayEditCardModal = true;">
+      <button class="card__button--edit" @click="displayEditCardModal = true">
         <Icon
           icon="fluent:calendar-edit-16-regular"
           width="42"
@@ -85,9 +84,9 @@ const displayEditCardModal = ref(false);
   <EditCardModal
     :display="displayEditCardModal"
     :id="props.flashcard._id"
+    :flashcard="props.flashcard"
     @closeModal="displayEditCardModal = false"
   />
-
 </template>
 
 <style scoped>
