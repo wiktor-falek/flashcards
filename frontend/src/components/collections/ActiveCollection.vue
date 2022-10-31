@@ -7,6 +7,7 @@ const flashcardStore = useFlashcardStore();
 </script>
 
 <template>
+  <button class="button" @click="$emit('closeActiveCollection')">Go back</button>
   <div class="collection collection--active">
     <Card
       v-for="flashcard in flashcardStore.flashcards"

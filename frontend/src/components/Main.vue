@@ -12,6 +12,7 @@ const authStore = useAuthStore();
 const flashcardStore = useFlashcardStore();
 
 const displayCreateCardModal = ref(false);
+const displayActiveCollection = ref(false);
 
 onMounted(async () => {
   const response = await getAllFlashcards();
@@ -39,12 +40,21 @@ onMounted(async () => {
   </header>
 
   <main>
-    <button class="button" @click="displayCreateCardModal = true">
-      Create flashcard
-    </button>
-  </main>
+    <ActiveCollection
+      v-if="displayActiveCollection"
+      @closeActiveCollection="displayActiveCollection = false"
+    />
+    <div class="menu" v-else>
+      <button class="button" @click="displayCreateCardModal = true">
+        Create Flashcard
+      </button>
 
-  <ActiveCollection />
+      <button class="button" @click="displayActiveCollection = true">
+        Browse Cards
+      </button>
+      <button class="button">Practise</button>
+    </div>
+  </main>
 
   <CreateCardModal
     :display="displayCreateCardModal"
