@@ -8,8 +8,15 @@ const flashcardStore = useFlashcardStore();
 
 const currentFlashcard = ref();
 
-// temporary solution until i figure out global storage,
-// then request only if data not found (accessing /practise route without loading main)
+const nextCard = () => {
+  const nextFlashcard = flashcardStore.getNextCard();
+  console.log(nextFlashcard);
+  if (nextFlashcard === undefined) {
+    flashcardStore.setPractiseRotation(flashcards);
+  }
+  currentFlashcard.value = nextFlashcard;
+};
+
 onMounted(async () => {
   const response = await getAllFlashcards();
 
@@ -24,16 +31,45 @@ onMounted(async () => {
     const flashcards = result.flashcards;
     flashcardStore.setPractiseRotation(flashcards);
   }
-  const nextFlashcard = flashcardStore.getNextCard();
-  console.log("chuj kurwa", nextFlashcard);
-  currentFlashcard.value = nextFlashcard;
+  nextCard();
 });
+
+const repeat = () => {
+  nextCard();
+};
+
+const memorized = () => {
+  nextCard();
+};
 </script>
 
 <template>
-  <router-link to="../" class="button">Go back</router-link>
-  <div class="div" v-if="true">
-    <p>Practise</p>
-    <Card :flashcard="currentFlashcard" v-if="currentFlashcard" />
-  </div>
+  <main>
+    <router-link to="../" class="button">Go back</router-link>
+
+    <div class="practise">
+      <Card :flashcard="currentFlashcard" v-if="currentFlashcard" />
+      <div class="practise__navigation">
+        <button class="button" @click="repeat()">Repeat</button>
+        <button class="button" @click="memorized()">Memorized</button>
+      </div>
+    </div>
+  </main>
 </template>
+
+<style scoped>
+.practise {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.practise__navigation {
+  display: flex;
+  padding-top: 20px;
+}
+
+.practise__navigation > button {
+  width: 50%;
+  font-size: 1rem;
+}
+</style>
