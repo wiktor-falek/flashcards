@@ -30,7 +30,9 @@ onMounted(async () => {
   if (response.status === 200) {
     const result = await response.json();
     const flashcards = result.flashcards;
+    flashcardStore.flashcards = flashcards;
     flashcardStore.setPractiseRotation(flashcards);
+    console.log(flashcardStore);
   }
   nextCard();
 });
@@ -38,11 +40,14 @@ onMounted(async () => {
 const repeat = async () => {
   const flashcard = await nextCard();
   const id = flashcard._id;
-
   const response = await increment(id);
 
-  const result = await response.json();
-  console.log(result);
+  console.log(response.status);
+  if (response.status === 200) {
+    setTimeout(() => {
+      flashcardStore.findById(id).reviewedCount++;
+    }, 150);
+  }
 };
 
 const memorized = async () => {
