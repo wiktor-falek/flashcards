@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { getAllFlashcards } from "../api/flashcardApi";
+import { getAllFlashcards, increment } from "../api/flashcardApi";
 import Card from "../components/cards/Card.vue";
 import { useFlashcardStore } from "../stores/flashcardStore";
 
@@ -8,13 +8,14 @@ const flashcardStore = useFlashcardStore();
 
 const currentFlashcard = ref();
 
-const nextCard = () => {
-  const nextFlashcard = flashcardStore.getNextCard();
-  console.log(nextFlashcard);
+const nextCard = async () => {
+  let nextFlashcard = await flashcardStore.getNextCard();
   if (nextFlashcard === undefined) {
-    flashcardStore.setPractiseRotation(flashcards);
+    flashcardStore.setPractiseRotation();
+    nextFlashcard = await flashcardStore.getNextCard();
   }
   currentFlashcard.value = nextFlashcard;
+  return nextFlashcard;
 };
 
 onMounted(async () => {
@@ -34,12 +35,18 @@ onMounted(async () => {
   nextCard();
 });
 
-const repeat = () => {
-  nextCard();
+const repeat = async () => {
+  const flashcard = await nextCard();
+  const id = flashcard._id;
+
+  const response = await increment(id);
+
+  const result = await response.json();
+  console.log(result);
 };
 
-const memorized = () => {
-  nextCard();
+const memorized = async () => {
+  const flashcard = await nextCard();
 };
 </script>
 

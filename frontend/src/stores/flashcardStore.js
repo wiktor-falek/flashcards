@@ -12,8 +12,8 @@ export const useFlashcardStore = defineStore("flashcards", () => {
   const flashcards = ref([]);
   const practiseRotation = ref([]);
 
-  const setPractiseRotation = (flashcards) => {
-    practiseRotation.value = shuffle(flashcards);
+  const setPractiseRotation = () => {
+    practiseRotation.value = shuffle(flashcards.value);
   }
 
   const findById = (id) => {
@@ -21,8 +21,14 @@ export const useFlashcardStore = defineStore("flashcards", () => {
     return flashcard;
   }
 
-  const getNextCard = () => {
+  const getNextCard = async () => {
     const flashcard = practiseRotation.value.pop();
+    if (!flashcard) {
+      // GET flashcards
+      // practiseRotation.value = await response.json();
+      // flashcard = practiseRotation.value.pop();
+    }
+
     return flashcard;
   }
 

@@ -12,6 +12,7 @@ const displayEditCardModal = ref(false);
 </script>
 
 <template>
+  <!-- front side -->
   <div class="card" v-if="isFrontSide">
     <div class="card__top">
       <div class="tag">Algorithm</div>
@@ -40,6 +41,7 @@ const displayEditCardModal = ref(false);
     </div>
   </div>
 
+  <!-- back side -->
   <div class="card" v-if="!isFrontSide">
     <div class="card__top">
       <button
@@ -70,7 +72,7 @@ const displayEditCardModal = ref(false);
         />
       </button>
       <p>Reviewed: {{ flashcard.reviewedCount }}</p>
-      <button class="card__button--edit" @click="">
+      <button class="card__button--edit" @click="displayEditCardModal = true">
         <Icon
           icon="fluent:calendar-edit-16-regular"
           width="42"

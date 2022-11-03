@@ -31,3 +31,7 @@ export const updateFlashcard = (id, front=null, back=null, code=null, reviewedCo
 
   return patch(`http://localhost:3000/api/v1/flashcard/${id}`, fields);
 };
+
+export const increment = (id) => {
+  return post(`http://localhost:3000/api/v1/flashcard/increment/${id}`);
+}
