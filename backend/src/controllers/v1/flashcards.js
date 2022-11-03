@@ -1,10 +1,10 @@
-import { Router } from "express";
+import { query, Router } from "express";
 import { body, param, validationResult } from "express-validator";
 
 import User from "../../db/models/User.js";
 import flashcardSchema from "../../db/schemas/flashcardSchema.js";
 import logger from "../../../logger.js";
-import { ObjectID, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 
 const router = Router();
 
@@ -39,7 +39,7 @@ router.post(
     const { front, back, code } = req.body;
 
     const flashcard = { front, back, code, reviewedCount: 0 };
-    
+
     let validatedFlashcard;
     try {
       validatedFlashcard = flashcardSchema.validate(flashcard).value;
@@ -59,6 +59,57 @@ router.post(
     }
 
     res.status(200).json(validatedFlashcard);
+  }
+);
+
+// increments reviewedCount by 1
+router.post(
+  "/flashcard/increment/:id",
+  param("id").isString().isLength({ min: 24, max: 24 }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { userId } = res.locals;
+
+    const flashcardId = req.params.id;
+
+    const filter = {
+      _id: userId,
+      flashcards: {
+        $elemMatch: { _id: ObjectId(flashcardId) },
+      },
+    };
+
+    const update = {
+      $inc: { "flashcards.$.reviewedCount": 1 },
+    };
+
+    const options = {
+      returnDocument: "after",
+      projection: {
+        flashcards: {
+          $elemMatch: { _id: ObjectId(flashcardId) },
+        },
+      },
+    };
+
+    const result = await User.collection.findOneAndUpdate(
+      filter,
+      update,
+      options
+    );
+
+    console.log(result);
+    if (result === null) {
+      return res
+        .status(400)
+        .json({ error: "Failed to increment reviewedCount." });
+    }
+
+    res.status(200).json(result.value);
   }
 );
 
@@ -91,15 +142,16 @@ router.patch(
         if (!Array.isArray(tags)) {
           throw new Error("I love javascript :))))");
         }
-
       } catch (e) {
-        return res
-          .status(400)
-          .json({ error: "Field 'tags' must be a valid JSON array of strings." });
+        return res.status(400).json({
+          error: "Field 'tags' must be a valid JSON array of strings.",
+        });
       }
       for (const item of tags) {
         if (typeof item !== "string") {
-          return res.status(400).json({ error: "All items of array 'tags' must consist of strings." })
+          return res.status(400).json({
+            error: "All items of array 'tags' must consist of strings.",
+          });
         }
       }
     }
@@ -172,8 +224,6 @@ router.delete(
     const { userId } = res.locals;
 
     const flashcardId = req.params.id;
-
-    console.log(flashcardId, typeof flashcardId);
 
     const result = await User.collection.updateOne(
       { _id: userId },
