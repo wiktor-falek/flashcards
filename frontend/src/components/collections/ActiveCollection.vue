@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from "vue";
-import { getAllFlashcards } from "../../api/flashcardApi";
+import { getFlashcards } from "../../api/flashcardApi";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 import Card from "../cards/Card.vue";
 import CardPreview from "../cards/CardPreview.vue";
@@ -8,7 +8,7 @@ const flashcardStore = useFlashcardStore();
 
 const emits = defineEmits(["closeActiveCollection"]);
 onMounted(async () => {
-  const response = await getAllFlashcards();
+  const response = await getFlashcards();
 
   if (response.status === 401) {
     localStorage.setItem("isAuthenticated", "false");

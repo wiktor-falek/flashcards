@@ -1,6 +1,6 @@
 import { get, post, _delete, patch } from "./fetchWrapper";
 
-export const getAllFlashcards = () => {
+export const getFlashcards = () => {
   return get("http://localhost:3000/api/v1/flashcard");
 };
 

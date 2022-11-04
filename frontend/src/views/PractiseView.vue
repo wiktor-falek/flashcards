@@ -1,25 +1,22 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { getAllFlashcards, increment } from "../api/flashcardApi";
+import { remove } from "@vue/shared";
+import { onMounted, ref, nextTick } from "vue";
+import { getFlashcards, increment } from "../api/flashcardApi";
 import Card from "../components/cards/Card.vue";
-import { useFlashcardStore } from "../stores/flashcardStore";
+import { usePractiseStore } from "../stores/practiseStore.js";
 
-const flashcardStore = useFlashcardStore();
+const practiseStore = usePractiseStore();
 
 const currentFlashcard = ref();
 
-const nextCard = async () => {
-  let nextFlashcard = await flashcardStore.getNextCard();
-  if (nextFlashcard === undefined) {
-    flashcardStore.setPractiseRotation();
-    nextFlashcard = await flashcardStore.getNextCard();
-  }
-  currentFlashcard.value = nextFlashcard;
-  return nextFlashcard;
+const nextCard = (removeFlashcard = false) => {
+  let flashcard = practiseStore.getNextCard(removeFlashcard);
+  currentFlashcard.value = flashcard;
+  return flashcard;
 };
 
 onMounted(async () => {
-  const response = await getAllFlashcards();
+  const response = await getFlashcards();
 
   if (response.status === 401) {
     localStorage.setItem("isAuthenticated", "false");
@@ -30,28 +27,25 @@ onMounted(async () => {
   if (response.status === 200) {
     const result = await response.json();
     const flashcards = result.flashcards;
-    flashcardStore.flashcards = flashcards;
-    flashcardStore.setPractiseRotation(flashcards);
-    console.log(flashcardStore);
+    practiseStore.flashcards = flashcards;
+    practiseStore.setPractiseRotation();
   }
   nextCard();
 });
 
-const repeat = async () => {
-  const flashcard = await nextCard();
-  const id = flashcard._id;
-  const response = await increment(id);
+const repeat = () => {
+  const id = currentFlashcard.value._id;
+  const response = increment(id);
 
-  console.log(response.status);
   if (response.status === 200) {
-    setTimeout(() => {
-      flashcardStore.findById(id).reviewedCount++;
-    }, 150);
+    practiseStore.findById(id).reviewedCount++;
   }
+
+  nextCard();
 };
 
-const memorized = async () => {
-  const flashcard = await nextCard();
+const memorized = () => {
+  nextCard(true)
 };
 </script>
 
@@ -61,7 +55,10 @@ const memorized = async () => {
 
     <div class="practise">
       <Card :flashcard="currentFlashcard" v-if="currentFlashcard" />
-      <div class="practise__navigation">
+      <div v-else>
+        <p>You have no flashcards</p>
+      </div>
+      <div class="practise__navigation" v-if="currentFlashcard">
         <button class="button" @click="repeat()">Repeat</button>
         <button class="button" @click="memorized()">Memorized</button>
       </div>
