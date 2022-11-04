@@ -35,7 +35,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     let { userId } = res.locals;
-
     const { front, back, code } = req.body;
 
     const flashcard = { front, back, code, reviewedCount: 0 };
@@ -73,7 +72,6 @@ router.post(
     }
 
     const { userId } = res.locals;
-
     const flashcardId = req.params.id;
 
     const filter = {
@@ -113,6 +111,99 @@ router.post(
   }
 );
 
+function extract(arrayField, id) {
+  return {
+    $arrayElemAt: [
+      {
+        $filter: {
+          input: arrayField,
+          cond: { $eq: ["$$this._id", ObjectId(id)] },
+        },
+      },
+      0,
+    ],
+  };
+}
+
+router.post(
+  "/flashcard/move/flashcards/:id",
+  param("id").isString().isLength({ min: 24, max: 24 }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { userId } = res.locals;
+    const flashcardId = req.params.id;
+
+    // this works, unless you try to move to the collection where flashcard already exists
+    // when that happens it inserts null, trying to find a fix for this
+
+    const result = await User.collection.updateOne({ _id: userId }, [
+      {
+        $set: {
+          memorized: {
+            $filter: {
+              input: "$memorized",
+              cond: { $ne: ["$$this._id", ObjectId(flashcardId)] },
+            },
+          },
+          flashcards: {
+            $concatArrays: [
+              "$memorized",
+              [extract("$memorized", flashcardId)],
+            ],
+          },
+        },
+      },
+    ]);
+
+    console.log(result);
+
+    res.status(200).json({ result });
+  }
+);
+
+router.post(
+  "/flashcard/move/memorized/:id",
+  param("id").isString().isLength({ min: 24, max: 24 }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { userId } = res.locals;
+    const flashcardId = req.params.id;
+
+    // this works, unless you try to move to the collection where flashcard already exists
+    // when that happens it inserts null, trying to find a fix for this
+
+    const result = await User.collection.updateOne({ _id: userId }, [
+      {
+        $set: {
+          flashcards: {
+            $filter: {
+              input: "$flashcards",
+              cond: { $ne: ["$$this._id", ObjectId(flashcardId)] },
+            },
+          },
+          memorized: {
+            $concatArrays: [
+              "$memorized",
+              [extract("$flashcards", flashcardId)],
+            ],
+          },
+        },
+      },
+    ]);
+
+    console.log(result);
+
+    res.status(200).json({ result });
+  }
+);
+
 router.patch(
   "/flashcard/:id",
   param("id").isString().isLength({ min: 24, max: 24 }),
@@ -129,9 +220,8 @@ router.patch(
 
     const { userId } = res.locals;
     const flashcardId = req.params.id;
-
     const { front, back, code } = req.body;
-    console.log(req.body, front, back, code);
+
     const reviewedCount = parseInt(req.body.reviewedCount);
 
     // im gonna go insane with this shit
@@ -222,7 +312,6 @@ router.delete(
     }
 
     const { userId } = res.locals;
-
     const flashcardId = req.params.id;
 
     const result = await User.collection.updateOne(
