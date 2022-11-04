@@ -1,10 +1,11 @@
-import { query, Router } from "express";
+import { Router } from "express";
 import { body, param, validationResult } from "express-validator";
 
 import User from "../../db/models/User.js";
 import flashcardSchema from "../../db/schemas/flashcardSchema.js";
 import logger from "../../../logger.js";
 import { ObjectId } from "mongodb";
+import extract from "../../db/utils/extract.js";
 
 const router = Router();
 
@@ -111,20 +112,6 @@ router.post(
   }
 );
 
-function extract(arrayField, id) {
-  return {
-    $arrayElemAt: [
-      {
-        $filter: {
-          input: arrayField,
-          cond: { $eq: ["$$this._id", ObjectId(id)] },
-        },
-      },
-      0,
-    ],
-  };
-}
-
 router.post(
   "/flashcard/move/flashcards/:id",
   param("id").isString().isLength({ min: 24, max: 24 }),
@@ -136,27 +123,33 @@ router.post(
     const { userId } = res.locals;
     const flashcardId = req.params.id;
 
-    // this works, unless you try to move to the collection where flashcard already exists
-    // when that happens it inserts null, trying to find a fix for this
+    // atomically moves flashcard at flashcardId
+    // from memorized array field to flashcards array field
 
-    const result = await User.collection.updateOne({ _id: userId }, [
+    const result = await User.collection.updateOne(
       {
-        $set: {
-          memorized: {
-            $filter: {
-              input: "$memorized",
-              cond: { $ne: ["$$this._id", ObjectId(flashcardId)] },
+        _id: userId,
+        memorized: { $elemMatch: { _id: ObjectId(flashcardId) } },
+      },
+      [
+        {
+          $set: {
+            memorized: {
+              $filter: {
+                input: "$memorized",
+                cond: { $ne: ["$$this._id", ObjectId(flashcardId)] },
+              },
+            },
+            flashcards: {
+              $concatArrays: [
+                "$flashcards",
+                [extract("$memorized", ObjectId(flashcardId))],
+              ],
             },
           },
-          flashcards: {
-            $concatArrays: [
-              "$memorized",
-              [extract("$memorized", flashcardId)],
-            ],
-          },
         },
-      },
-    ]);
+      ]
+    );
 
     console.log(result);
 
@@ -179,24 +172,30 @@ router.post(
     // this works, unless you try to move to the collection where flashcard already exists
     // when that happens it inserts null, trying to find a fix for this
 
-    const result = await User.collection.updateOne({ _id: userId }, [
+    const result = await User.collection.updateOne(
       {
-        $set: {
-          flashcards: {
-            $filter: {
-              input: "$flashcards",
-              cond: { $ne: ["$$this._id", ObjectId(flashcardId)] },
+        _id: userId,
+        flashcards: { $elemMatch: { _id: ObjectId(flashcardId) } },
+      },
+      [
+        {
+          $set: {
+            flashcards: {
+              $filter: {
+                input: "$flashcards",
+                cond: { $ne: ["$$this._id", ObjectId(flashcardId)] },
+              },
+            },
+            memorized: {
+              $concatArrays: [
+                "$memorized",
+                [extract("$flashcards", ObjectId(flashcardId))],
+              ],
             },
           },
-          memorized: {
-            $concatArrays: [
-              "$memorized",
-              [extract("$flashcards", flashcardId)],
-            ],
-          },
         },
-      },
-    ]);
+      ]
+    );
 
     console.log(result);
 
