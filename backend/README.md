@@ -69,6 +69,26 @@
 
 <br>
 
+## POST `/api/v1/flashcard/move/memorized/:id`
+
+`Moves flashcard to memorized array field`
+
+| Params | Required? |  Type  | minLen | maxLen |
+| :----: | :-------: | :----: | :----: | :----: |
+|   id   |  Yes ✅   | string |   24   |   24   |
+
+<br>
+
+## POST `/api/v1/flashcard/move/flashcards/:id`
+
+`Moves flashcard to flashcards array field`
+
+| Params | Required? |  Type  | minLen | maxLen |
+| :----: | :-------: | :----: | :----: | :----: |
+|   id   |  Yes ✅   | string |   24   |   24   |
+
+<br>
+
 ## PATCH `/api/v1/flashcard/:id`
 
 TODO
