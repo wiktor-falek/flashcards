@@ -9,8 +9,8 @@ const practiseStore = usePractiseStore();
 
 const currentFlashcard = ref();
 
-const nextCard = (removeFlashcard = false) => {
-  let flashcard = practiseStore.getNextCard(removeFlashcard);
+const nextCard = () => {
+  let flashcard = practiseStore.getNextCard();
   currentFlashcard.value = flashcard;
   return flashcard;
 };
@@ -40,12 +40,12 @@ const repeat = () => {
   if (response.status === 200) {
     practiseStore.findById(id).reviewedCount++;
   }
-
   nextCard();
 };
 
 const memorized = () => {
-  nextCard(true)
+  practiseStore.removeCurrentCard();
+  nextCard()
 };
 </script>
 

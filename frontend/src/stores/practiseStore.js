@@ -23,13 +23,15 @@ export const usePractiseStore = defineStore("practise", () => {
     practiseRotation.value = shuffle(flashcards.value);
   };
 
-  const getNextCard = (deleteFlashcard = false) => {
+  const getNextCard = () => {
     const flashcard = practiseRotation.value.shift();
-    if (!deleteFlashcard) {
-      practiseRotation.value.push(flashcard); // move to the last position
-      // this will be a linked list for better performance
-    }
+    practiseRotation.value.push(flashcard); // move to the last position
     return flashcard;
+  };
+
+  const removeCurrentCard = () => {
+    const removedFlashcard = practiseRotation.value.pop();
+    return removedFlashcard;
   };
 
   return {
@@ -38,5 +40,6 @@ export const usePractiseStore = defineStore("practise", () => {
     practiseRotation,
     setPractiseRotation,
     getNextCard,
+    removeCurrentCard
   };
 });
