@@ -13,7 +13,7 @@ export const deleteFlashcard = (id) => {
   return _delete(`http://localhost:3000/api/v1/flashcard/${id}`);
 };
 
-export const updateFlashcard = (id, front=null, back=null, code=null, reviewedCount=null, tags=null) => {
+export const updateFlashcard = (id, front = null, back = null, code = null, reviewedCount = null, tags = null) => {
   const fields = {
     front,
     back,
@@ -21,17 +21,23 @@ export const updateFlashcard = (id, front=null, back=null, code=null, reviewedCo
     reviewedCount,
     tags,
   };
-  console.log("before", fields);
+
   // filter out invalid values from fields
   Object.keys(fields).forEach(
     (key) => [undefined, null].includes(fields[key]) && delete fields[key]
   );
-
-  console.log("after", fields);
 
   return patch(`http://localhost:3000/api/v1/flashcard/${id}`, fields);
 };
 
 export const increment = (id) => {
   return post(`http://localhost:3000/api/v1/flashcard/increment/${id}`);
-}
+};
+
+export const moveFlashcardToMemorizedCollection = (id) => {
+  return post(`http://localhost:3000/api/v1/flashcard/move/memorized/${id}`);
+};
+
+export const moveFlashcardToActiveCollection = (id) => {
+  return post(`http://localhost:3000/api/v1/flashcard/move/flashcards/${id}`);
+};
