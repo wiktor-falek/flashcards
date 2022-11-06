@@ -54,6 +54,9 @@ const removeFlashcard = async () => {
   const response = await deleteFlashcard(props.id);
 
   if (response.status === 200) {
+    // const target = flashcardStore.findById(props.id);
+    // flashcardStore.deleteFlashcard(props.id);
+    flashcardStore.removeFlashcard(props.id);
     emit("closeModal");
   }
 };

@@ -19,6 +19,15 @@ export const useFlashcardStore = defineStore("flashcards", () => {
     flashcards.value.push(flashcard);
   };
 
+  const removeFlashcard = (id) => {
+    for (let i = 0; i < flashcards.value.length; i++) {
+      const flashcard = flashcards.value[i];
+      if (flashcard._id === id) {
+        flashcards.value.splice(i, 1);
+      }
+    }
+  };
+
   const findById = (id) => {
     const flashcard =
       flashcards.value.find((flashcard) => flashcard._id === id) || null;
@@ -30,6 +39,7 @@ export const useFlashcardStore = defineStore("flashcards", () => {
     flashcards,
     setFlashcards,
     addFlashcard,
+    removeFlashcard,
     findById,
   };
 });
