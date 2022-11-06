@@ -23,7 +23,7 @@ const editFlashcard = async () => {
   const f = front.value;
   const b = back.value;
   const c = code.value;
-  console.log(f, b, c);
+
   if (!f && !b && !c) {
     // some kind of visual is needed here to indicate missing fields
     return;
@@ -36,8 +36,12 @@ const editFlashcard = async () => {
   }
 
   const result = await response.json();
-  // props.flashcard.value = result;
-  console.log(result);
+  props.flashcard.value = result;
+
+  // update flashcard in store, this component probably should just have,
+  // a flashcard ref to the flashcard from store at props.id to avoid 
+  // possible issues like synchronizing data between both
+  flashcardStore.flashcards[1] = result;
 
   emit("closeModal");
 };
