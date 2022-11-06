@@ -30,9 +30,6 @@ const onSubmit = async (event) => {
     authStore.setIsAuthenticated(true);
     router.push("/");
   }
-  console.log(authStore.isAuthenticated);
-
-  console.log(result.status, response);
 };
 
 const linkOnClick = (event) => {
@@ -59,7 +56,9 @@ const linkOnClick = (event) => {
       @focusout="usernameLabelIsVisible = false"
     />
 
-    <label for="password" :class="{ visible: passwordLabelIsVisible }" >Password</label>
+    <label for="password" :class="{ visible: passwordLabelIsVisible }"
+      >Password</label
+    >
     <input
       id="password"
       type="password"
@@ -95,5 +94,4 @@ const linkOnClick = (event) => {
 .center {
   margin: 0 auto;
 }
-
 </style>

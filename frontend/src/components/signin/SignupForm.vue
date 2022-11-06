@@ -25,7 +25,6 @@ const onSubmit = async (event) => {
   const response = await result.json();
 
   if (result.status === 200) {
-    console.log("Registered an user");
     emit("signinViewToggle"); // 'redirect' to signin
   }
 };

@@ -37,7 +37,6 @@ const nextCard = () => {
   practiseRotation.value.push(flashcard);
 
   currentFlashcard.value = flashcard;
-  console.log(currentFlashcard.value);
   return flashcard;
 };
 

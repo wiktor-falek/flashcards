@@ -1,6 +1,7 @@
 import { useAuthStore } from "../stores/authStore";
 import { useFlashcardStore } from "../stores/flashcardStore";
 import { getFlashcards } from "../api/flashcardApi";
+import router from "../router";
 
 export default async function authAndLoadFlashcards() {
   const authStore = useAuthStore();
