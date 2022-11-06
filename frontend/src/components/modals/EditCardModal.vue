@@ -41,7 +41,7 @@ const editFlashcard = async () => {
   // update flashcard in store, this component probably should just have,
   // a flashcard ref to the flashcard from store at props.id to avoid 
   // possible issues like synchronizing data between both
-  flashcardStore.flashcards[1] = result;
+  flashcardStore.findById(props.id).value = result;
 
   emit("closeModal");
 };
