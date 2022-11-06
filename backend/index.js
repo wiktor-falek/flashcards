@@ -21,7 +21,7 @@ const app = express();
 // MIDDLEWARE
 app.use(
   cors({
-    origin: "https://flashcards-frontend.onrender.com/",
+    origin: "https://flashcards-frontend.onrender.com",
     optionsSuccessStatus: 200,
     credentials: true,
   })
