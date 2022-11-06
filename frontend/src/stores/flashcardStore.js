@@ -31,6 +31,7 @@ export const useFlashcardStore = defineStore("flashcards", () => {
   const findById = (id) => {
     const flashcard =
       flashcards.value.find((flashcard) => flashcard._id === id) || null;
+    console.log(flashcard);
     return flashcard;
   };
 
