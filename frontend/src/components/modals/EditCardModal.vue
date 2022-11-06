@@ -36,12 +36,18 @@ const editFlashcard = async () => {
   }
 
   const result = await response.json();
-  props.flashcard.value = result;
+  props.flashcard.value = result; // this doesn't update flashcardStore flashcard
 
-  // update flashcard in store, this component probably should just have,
-  // a flashcard ref to the flashcard from store at props.id to avoid 
+  // TEMPORARY FIX
+  // this component ideally should have a ref
+  // to flashcard from store at props.id to avoid
   // possible issues like synchronizing data between both
-  flashcardStore.findById(props.id).value = result;
+  console.log("result", result);
+  const idx = flashcardStore.flashcards.findIndex((flashcard) => {
+    console.log(flashcard._id, props.id);
+    return flashcard._id === props.id;
+  })
+  flashcardStore.flashcards[idx] = result;
 
   emit("closeModal");
 };

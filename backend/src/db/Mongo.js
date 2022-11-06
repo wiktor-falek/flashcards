@@ -5,9 +5,9 @@ dotenv.config();
 class Mongo {
   constructor() {
     this.URL =
-      process.env.NODE_ENV === "production"
-        ? `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.4zrjv3n.mongodb.net/flashcards?retryWrites=true&w=majority`
-        : "mongodb://127.0.0.1:27017/flashcards";
+      /*process.env.NODE_ENV === "production"
+        ?*/ `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.4zrjv3n.mongodb.net/flashcards?retryWrites=true&w=majority`
+        // : "mongodb://127.0.0.1:27017/flashcards";
     
     try {
       this.client = new MongoClient(this.URL);

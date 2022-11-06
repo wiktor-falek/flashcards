@@ -9,19 +9,32 @@ import { default as login } from "./src/controllers/auth/login.js";
 import { default as verify } from "./src/controllers/auth/verify.js";
 
 import authorize from "./src/middlewares/authorize.js";
-import { authApiLimiter } from "./src/middlewares/rateLimit.js"
+import { authApiLimiter } from "./src/middlewares/rateLimit.js";
 import { default as v1 } from "./src/controllers/v1/index.js";
 import logger from "./logger.js";
 
 process.env.NODE_ENV =
   process.env.NODE_ENV === "production" ? "production" : "development";
 
+console.log(process.env.NODE_ENV);
+console.log(
+  process.env.NODE_ENV === "production"
+    ? "https://flashcards-frontend.onrender.com"
+    : "http://localhost:5173"
+);
 const app = express();
 
 // MIDDLEWARE
 app.use(
   cors({
+<<<<<<< HEAD
     origin: "https://flashcards-frontend.onrender.com",
+=======
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://flashcards-frontend.onrender.com"
+        : "http://localhost:5173",
+>>>>>>> master
     optionsSuccessStatus: 200,
     credentials: true,
   })
@@ -52,8 +65,10 @@ app.use("/auth", register, login, verify);
 app.use("/api", authorize, v1);
 
 app.use("/auth/ping", authorize, (req, res) => {
-  res.status(200).json({ message: "Authorized", username: req.cookies.username });
-})
+  res
+    .status(200)
+    .json({ message: "Authorized", username: req.cookies.username });
+});
 
 // SERVER
 const PORT = 3000;
