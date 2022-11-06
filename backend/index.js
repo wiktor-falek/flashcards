@@ -27,14 +27,10 @@ const app = express();
 // MIDDLEWARE
 app.use(
   cors({
-<<<<<<< HEAD
-    origin: "https://flashcards-frontend.onrender.com",
-=======
     origin:
       process.env.NODE_ENV === "production"
         ? "https://flashcards-frontend.onrender.com"
         : "http://localhost:5173",
->>>>>>> master
     optionsSuccessStatus: 200,
     credentials: true,
   })
