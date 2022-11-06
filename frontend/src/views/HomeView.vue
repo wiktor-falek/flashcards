@@ -1,10 +1,9 @@
 <script setup>
-import Landing from '../components/Landing.vue';
-import Main from '../components/Main.vue';
-import { useAuthStore } from '../stores/authStore';
+import Landing from "../components/Landing.vue";
+import Main from "../components/Main.vue";
+import { useAuthStore } from "../stores/authStore";
 
 const authStore = useAuthStore();
-
 </script>
 
 <template>

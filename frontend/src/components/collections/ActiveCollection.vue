@@ -1,33 +1,20 @@
 <script setup>
-import { onMounted } from "vue";
-import { getFlashcards } from "../../api/flashcardApi";
+import { onBeforeMount } from "vue";
 import { useFlashcardStore } from "../../stores/flashcardStore";
+import authAndLoadFlashcards from "../../helpers/authAndLoadFlashcards";
 import Card from "../cards/Card.vue";
 import CardPreview from "../cards/CardPreview.vue";
+
 const flashcardStore = useFlashcardStore();
 
-const emits = defineEmits(["closeActiveCollection"]);
-onMounted(async () => {
-  const response = await getFlashcards();
-
-  if (response.status === 401) {
-    localStorage.setItem("isAuthenticated", "false");
-    authStore.setIsAuthenticated(false);
-    return router.push("/signin");
-  }
-
-  if (response.status === 200) {
-    const result = await response.json();
-    const flashcards = result.flashcards;
-    flashcardStore.flashcards = flashcards;
+onBeforeMount(() => {
+  if (!flashcardStore.hasFetchedFlashcards) {
+    authAndLoadFlashcards();
   }
 });
 </script>
 
 <template>
-  <button class="button" @click="$emit('closeActiveCollection')">
-    Go back
-  </button>
   <div class="collection collection--active">
     <Card
       v-for="flashcard in flashcardStore.flashcards"

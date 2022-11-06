@@ -1,51 +1,59 @@
 <script setup>
-import { remove } from "@vue/shared";
-import { onMounted, ref, nextTick } from "vue";
-import { getFlashcards, increment } from "../api/flashcardApi";
+import { onMounted, ref, onBeforeMount } from "vue";
+import { increment } from "../api/flashcardApi";
 import Card from "../components/cards/Card.vue";
-import { usePractiseStore } from "../stores/practiseStore.js";
+import { useFlashcardStore } from "../stores/flashcardStore";
+import authAndLoadFlashcards from "../helpers/authAndLoadFlashcards";
+const flashcardStore = useFlashcardStore();
 
-const practiseStore = usePractiseStore();
-
-const currentFlashcard = ref();
-
-const nextCard = () => {
-  let flashcard = practiseStore.getNextCard();
-  currentFlashcard.value = flashcard;
-  return flashcard;
-};
-
-onMounted(async () => {
-  const response = await getFlashcards();
-
-  if (response.status === 401) {
-    localStorage.setItem("isAuthenticated", "false");
-    authStore.setIsAuthenticated(false);
-    return router.push("/signin");
+onBeforeMount(async () => {
+  if (!flashcardStore.hasFetchedFlashcards) {
+    await authAndLoadFlashcards();
   }
-
-  if (response.status === 200) {
-    const result = await response.json();
-    const flashcards = result.flashcards;
-    practiseStore.flashcards = flashcards;
-    practiseStore.setPractiseRotation();
-  }
+  setPractiseRotation();
   nextCard();
 });
 
-const repeat = () => {
+const practiseRotation = ref([]);
+const currentFlashcard = ref();
+
+const setPractiseRotation = () => {
+  const shuffle = (array) => {
+    return array
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  };
+  practiseRotation.value = shuffle(flashcardStore.flashcards);
+};
+
+const removeCurrentCard = () => {
+  const removedFlashcard = practiseRotation.value.pop();
+  return removedFlashcard;
+};
+
+const nextCard = () => {
+  const flashcard = practiseRotation.value.shift();
+  practiseRotation.value.push(flashcard);
+
+  currentFlashcard.value = flashcard;
+  console.log(currentFlashcard.value);
+  return flashcard;
+};
+
+const repeat = async () => {
   const id = currentFlashcard.value._id;
-  const response = increment(id);
+  const response = await increment(id);
 
   if (response.status === 200) {
-    practiseStore.findById(id).reviewedCount++;
+    flashcardStore.findById(id).reviewedCount++;
   }
   nextCard();
 };
 
 const memorized = () => {
-  practiseStore.removeCurrentCard();
-  nextCard()
+  removeCurrentCard();
+  nextCard();
 };
 </script>
 
@@ -53,15 +61,15 @@ const memorized = () => {
   <main>
     <router-link to="../" class="button">Go back</router-link>
 
-    <div class="practise">
-      <Card :flashcard="currentFlashcard" v-if="currentFlashcard" />
-      <div v-else>
-        <p>You have no flashcards</p>
-      </div>
-      <div class="practise__navigation" v-if="currentFlashcard">
+    <div class="practise" v-if="currentFlashcard">
+      <Card :flashcard="currentFlashcard" />
+      <div class="practise__navigation">
         <button class="button" @click="repeat()">Repeat</button>
         <button class="button" @click="memorized()">Memorized</button>
       </div>
+    </div>
+    <div class="practise" v-else>
+      <p>You have no flashcards</p>
     </div>
   </main>
 </template>

@@ -1,17 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import Logo from "../components/Logo.vue";
-import { useAuthStore } from "../stores/authStore.js";
-import { useFlashcardStore } from "../stores/flashcardStore.js";
 import CreateCardModal from "./modals/CreateCardModal.vue";
-import ActiveCollection from "./collections/ActiveCollection.vue";
+import authAndLoadFlashcards from "../helpers/authAndLoadFlashcards";
+import { useFlashcardStore } from "../stores/flashcardStore";
 
-const authStore = useAuthStore();
 const flashcardStore = useFlashcardStore();
 
 const displayCreateCardModal = ref(false);
-const displayActiveCollection = ref(false);
 
+onBeforeMount(() => {
+  if (!flashcardStore.hasFetchedFlashcards) {
+    authAndLoadFlashcards();
+  }
+});
 </script>
 
 <template>
@@ -20,19 +22,12 @@ const displayActiveCollection = ref(false);
   </header>
 
   <main>
-    <ActiveCollection
-      v-if="displayActiveCollection"
-      @closeActiveCollection="displayActiveCollection = false"
-    />
-    <div class="menu" v-else>
+    <div class="menu">
       <button class="button" @click="displayCreateCardModal = true">
         Create Flashcard
       </button>
-
-      <button class="button" @click="displayActiveCollection = true">
-        Browse Cards
-      </button>
-      <router-link class="button" to="/practise">Practise</router-link>
+      <router-link to="/browse" class="button">Browse Cards</router-link>
+      <router-link to="/practise" class="button">Practise</router-link>
     </div>
   </main>
 
