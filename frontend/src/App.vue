@@ -8,9 +8,7 @@ import { RouterView } from "vue-router";
 
 <style scoped>
 header {
-  max-height: 100vh;
-  height: 120px;
-  display: flex;
+  height: 100px;
   align-items: center;
 }
 

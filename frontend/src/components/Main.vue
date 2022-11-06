@@ -4,6 +4,7 @@ import Logo from "../components/Logo.vue";
 import CreateCardModal from "./modals/CreateCardModal.vue";
 import authAndLoadFlashcards from "../helpers/authAndLoadFlashcards";
 import { useFlashcardStore } from "../stores/flashcardStore";
+import logout from "../helpers/logout";
 
 const flashcardStore = useFlashcardStore();
 
@@ -19,6 +20,7 @@ onBeforeMount(() => {
 <template>
   <header>
     <Logo />
+    <button @click="">Logout</button>
   </header>
 
   <main>

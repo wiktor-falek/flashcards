@@ -42,9 +42,7 @@ const editFlashcard = async () => {
   // this component ideally should have a ref
   // to flashcard from store at props.id to avoid
   // possible issues like synchronizing data between both
-  console.log("result", result);
   const idx = flashcardStore.flashcards.findIndex((flashcard) => {
-    console.log(flashcard._id, props.id);
     return flashcard._id === props.id;
   })
   flashcardStore.flashcards[idx] = result;

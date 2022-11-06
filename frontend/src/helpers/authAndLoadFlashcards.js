@@ -2,6 +2,7 @@ import { useAuthStore } from "../stores/authStore";
 import { useFlashcardStore } from "../stores/flashcardStore";
 import { getFlashcards } from "../api/flashcardApi";
 import router from "../router";
+import logout from "./logout";
 
 export default async function authAndLoadFlashcards() {
   const authStore = useAuthStore();
@@ -10,9 +11,7 @@ export default async function authAndLoadFlashcards() {
   const response = await getFlashcards();
 
   if (response.status === 401) {
-    localStorage.setItem("isAuthenticated", "false");
-    authStore.setIsAuthenticated(false);
-    return router.push("/signin");
+    logout()
   }
 
   if (response.status === 200) {
