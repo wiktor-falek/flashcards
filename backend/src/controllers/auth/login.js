@@ -45,8 +45,8 @@ router.post(
     );
 
     if (result.acknowledged) {
-      res.cookie("username", username, { httpOnly: true, secure: false, sameSite: "none" });
-      res.cookie("sessionId", sessionId, { httpOnly: true, secure: false,  sameSite: "none" });
+      res.cookie("username", username, { httpOnly: true, secure: true, sameSite: "none" });
+      res.cookie("sessionId", sessionId, { httpOnly: true, secure: true,  sameSite: "none" });
       return res.json({username, sessionId});
     }
     res.status(400).json({ error: "Something went wrong" });
