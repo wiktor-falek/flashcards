@@ -8,8 +8,6 @@ import logout from "../helpers/logout";
 
 const flashcardStore = useFlashcardStore();
 
-const displayCreateCardModal = ref(false);
-
 onBeforeMount(() => {
   if (!flashcardStore.hasFetchedFlashcards) {
     authAndLoadFlashcards();
@@ -25,18 +23,11 @@ onBeforeMount(() => {
 
   <main>
     <div class="menu">
-      <button class="button" @click="displayCreateCardModal = true">
-        Create Flashcard
-      </button>
+      <CreateCardModal />
       <router-link to="/browse" class="button">Browse Cards</router-link>
       <router-link to="/practise" class="button">Practise</router-link>
     </div>
   </main>
-
-  <CreateCardModal
-    :display="displayCreateCardModal"
-    @closeModal="displayCreateCardModal = false"
-  />
 </template>
 
 <style scoped>

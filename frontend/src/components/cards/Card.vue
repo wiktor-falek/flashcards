@@ -7,8 +7,6 @@ const props = defineProps(["flashcard"]);
 
 const isFrontSide = ref(true);
 const isAnswer = ref(true);
-
-const displayEditCardModal = ref(false);
 </script>
 
 <template>
@@ -30,14 +28,8 @@ const displayEditCardModal = ref(false);
         />
       </button>
       <p>Reviewed: {{ flashcard.reviewedCount }}</p>
-      <button class="card__button--edit" @click="displayEditCardModal = true">
-        <Icon
-          icon="fluent:calendar-edit-16-regular"
-          width="42"
-          height="42"
-          color="grey"
-        />
-      </button>
+
+      <EditCardModal :id="props.flashcard._id" :flashcard="props.flashcard" />
     </div>
   </div>
 
@@ -82,16 +74,9 @@ const displayEditCardModal = ref(false);
       </button>
     </div>
   </div>
-
-  <EditCardModal
-    :display="displayEditCardModal"
-    :id="props.flashcard._id"
-    :flashcard="props.flashcard"
-    @closeModal="displayEditCardModal = false"
-  />
 </template>
 
-<style scoped>
+<style>
 @import "../../assets/card.css";
 .selected {
   background-color: rgb(60, 60, 60) !important;

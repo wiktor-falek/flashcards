@@ -1,7 +1,10 @@
 <script setup>
+import { Icon } from "@iconify/vue";
 import { onMounted, ref } from "vue";
 import { deleteFlashcard, updateFlashcard } from "../../api/flashcardApi.js";
 import { useFlashcardStore } from "../../stores/flashcardStore";
+
+const isOpen = ref(false);
 
 const flashcardStore = useFlashcardStore();
 
@@ -15,9 +18,7 @@ onMounted(() => {
   front.value = props.flashcard.front;
   back.value = props.flashcard.back;
   code.value = props.flashcard.code;
-})
-
-const emit = defineEmits(["closeModal"]);
+});
 
 const editFlashcard = async () => {
   const f = front.value;
@@ -44,7 +45,7 @@ const editFlashcard = async () => {
   // possible issues like synchronizing data between both
   const idx = flashcardStore.flashcards.findIndex((flashcard) => {
     return flashcard._id === props.id;
-  })
+  });
   flashcardStore.flashcards[idx] = result;
 
   emit("closeModal");
@@ -67,63 +68,48 @@ const removeFlashcard = async () => {
 </script>
 
 <template>
-  <div class="modal" v-show="display" v-if="props.flashcard">
-    <h1>Edit</h1>
-    <label for="front">Front</label>
-    <textarea
-      name="front"
-      id="front"
-      rows="4"
-      v-model="front"
-    ></textarea>
+  <button class="card__button--edit" @click="isOpen = true">
+    <Icon
+      icon="fluent:calendar-edit-16-regular"
+      width="42"
+      height="42"
+      color="grey"
+    />
+  </button>
 
-    <label for="back">Back</label>
-    <textarea
-      name="back"
-      id="back"
-      rows="4"
-      v-model="back"
-    ></textarea>
+  <Teleport to="body" v-if="isOpen">
+    <div class="modal" v-if="isOpen" @click.self="isOpen = false">
+      <div class="edit-card">
+        <div class="edit-card--top">
+          <h2>Edit</h2>
+          <button @click="isOpen = false">Close</button>
+        </div>
+        <label for="front">Front</label>
+        <textarea name="front" id="front" rows="4" v-model="front"></textarea>
 
-    <label for="code">Code (optional)</label>
-    <textarea
-      name="code"
-      id="code"
-      rows="4"
-      v-model="code"
-    ></textarea>
+        <label for="back">Back</label>
+        <textarea name="back" id="back" rows="4" v-model="back"></textarea>
 
-    <button class="button" @click="editFlashcard">Update Flashcard</button>
-    <button class="button" @click="removeFlashcard">Delete Flashcard</button>
-  </div>
+        <label for="code">Code (optional)</label>
+        <textarea name="code" id="code" rows="4" v-model="code"></textarea>
 
-  <div class="overlay" v-if="display" @click="$emit('closeModal')"></div>
+        <button class="button" @click="editFlashcard">Update Flashcard</button>
+        <button class="button" @click="removeFlashcard">
+          Delete Flashcard
+        </button>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <style scoped>
-.overlay {
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+.edit-card {
+  background-color: rgb(31, 31, 31);
+  max-width: 400px;
 }
-
-.modal {
+.edit-card--top {
   display: flex;
-  flex-direction: column;
-  text-align: left;
-  justify-content: center;
-  z-index: 101;
-  border: 1px solid grey;
-  position: absolute;
-  --width: 350px;
-  width: var(--width);
-  left: calc(50% - (var(--width) / 2));
-  top: 20%;
-  background-color: rgb(20, 20, 20);
+  justify-content: space-between;
 }
 
 textarea {
