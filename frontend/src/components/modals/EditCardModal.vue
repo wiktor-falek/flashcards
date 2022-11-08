@@ -47,8 +47,7 @@ const editFlashcard = async () => {
     return flashcard._id === props.id;
   });
   flashcardStore.flashcards[idx] = result;
-
-  emit("closeModal");
+  isOpen.value = false;
 };
 
 const removeFlashcard = async () => {
@@ -62,7 +61,6 @@ const removeFlashcard = async () => {
     // const target = flashcardStore.findById(props.id);
     // flashcardStore.deleteFlashcard(props.id);
     flashcardStore.removeFlashcard(props.id);
-    emit("closeModal");
   }
 };
 </script>
