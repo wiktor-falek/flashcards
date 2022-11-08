@@ -1,8 +1,8 @@
 <template>
   <router-link to="/" class="logo" tabindex="-1">
-    <div class="card idx-1"></div>
-    <div class="card idx-2"></div>
-    <div class="card idx-3"></div>
+    <div class="logo__card idx-1"></div>
+    <div class="logo__card idx-2"></div>
+    <div class="logo__card idx-3"></div>
   </router-link>
 </template>
 
@@ -19,8 +19,7 @@
   outline: none;
 }
 
-
-.card {
+.logo__card {
   position: relative;
   display: flex;
   align-items: center;
@@ -35,7 +34,7 @@
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
 }
-.card::after {
+.logo__card::after {
   content: "";
   width: 35px;
   height: 50px;
@@ -76,7 +75,7 @@
   font-weight: bold;
 }
 
-.logo--transparent > .card::after {
+.logo--transparent > .logo__card::after {
   /* hardcoded background color cuz i don't know
   how to make it transparent without showing other cards */
   background-color: #19273c;
@@ -86,7 +85,7 @@
 .logo--transparent > .idx-3::after {
 }
 
-.logo--transparent > .card {
+.logo--transparent > .logo__card {
   background-color: #19273c;
 }
 </style>
