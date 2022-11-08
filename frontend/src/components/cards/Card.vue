@@ -12,7 +12,6 @@ const isAnswerTab = ref(true);
 <template>
   <!-- front side -->
   <div class="card">
-
     <div class="card__top" v-if="isFrontSide">
       <div class="tag">Algorithm</div>
       <div class="tag">Dynamic</div>
@@ -34,11 +33,15 @@ const isAnswerTab = ref(true);
         Code
       </button>
     </div>
-    
+
     <p class="card__content--front" v-if="isFrontSide">{{ flashcard.front }}</p>
 
-    <p class="card__content--back" v-if="!isFrontSide && isAnswerTab">{{ flashcard.back }}</p>
-    <p class="card__content--code" v-if="!isFrontSide && !isAnswerTab">{{ flashcard.code }}</p>
+    <p class="card__content--back" v-if="!isFrontSide && isAnswerTab">
+      {{ flashcard.back }}
+    </p>
+    <p class="card__content--code" v-if="!isFrontSide && !isAnswerTab">
+      {{ flashcard.code }}
+    </p>
 
     <div class="card__bottom">
       <button class="card__button--flip" @click="isFrontSide = !isFrontSide">
