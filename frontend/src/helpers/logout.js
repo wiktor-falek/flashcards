@@ -6,7 +6,8 @@ export default function logout() {
 
   localStorage.setItem("isAuthenticated", "false");
   authStore.setIsAuthenticated(false);
-  // delete secondary cookie
-  
+  console.log(document.cookie);
+  document.cookie = "sessionId2= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+  console.log(document.cookie);
   return router.push("/signin");
 }

@@ -18,7 +18,7 @@ onBeforeMount(() => {
 <template>
   <header>
     <Logo />
-    <button @click="">Logout</button>
+    <button @click="logout()">Logout</button>
   </header>
 
   <main>
