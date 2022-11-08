@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 
 import User from "../../db/models/User.js";
+import splitInHalf from "../../utils/splitInHalf.js";
 
 const router = Router();
 
@@ -45,9 +46,12 @@ router.post(
     );
 
     if (result.acknowledged) {
-      res.cookie("username", username, { httpOnly: true, secure: true, sameSite: "none" });
-      res.cookie("sessionId", sessionId, { httpOnly: true, secure: true,  sameSite: "none" });
-      return res.json({username, sessionId});
+      const [sessionId1, sessionId2] = splitInHalf(sessionId);
+      res.cookie("username", username, { httpOnly: true, secure: true, sameSite: "strict" });
+      res.cookie("sessionId1", sessionId1, { httpOnly: true, secure: true,  sameSite: "strict" });
+      // this cookie is httpOnly=false, so the client can remove it, effectively logging out
+      res.cookie("sessionId2", sessionId2, { httpOnly: false, secure: true,  sameSite: "strict" });
+      return res.json({username, sessionId1, sessionId2});
     }
     res.status(400).json({ error: "Something went wrong" });
   }

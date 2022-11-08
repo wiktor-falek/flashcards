@@ -15,7 +15,8 @@ import User from "../db/models/User.js";
  * const { user } = res.locals;
  */
 const authorize = async (req, res, next) => {
-  const { username, sessionId } = req.cookies;
+  const { username, sessionId1, sessionId2 } = req.cookies;
+  const sessionId = sessionId1 + sessionId2
 
   if (!username || !sessionId) {
     return res.status(401).json({
