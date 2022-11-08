@@ -25,10 +25,6 @@ const editFlashcard = async () => {
   const b = back.value;
   const c = code.value;
 
-  if (!f && !b && !c) {
-    // some kind of visual is needed here to indicate missing fields
-    return;
-  }
   const response = await updateFlashcard(props.id, f, b, c);
 
   if (response.status !== 200) {

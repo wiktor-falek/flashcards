@@ -13,7 +13,7 @@ export const deleteFlashcard = (id) => {
   return _delete(`http://localhost:3000/api/v1/flashcard/${id}`);
 };
 
-export const updateFlashcard = (id, front = null, back = null, code = null, reviewedCount = null, tags = null) => {
+export const updateFlashcard = (id, front = "", back = "", code = "", reviewedCount = null, tags = null) => {
   const fields = {
     front,
     back,

@@ -27,9 +27,9 @@ router.get("/flashcard", async (req, res) => {
 
 router.post(
   "/flashcard",
-  body("front").isString().trim().isLength({ min: 1, max: 512 }),
-  body("back").isString().trim().isLength({ min: 1, max: 512 }),
-  body("code").optional().isString().trim().isLength({ min: 0, max: 512 }),
+  body("front").isString().trim().isLength({ max: 512 }),
+  body("back").isString().trim().isLength({ max: 512 }),
+  body("code").optional().isString().trim().isLength({ max: 512 }),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -245,12 +245,12 @@ router.patch(
       }
     }
 
-    if (!front && !back && !code && !reviewedCount && !tags) {
-      return res.status(400).json({
-        error:
-          "Body must contain at least one of fields ('front', 'back', 'code', 'reviewedCount', 'tags') to update flashcard.",
-      });
-    }
+    // if (!front && !back && !code && !reviewedCount && !tags) {
+    //   return res.status(400).json({
+    //     error:
+    //       "Body must contain at least one of fields ('front', 'back', 'code', 'reviewedCount', 'tags') to update flashcard.",
+    //   });
+    // }
 
     const fields = {
       "flashcards.$.front": front,

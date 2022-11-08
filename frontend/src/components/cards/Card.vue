@@ -64,14 +64,7 @@ const isAnswer = ref(true);
         />
       </button>
       <p>Reviewed: {{ flashcard.reviewedCount }}</p>
-      <button class="card__button--edit" @click="displayEditCardModal = true">
-        <Icon
-          icon="fluent:calendar-edit-16-regular"
-          width="42"
-          height="42"
-          color="grey"
-        />
-      </button>
+      <EditCardModal :id="props.flashcard._id" :flashcard="props.flashcard" />
     </div>
   </div>
 </template>
