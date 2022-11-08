@@ -29,7 +29,7 @@ body {
   min-height: 100vh;
   color: var(--font-color-light);
   line-height: 1.4;
-  font-family: "Consolas" -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: "Consolas", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 
