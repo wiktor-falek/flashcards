@@ -6,56 +6,42 @@ import EditCardModal from "../modals/EditCardModal.vue";
 const props = defineProps(["flashcard"]);
 
 const isFrontSide = ref(true);
-const isAnswer = ref(true);
+const isAnswerTab = ref(true);
 </script>
 
 <template>
   <!-- front side -->
-  <div class="card" v-if="isFrontSide">
-    <div class="card__top">
+  <div class="card">
+
+    <div class="card__top" v-if="isFrontSide">
       <div class="tag">Algorithm</div>
       <div class="tag">Dynamic</div>
     </div>
-    <p class="card__content--front">{{ flashcard.front }}</p>
 
-    <div class="card__bottom">
-      <button class="card__button--flip" @click="isFrontSide = false">
-        <Icon
-          icon="akar-icons:arrow-counter-clockwise"
-          width="42"
-          height="42"
-          color="grey"
-        />
-      </button>
-      <p>Reviewed: {{ flashcard.reviewedCount }}</p>
-
-      <EditCardModal :id="props.flashcard._id" :flashcard="props.flashcard" />
-    </div>
-  </div>
-
-  <!-- back side -->
-  <div class="card" v-if="!isFrontSide">
-    <div class="card__top">
+    <div class="card__top" v-else>
       <button
-        :class="{ selected: isAnswer }"
-        @click="isAnswer = true"
+        :class="{ selected: isAnswerTab }"
+        @click="isAnswerTab = true"
         tabindex="-1"
       >
         Answer
       </button>
       <button
-        :class="{ selected: !isAnswer }"
-        @click="isAnswer = false"
+        :class="{ selected: !isAnswerTab }"
+        @click="isAnswerTab = false"
         tabindex="-1"
       >
         Code
       </button>
     </div>
-    <p class="card__content--back" v-if="isAnswer">{{ flashcard.back }}</p>
-    <p class="card__content--code" v-else>{{ flashcard.code }}</p>
+    
+    <p class="card__content--front" v-if="isFrontSide">{{ flashcard.front }}</p>
+
+    <p class="card__content--back" v-if="!isFrontSide && isAnswerTab">{{ flashcard.back }}</p>
+    <p class="card__content--code" v-if="!isFrontSide && !isAnswerTab">{{ flashcard.code }}</p>
 
     <div class="card__bottom">
-      <button class="card__button--flip" @click="isFrontSide = true">
+      <button class="card__button--flip" @click="isFrontSide = !isFrontSide">
         <Icon
           icon="akar-icons:arrow-counter-clockwise"
           width="42"
@@ -64,6 +50,7 @@ const isAnswer = ref(true);
         />
       </button>
       <p>Reviewed: {{ flashcard.reviewedCount }}</p>
+
       <EditCardModal :id="props.flashcard._id" :flashcard="props.flashcard" />
     </div>
   </div>
