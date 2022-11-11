@@ -4,10 +4,9 @@ import dotenv from 'dotenv'; dotenv.config();
 const SECRET = process.env.JWT_SECRET;
 
 /**
- * returns jwt token
  * @param {String} id 
  * @param {Number} registrationTimestamp 
- * @returns {String}
+ * @returns {String} JWT token
  */
 export const encode = (username, email) => {
     const payload = { username, email };
@@ -16,9 +15,8 @@ export const encode = (username, email) => {
 }
 
 /**
- * returns decoded jwt token data
  * @param {String} token
- * @returns {Object}
+ * @returns {Object} decoded JWT token data
  */
 export const decode = (token) => {
     const decodedToken = jwt.verify(token, SECRET);

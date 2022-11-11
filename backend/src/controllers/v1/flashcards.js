@@ -14,7 +14,7 @@ router.get("/flashcard", async (req, res) => {
 
   const result = await User.collection.findOne(
     { _id: userId },
-    { projection: { flashcards: 1, _id: 0 } }
+    { projection: { flashcards: 1, memorized: 1, _id: 0 } }
   );
 
   if (result === null) {

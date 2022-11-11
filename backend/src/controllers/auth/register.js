@@ -35,7 +35,7 @@ router.post(
       });
     }
 
-    // once we know that both username and email is available create new user
+    // both username and email are available
     const newUser = await User.register(username, password, email);
 
     if (newUser === null) {
