@@ -7,10 +7,6 @@ import { decode } from "../../utils/token.js";
 
 const router = Router();
 
-router.get("/verify", (req, res) => {
-  res.status(200).json({ where: "token" });
-});
-
 router.get(
   "/verify/:token",
   param("token").isString().isLength({ min: 3 }),
@@ -27,7 +23,7 @@ router.get(
       tokenData = decode(token);
     } catch (err) {
       console.log(err);
-      return res.status(400).json({ message: "Invalid token" });
+      return res.status(400).json({ message: `Invalid token: ${token}` });
     }
 
     const { username, email } = tokenData;
@@ -42,7 +38,7 @@ router.get(
       return res.status(400).send("Email is already verified");
     }
 
-    // token email matches current unconfirmed email and not already taken
+    // token email matches current unconfirmed email and email is not already taken
 
     if (email !== user.account.email) {
       return res.status(400).send("Something went wrong");

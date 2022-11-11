@@ -1,7 +1,7 @@
 import User from "../db/models/User.js";
 
 /**
- * queries db for an user with username and sessionId from cookie
+ * queries db for an user with cookie data: username, sessionId1 and sessionId2
  * if unsuccessfull returns status 401 message breaking the middleware chain
  * otherwise passes { username, sessionId, userId } to succeeding middlewares
  * available inside res.locals and calls next

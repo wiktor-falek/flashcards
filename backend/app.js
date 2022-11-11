@@ -9,7 +9,7 @@ import { default as login } from "./src/controllers/auth/login.js";
 import { default as verify } from "./src/controllers/auth/verify.js";
 
 import authorize from "./src/middlewares/authorize.js";
-import { authApiLimiter } from "./src/middlewares/rateLimit.js";
+import { apiLimiter, authApiLimiter } from "./src/middlewares/rateLimit.js";
 import { default as v1 } from "./src/controllers/v1/index.js";
 
 const app = express();
@@ -45,6 +45,7 @@ app.use(
 
 // RATE LIMITERS
 app.use("/auth", authApiLimiter);
+app.use("/api", apiLimiter);
 
 // ROUTES
 app.use("/auth", register, login, verify);
@@ -53,7 +54,7 @@ app.use("/api", authorize, v1);
 app.use("/auth/ping", authorize, (req, res) => {
   res
     .status(200)
-    .json({ message: "Authorized", username: req.cookies.username });
+    .json({ message: "pong" });
 });
 
 export default app;
