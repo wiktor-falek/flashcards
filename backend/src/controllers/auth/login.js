@@ -48,6 +48,8 @@ router.post(
     if (result.acknowledged) {
       const [sessionId1, sessionId2] = splitInHalf(sessionId);
       res.cookie("username", username, { httpOnly: true, secure: true, sameSite: "strict" });
+
+      // session id is split into two halves, one httpOnly=true and second one httpOnly=false
       res.cookie("sessionId1", sessionId1, { httpOnly: true, secure: true,  sameSite: "strict" });
       // this cookie is httpOnly=false, so the client can remove it, effectively logging out
       res.cookie("sessionId2", sessionId2, { httpOnly: false, secure: true,  sameSite: "strict" });
@@ -58,4 +60,3 @@ router.post(
 );
 
 export default router;
-
