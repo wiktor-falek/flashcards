@@ -4,15 +4,14 @@ import { ref } from "vue";
 export const useFlashcardStore = defineStore("flashcards", () => {
   const hasFetchedFlashcards = ref(false);
   const flashcards = ref([]);
+  const memorizedFlashcards = ref([]);
 
   const setFlashcards = (_flashcards) => {
-    if (typeof _flashcards !== "array" && typeof _flashcards !== "object") {
-      return console.warn(
-        `Could not set flashcards, must be an array or a proxy with array as a target.`
-      );
-    }
-
     flashcards.value = _flashcards;
+  };
+
+  const setMemorizedFlashcards = (_flashcards) => {
+    memorizedFlashcards.value = _flashcards;
   };
 
   const addFlashcard = (flashcard) => {
@@ -42,5 +41,8 @@ export const useFlashcardStore = defineStore("flashcards", () => {
     addFlashcard,
     removeFlashcard,
     findById,
+
+    memorizedFlashcards,
+    setMemorizedFlashcards,
   };
 });

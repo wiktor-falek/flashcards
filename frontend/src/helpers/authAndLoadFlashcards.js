@@ -13,8 +13,13 @@ export default async function authAndLoadFlashcards() {
 
   if (response.status === 200) {
     const result = await response.json();
+
     const flashcards = result.flashcards;
     flashcardStore.setFlashcards(flashcards);
+
+    const memorizedFlashcards = result.memorized;
+    flashcardStore.setMemorizedFlashcards(memorizedFlashcards);
+
     flashcardStore.hasFetchedFlashcards = true;
   }
 }
