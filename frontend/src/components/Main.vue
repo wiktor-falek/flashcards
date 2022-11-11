@@ -31,7 +31,10 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
-.button {
-  margin: 15px auto;
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 </style>

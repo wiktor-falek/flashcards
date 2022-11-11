@@ -3,7 +3,7 @@ import { onBeforeMount } from "vue";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 import authAndLoadFlashcards from "../../helpers/authAndLoadFlashcards";
 import Card from "../cards/Card.vue";
-import CardPreview from "../cards/CardPreview.vue";
+// import CardPreview from "../cards/CardPreview.vue";
 
 const flashcardStore = useFlashcardStore();
 

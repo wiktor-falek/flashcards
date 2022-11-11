@@ -51,12 +51,7 @@ main {
   height: 100vh;
   display: flex;
   align-items: center;
-
- /* without htis margin:auto results in uneven because css yes */
   justify-content: center;
-
-  /* and then shit doesn't even work without this because css yes */
-  margin: auto;
   color: var(--font-color-dark);
 }
 

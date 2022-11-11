@@ -4,9 +4,9 @@
   width: 275px;
   aspect-ratio: 6/9;
   padding: 10px;
-  border: 1px solid #4f4f4f;
-  background-color: #181818;
+  border: 2px solid #ddd;
   margin: 0px auto;
+  border-radius: 20px;
 }
 
 .card > p, h1 {

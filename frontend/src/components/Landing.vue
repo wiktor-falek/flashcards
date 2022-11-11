@@ -54,20 +54,19 @@ onMounted(() => {
 
       <p>
         After learning a concept create a flashcard with a question at the front
-        and an answer at the back, you also have an option to include a code
-        snippet.
+        and an answer at the back, you can also include a code snippet.
       </p>
 
       <p>
-        When a flashcard shows up during your learning session, try to answer
-        the question. Check if it matches the answer. Ideally you should aim to
-        repeat this process at least three times.
+        When a flashcard shows up during your practise session, try to answer
+        the question. Check if it matches the answer on the back side. Ideally
+        you should aim to repeat this process at least three times.
       </p>
 
       <p>
         If you feel confident about the topic, mark the flashcard as memorized.
-        It won't be presented to you anymore, but it still will be available in
-        Completed Collection.
+        It won't be presented to you anymore during practise, but it still will
+        be available in seperate collection.
       </p>
     </section>
 

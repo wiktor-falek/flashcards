@@ -16,7 +16,6 @@ const createFlashcard = async () => {
   const b = back.value;
   const c = code.value;
 
-  
   const response = await createNewFlashcard(f, b, c);
 
   if (!response.status === 200) {

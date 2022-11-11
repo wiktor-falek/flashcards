@@ -28,6 +28,11 @@ const router = createRouter({
       name: "practise",
       component: PractiseView,
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      // component: NotFound,
+    },
   ],
 });
 
