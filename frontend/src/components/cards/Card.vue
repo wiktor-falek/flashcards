@@ -2,8 +2,9 @@
 import { ref } from "vue";
 import { Icon } from "@iconify/vue";
 import EditCardModal from "../modals/EditCardModal.vue";
+import TagBar from "./tags/TagBar.vue";
 
-const props = defineProps(["flashcard"]);
+const props = defineProps(["flashcard", "id"]);
 
 const isFrontSide = ref(true);
 const isAnswerTab = ref(true);
@@ -13,8 +14,7 @@ const isAnswerTab = ref(true);
   <!-- front side -->
   <div class="card">
     <div class="card__top" v-if="isFrontSide">
-      <div class="tag">Algorithm</div>
-      <div class="tag">Dynamic</div>
+      <TagBar :id="props.flashcard._id" :tags="props.flashcard.tags" />
     </div>
 
     <div class="card__top" v-else>

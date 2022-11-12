@@ -1,4 +1,4 @@
-@import './base.css';
+@import "./base.css";
 
 h1 {
   font-size: 2rem;
@@ -56,20 +56,6 @@ h1 {
 .center {
   margin-left: auto;
   margin-right: auto;
-}
-
-.tag {
-  font-size: 16px;
-  width: fit-content;
-  padding: 1px 10px;
-  background-color: #414141;
-  border-radius: 30px;
-  height: fit-content;
-}
-
-.tag:hover {
-  background-color: #555555;
-  cursor: default;
 }
 
 .modal {

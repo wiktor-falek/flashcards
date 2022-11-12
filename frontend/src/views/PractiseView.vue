@@ -61,7 +61,7 @@ const memorized = () => {
     <router-link to="../" class="button">Go back</router-link>
 
     <div class="practise" v-if="currentFlashcard">
-      <Card :flashcard="currentFlashcard" />
+      <Card :id="currentFlashcard._id" :flashcard="currentFlashcard" />
       <div class="practise__navigation">
         <button class="button" @click="repeat()">Repeat</button>
         <button class="button" @click="memorized()">Memorized</button>

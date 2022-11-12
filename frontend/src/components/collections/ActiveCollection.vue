@@ -20,6 +20,7 @@ onBeforeMount(() => {
       v-for="flashcard in flashcardStore.flashcards"
       :flashcard="flashcard"
       :key="flashcard._id"
+      :id="flashcard._id"
     />
   </div>
 </template>
