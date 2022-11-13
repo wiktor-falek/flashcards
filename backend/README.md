@@ -69,6 +69,30 @@
 
 <br>
 
+## POST `/api/v1/flashcard/addTag/:id`
+
+`Pushes a tag to a flashcards tags array`
+
+| Params | Required? |  Type  | minLen | maxLen |
+| :----: | :-------: | :----: | :----: | :----: |
+|   id   |  Yes ✅   | string |   24   |   24   |
+
+| Body | Required? |  Type  | minLen | maxLen |
+| :--: | :-------: | :----: | :----: | :----: |
+| tag  |  Yes ✅   | string |   1    |   32   |
+
+## POST `/api/v1/flashcard/removeTag/:id`
+
+`Pulls a tag from flashcards tags array`
+
+| Params | Required? |  Type  | minLen | maxLen |
+| :----: | :-------: | :----: | :----: | :----: |
+|   id   |  Yes ✅   | string |   24   |   24   |
+
+| Body | Required? |  Type  | minLen | maxLen |
+| :--: | :-------: | :----: | :----: | :----: |
+| tag  |  Yes ✅   | string |   1    |   32   |
+
 ## POST `/api/v1/flashcard/move/memorized/:id`
 
 `Moves flashcard to memorized array field`

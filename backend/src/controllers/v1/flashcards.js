@@ -19,7 +19,7 @@ router.get("/flashcard", async (req, res) => {
 
   if (result === null) {
     logger.warn(`User ${userId.toString()} not found. How?`);
-    return res.status(400).json({ error: "" });
+    return res.status(400).json({ error: "What? How?" });
   }
 
   res.status(200).json(result);
@@ -169,9 +169,6 @@ router.post(
     const { userId } = res.locals;
     const flashcardId = req.params.id;
 
-    // this works, unless you try to move to the collection where flashcard already exists
-    // when that happens it inserts null, trying to find a fix for this
-
     const result = await User.collection.updateOne(
       {
         _id: userId,
@@ -200,6 +197,77 @@ router.post(
     console.log(result);
 
     res.status(200).json({ result });
+  }
+);
+
+router.post(
+  "/flashcard/addTag/:id",
+  param("id").isString().isLength({ min: 24, max: 24 }),
+  body("tag").isString().trim().isLength({ min: 1, max: 32 }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { userId } = res.locals;
+    const flashcardId = req.params.id;
+    const tag = req.body.tag;
+
+    // TODO tags length limit
+    
+    const filter = {
+      _id: userId,
+      flashcards: {
+        $elemMatch: { _id: ObjectId(flashcardId), tags: { $ne: tag } },
+      },
+    };
+
+    const update = {
+      $push: { "flashcards.$.tags": tag },
+    };
+
+    const result = await User.collection.updateOne(filter, update);
+
+    if (result.modifiedCount === 0) {
+      return res.status(400).json({ error: `Failed to add tag ${tag}` });
+    }
+
+    res.status(200).json({ tag });
+  }
+);
+
+router.post(
+  "/flashcard/removeTag/:id",
+  param("id").isString().isLength({ min: 24, max: 24 }),
+  body("tag").isString().trim().isLength({ min: 1, max: 32 }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { userId } = res.locals;
+    const flashcardId = req.params.id;
+    const tag = req.body.tag;
+
+
+    const filter = {
+      _id: userId,
+      flashcards: {
+        $elemMatch: { _id: ObjectId(flashcardId) },
+      },
+    };
+
+    const update = {
+      $pull: { "flashcards.$.tags": tag }
+    };
+
+    const result = await User.collection.updateOne(filter, update);
+    
+    if (result.modifiedCount === 0) {
+      return res.status(400).json({ error: `Failed to remove tag ${tag}` });
+    }
+
+    res.status(200).json({ tag });
   }
 );
 
