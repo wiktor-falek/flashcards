@@ -34,7 +34,7 @@ const withdrawTag = async () => {
 .tag {
   font-size: 20px;
   width: fit-content;
-  padding: 2px 10px;
+  padding-left: 8px;
   background-color: #414141;
   border-radius: 30px;
   height: fit-content;
@@ -42,17 +42,18 @@ const withdrawTag = async () => {
   flex-direction: row;
   align-items: center;
   height: fit-content;
+  height: 32px;
 }
 
 .tag__name {
   line-height: 20px;
+  padding-top: 2px;
 }
 
 .tag__delete {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
   width: 32px;
   aspect-ratio: 1/1;
   border: none;

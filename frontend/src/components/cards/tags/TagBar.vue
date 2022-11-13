@@ -9,38 +9,21 @@ const props = defineProps(["tags", "id"]);
     <div class="tags" v-for="tag in tags">
       <Tag :tag="tag" :id="props.id" />
     </div>
-    <AddTagModal :id="props.id"/>
+    <AddTagModal :id="props.id" />
   </div>
 </template>
 
 <style scoped>
-
 .tagbar {
   display: flex;
-  overflow-x: scroll;
-}
-
-.tagbar__add {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  height: 32px;
-  width: 32px;
-  aspect-ratio: 1/1;
-  border: none;
-  background-color: #1f1f1f;
-  border-radius: 50%;
+  justify-content: start;
+  overflow-x: scroll;
+  width: 100%;
+  height: fit-content;
 }
 
-.tagbar__add::before {
-  position: relative;
-  bottom: 1px;
-  content: "\002b";
-  font-size: 24px;
-}
-
-.tagbar__add:hover {
-  background-color: #696969;
-  cursor: default;
+.tags {
+  margin-right: 5px;
 }
 </style>

@@ -12,13 +12,16 @@ const flashcard = ref(flashcardStore.findById(props.id));
 const tag = ref();
 
 const submitTag = async () => {
+  if (!tag.value) {
+    return;
+    // error
+  }
   console.log(tag);
   const response = await addTag(props.id, tag.value);
   if (response.status === 200) {
     flashcard.value.tags.push(tag.value);
+    isOpen.value = false;
   }
-  // error
-  isOpen.value = false;
 }
 </script>
 
@@ -30,7 +33,7 @@ const submitTag = async () => {
       <div class="modal__container">
         <h1>Add new tag</h1>
         <p>ID {{props.id}}</p>
-        <input v-model="tag" type="text">
+        <input v-model="tag" type="text" autofocus>
         <button @click="submitTag()">Add</button>
       </div>
     </div>
