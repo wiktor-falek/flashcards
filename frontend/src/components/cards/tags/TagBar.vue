@@ -7,13 +7,18 @@ const props = defineProps(["tags", "id"]);
 <template>
   <div class="tagbar">
     <div class="tags" v-for="tag in tags">
-      <Tag :tag="tag" />
+      <Tag :tag="tag" :id="props.id" />
     </div>
     <AddTagModal :id="props.id"/>
   </div>
 </template>
 
 <style scoped>
+
+.tagbar {
+  display: flex;
+  overflow-x: scroll;
+}
 
 .tagbar__add {
   display: flex;

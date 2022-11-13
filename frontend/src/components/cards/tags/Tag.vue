@@ -1,10 +1,33 @@
 <script setup>
-const props = defineProps(["tag"]);
+import { useFlashcardStore } from "../../../stores/flashcardStore";
+import { removeTag } from "../../../api/flashcardApi";
+import { ref } from "vue";
+
+const props = defineProps(["tag", "id"]);
+
+const display = ref(true);
+
+const flashcardStore = useFlashcardStore();
+
+const flashcard = ref(flashcardStore.findById(props.id));
+
+const withdrawTag = async () => {
+  console.log("removing tag", props.tag);
+  const response = await removeTag(props.id, props.tag);
+  console.log(response);
+  if (response.status === 200) {
+    const tags = ref(flashcard.value.tags);
+    tags.value = tags.value.filter((item) => item !== props.tag.value);
+    flashcard.value.tags = tags;
+    display.value = false;
+  }
+  // error
+};
 </script>
 <template>
-  <div class="tag">
-    <p class="tag__name">{{props.tag}}</p>
-    <button class="tag__delete"></button>
+  <div class="tag" v-if="display">
+    <p class="tag__name">{{ props.tag }}</p>
+    <button class="tag__delete" @click="withdrawTag()"></button>
   </div>
 </template>
 

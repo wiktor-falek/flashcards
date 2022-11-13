@@ -41,3 +41,11 @@ export const moveFlashcardToMemorizedCollection = (id) => {
 export const moveFlashcardToActiveCollection = (id) => {
   return post(`http://localhost:3000/api/v1/flashcard/move/flashcards/${id}`);
 };
+
+export const addTag = (id, tag) => {
+  return post(`http://localhost:3000/api/v1/flashcard/addTag/${id}`, { tag });
+}
+
+export const removeTag = (id, tag) => {
+  return post(`http://localhost:3000/api/v1/flashcard/removeTag/${id}`, { tag });
+}

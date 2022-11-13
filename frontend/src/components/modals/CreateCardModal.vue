@@ -62,6 +62,7 @@ const createFlashcard = async () => {
 </template>
 
 <style scoped>
+@import url("../../assets/modal.css");
 .create-card {
   background-color: rgb(31, 31, 31);
   max-width: 400px;

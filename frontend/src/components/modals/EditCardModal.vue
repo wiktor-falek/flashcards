@@ -73,7 +73,7 @@ const removeFlashcard = async () => {
 
   <Teleport to="body" v-if="isOpen">
     <div class="modal" v-if="isOpen" @click.self="isOpen = false">
-      <div class="edit-card">
+      <div class="modal__container">
         <div class="edit-card--top">
           <h2>Edit</h2>
           <button @click="isOpen = false">Close</button>
@@ -97,10 +97,7 @@ const removeFlashcard = async () => {
 </template>
 
 <style scoped>
-.edit-card {
-  background-color: rgb(31, 31, 31);
-  max-width: 400px;
-}
+@import url("../../assets/modal.css");
 .edit-card--top {
   display: flex;
   justify-content: space-between;

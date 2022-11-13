@@ -1,11 +1,25 @@
 <script setup>
 import { ref } from 'vue';
 import { useFlashcardStore } from '../../../stores/flashcardStore';
+import { addTag } from "../../../api/flashcardApi.js";
 
 const isOpen = ref(false);
 const props = defineProps(["id"]);
 
 const flashcardStore = useFlashcardStore();
+const flashcard = ref(flashcardStore.findById(props.id));
+
+const tag = ref();
+
+const submitTag = async () => {
+  console.log(tag);
+  const response = await addTag(props.id, tag.value);
+  if (response.status === 200) {
+    flashcard.value.tags.push(tag.value);
+  }
+  // error
+  isOpen.value = false;
+}
 </script>
 
 <template>
@@ -13,12 +27,20 @@ const flashcardStore = useFlashcardStore();
 
   <Teleport to="body" v-if="isOpen">
     <div class="modal" v-if="isOpen" @click.self="isOpen = false">
+      <div class="modal__container">
         <h1>Add new tag</h1>
+        <p>ID {{props.id}}</p>
+        <input v-model="tag" type="text">
+        <button @click="submitTag()">Add</button>
+      </div>
     </div>
   </Teleport>
 </template>
 
 <style scoped>
+
+@import url("../../../assets/modal.css");
+
 .tagbar__add {
   display: flex;
   align-items: center;

@@ -1,4 +1,4 @@
-function request(method, endpoint, body = null) {
+function request(method, url, body = null) {
   const options = {
     method,
     headers: { "Content-Type": "application/json" },
@@ -9,21 +9,21 @@ function request(method, endpoint, body = null) {
     options.body = JSON.stringify(body);
   }
 
-  return fetch(endpoint, options);
+  return fetch(url, options);
 }
 
-export function get(endpoint) {
-  return request("GET", endpoint);
+export function get(url) {
+  return request("GET", url);
 }
 
-export function post(endpoint, body) {
-  return request("POST", endpoint, body);
+export function post(url, body) {
+  return request("POST", url, body);
 }
 
-export function patch(endpoint, body) {
-  return request("PATCH", endpoint, body);
+export function patch(url, body) {
+  return request("PATCH", url, body);
 }
 
-export function _delete(endpoint, body) {
-  return request("DELETE", endpoint, body);
+export function _delete(url, body) {
+  return request("DELETE", url, body);
 }
