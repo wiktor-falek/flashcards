@@ -12,13 +12,12 @@ const flashcardStore = useFlashcardStore();
 const flashcard = ref(flashcardStore.findById(props.id));
 
 const withdrawTag = async () => {
-  console.log("removing tag", props.tag);
   const response = await removeTag(props.id, props.tag);
   console.log(response);
   if (response.status === 200) {
-    const tags = ref(flashcard.value.tags);
-    tags.value = tags.value.filter((item) => item !== props.tag.value);
-    flashcard.value.tags = tags;
+    console.log("before", flashcard.value.tags);
+    flashcard.value.tags = flashcard.value.tags.filter((tag) => tag !== props.tag);
+    console.log("after", flashcard.value.tags);
     display.value = false;
   }
   // error
