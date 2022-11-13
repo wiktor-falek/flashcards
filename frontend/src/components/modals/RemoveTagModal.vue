@@ -27,7 +27,11 @@ const withdrawTag = async () => {
   <Teleport to="body" v-if="isOpen">
     <div class="modal" @click.self="isOpen = false">
       <div class="modal__container">
-        <h1>Are you sure you want to remove tag '{{ props.tag }}'?</h1>
+        <div class="modal__container__top">
+          <h2>Remove tag?</h2>
+          <button @click="isOpen = false">Close</button>
+        </div>
+        <h2>'{{ props.tag }}'</h2>
         <button class="button" @click="withdrawTag()">Remove</button>
       </div>
     </div>
