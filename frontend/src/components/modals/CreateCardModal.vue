@@ -37,8 +37,8 @@ const createFlashcard = async () => {
 <template>
   <button class="button" @click="isOpen = true">Create Flashcard</button>
 
-  <Teleport to="body">
-    <div class="modal" v-if="isOpen" @click.self="isOpen = false">
+  <Teleport to="body" v-if="isOpen">
+    <div class="modal" @click.self="isOpen = false">
       <div class="create-card">
         <div class="create-card--top">
           <h2>Create Card</h2>

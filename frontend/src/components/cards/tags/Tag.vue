@@ -1,32 +1,19 @@
 <script setup>
 import { useFlashcardStore } from "../../../stores/flashcardStore";
-import { removeTag } from "../../../api/flashcardApi";
+import RemoveTagModal from "../../modals/RemoveTagModal.vue"
+
 import { ref } from "vue";
 
 const props = defineProps(["tag", "id"]);
 
 const display = ref(true);
 
-const flashcardStore = useFlashcardStore();
-
-const flashcard = ref(flashcardStore.findById(props.id));
-
-const withdrawTag = async () => {
-  const response = await removeTag(props.id, props.tag);
-  console.log(response);
-  if (response.status === 200) {
-    console.log("before", flashcard.value.tags);
-    flashcard.value.tags = flashcard.value.tags.filter((tag) => tag !== props.tag);
-    console.log("after", flashcard.value.tags);
-    display.value = false;
-  }
-  // error
-};
 </script>
 <template>
   <div class="tag" v-if="display">
     <p class="tag__name">{{ props.tag }}</p>
-    <button class="tag__delete" @click="withdrawTag()"></button>
+    <RemoveTagModal :id="props.id" :tag="props.tag" />
+    <!-- modal -->
   </div>
 </template>
 
@@ -48,27 +35,5 @@ const withdrawTag = async () => {
 .tag__name {
   line-height: 20px;
   padding-top: 2px;
-}
-
-.tag__delete {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  aspect-ratio: 1/1;
-  border: none;
-  border-radius: 50%;
-}
-
-.tag__delete::before {
-  position: relative;
-  bottom: 1px;
-  content: "\00d7";
-  font-size: 24px;
-}
-
-.tag__delete:hover {
-  background-color: #696969;
-  cursor: default;
 }
 </style>

@@ -29,11 +29,11 @@ const submitTag = async () => {
   <button class="tagbar__add" @click="isOpen = true"></button>
 
   <Teleport to="body" v-if="isOpen">
-    <div class="modal" v-if="isOpen" @click.self="isOpen = false">
+    <div class="modal" @click.self="isOpen = false">
       <div class="modal__container">
         <h1>Add new tag</h1>
         <p>ID {{props.id}}</p>
-        <input v-model="tag" type="text" autofocus>
+        <input v-model="tag" type="text" autofocus minlength="1" maxlength="32">
         <button @click="submitTag()">Add</button>
       </div>
     </div>

@@ -70,9 +70,9 @@ const removeFlashcard = async () => {
       color="grey"
     />
   </button>
-
+  
   <Teleport to="body" v-if="isOpen">
-    <div class="modal" v-if="isOpen" @click.self="isOpen = false">
+    <div class="modal" @click.self="isOpen = false">
       <div class="modal__container">
         <div class="edit-card--top">
           <h2>Edit</h2>
