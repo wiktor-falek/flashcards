@@ -94,7 +94,10 @@ onMounted(() => {
         it.
       </p>
 
-      <a class="button" href="https://github.com/wiktor-falek/flashcards" target="_blank"
+      <a
+        class="button"
+        href="https://github.com/wiktor-falek/flashcards"
+        target="_blank"
         >Github</a
       >
     </section>
@@ -103,9 +106,16 @@ onMounted(() => {
   <footer>Wiktor Falek - All rights reserved</footer>
 </template>
 
+<style>
+#app {
+  overflow-y: scroll !important;
+}
+</style>
+
 <style scoped>
 main,
 header {
+  overflow: scroll;
   max-width: 800px;
   padding: 0px 20px;
   margin-left: auto;
@@ -125,7 +135,7 @@ header > * {
 
 .subheading {
   font-size: 1.1rem;
-  color: var(--font-color-dark);
+  color: #e44f71;
   margin-top: -10px;
   margin-bottom: 30px;
 }
@@ -145,10 +155,6 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.subheading {
-  color: #e44f71;
 }
 
 p {
