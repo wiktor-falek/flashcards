@@ -8,7 +8,8 @@ const isActiveCollection = ref(true);
 </script>
 
 <template>
-  <router-link to="/" class="button">Go Back</router-link>
+  <nav>
+    <router-link to="/" class="button">Go Back</router-link>
   <CreateCardModal />
 
   <button
@@ -25,7 +26,19 @@ const isActiveCollection = ref(true);
   >
     Memorized Collection
   </button>
+  </nav>
+
+
 
   <ActiveCollection v-if="isActiveCollection" />
   <MemorizedCollection v-else />
 </template>
+
+<style scoped>
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+</style>

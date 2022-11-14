@@ -1,9 +1,9 @@
 .card {
   display: flex;
   flex-direction: column;
-  width: 275px;
-  aspect-ratio: 6/9;
-  padding: 10px;
+  width: 250px;
+  height: 370px;
+  padding: 8px;
   border: 2px solid #ddd;
   margin: 0px auto;
   border-radius: 20px;
@@ -36,7 +36,6 @@
   height: 50px;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 20px;
 }
 
 .card__top button {

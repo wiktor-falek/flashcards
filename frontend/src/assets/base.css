@@ -25,6 +25,8 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
   background: radial-gradient(#243b55, #141e30) !important;
   min-height: 100vh;
   color: var(--font-color-light);
@@ -40,6 +42,6 @@ body {
 }
 
 #app {
+  box-sizing: border-box;
   overflow: hidden;
-  min-height: 100%;
 }

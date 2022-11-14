@@ -21,7 +21,7 @@ const props = defineProps(["tags", "id"]);
   overflow-x: scroll;
   width: 100%;
   height: fit-content;
-  padding-bottom: 8px;
+  padding-bottom: 12px;
 }
 
 .tags {
