@@ -44,4 +44,5 @@ body {
 #app {
   box-sizing: border-box;
   overflow: hidden;
+  min-height: 100vh;
 }

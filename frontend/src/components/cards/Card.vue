@@ -4,7 +4,7 @@ import { Icon } from "@iconify/vue";
 import EditCardModal from "../modals/EditCardModal.vue";
 import TagBar from "./tags/TagBar.vue";
 
-const props = defineProps(["flashcard", "id"]);
+const props = defineProps(["flashcard"]);
 
 const isFrontSide = ref(true);
 const isAnswerTab = ref(true);

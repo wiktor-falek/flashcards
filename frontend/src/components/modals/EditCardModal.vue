@@ -58,6 +58,7 @@ const removeFlashcard = async () => {
     // flashcardStore.deleteFlashcard(props.id);
     flashcardStore.removeFlashcard(props.id);
   }
+  isOpen.value = false;
 };
 </script>
 

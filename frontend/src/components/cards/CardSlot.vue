@@ -1,15 +1,16 @@
-<script setup></script>
+<script setup>
+import { onMounted, ref } from "vue";
+import { useFlashcardStore } from "../../stores/flashcardStore";
+import Card from "./Card.vue";
+
+const props = defineProps(["flashcard"]);
+
+</script>
 
 <template>
-  <div class="card-slot"></div>
+  <div class="card-slot">
+    <Card v-if="flashcard" :flashcard="flashcard" />
+  </div>
 </template>
 
-<style scoped>
-.card-slot {
-  width: 270px;
-  height: 400px;
-  box-sizing: content-box;
-  border: 1px solid white;
-  background-color: black;
-}
-</style>
+<style scoped></style>

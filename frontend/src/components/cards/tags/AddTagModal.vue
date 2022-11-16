@@ -19,6 +19,10 @@ const submitTag = async () => {
   console.log(tag);
   const response = await addTag(props.id, tag.value);
   if (response.status === 200) {
+    // create tags array if it doesn't exist
+    if (!flashcard.value.tags) {
+      flashcard.value.tags = [];
+    }
     flashcard.value.tags.push(tag.value);
     isOpen.value = false;
   }
