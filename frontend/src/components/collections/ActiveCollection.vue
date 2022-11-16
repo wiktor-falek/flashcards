@@ -89,10 +89,11 @@ onMounted(() => {
   </div>
 
   <div class="pagination" v-if="totalPages && totalPages > 1">
-    <button @click="decrementPage()">&lt;</button>
+    <button @click="decrementPage()" class="pagination__nav">&lt;</button>
     <ul v-for="index in totalPages">
       <li>
         <button
+          :class="{ active: currentPage === index}"
           :key="index"
           @click="handlePaginationButton($event, index)"
         >
@@ -100,11 +101,15 @@ onMounted(() => {
         </button>
       </li>
     </ul>
-    <button @click="incrementPage()">&gt;</button>
+    <button @click="incrementPage()" class="pagination__nav">&gt;</button>
   </div>
 </template>
 
 <style scoped>
+
+.active {
+  background-color: grey;
+}
 .card-slot {
   width: 260px;
   height: 370px;
@@ -131,12 +136,27 @@ onMounted(() => {
 }
 
 .pagination ul,
-li {
+.pagination li {
   all: unset;
+}
+
+.pagination ul {
+  background-color: aliceblue;
 }
 
 .pagination button {
   width: 32px;
   height: 32px;
+  border: none;
+  background-color: aliceblue;
+}
+
+.pagination__nav {
+  background-color: rgb(219, 219, 219) !important;
+}
+
+.active {
+  background-color: #3e9bf8 !important;
+  border-radius: 6px;
 }
 </style>
