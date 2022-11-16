@@ -9,8 +9,6 @@ const flashcardStore = useFlashcardStore();
 
 const gridElement = ref();
 
-const skipUnwrap = { el: ref([]) }; // for convenience
-const paginationItems = computed(() => skipUnwrap.el.value);
 
 const columns = ref();
 const rows = ref();
@@ -23,6 +21,7 @@ const totalPages = computed(() => {
   
   // make sure currentPage is not bigger than the amount of pages
   if (total !== NaN && currentPage.value >= totalPages.value) {
+    console.log(total);
     currentPage.value = total;
   }
   return total;
@@ -36,16 +35,20 @@ function handlePaginationButton(event, index) {
 
 function decrementPage() {
   if (currentPage.value <= 1) {
-    // disable decrement button
+    // TODO disable decrement button
     return;
+  } else {
+    // TODO enable decrement button
   }
   currentPage.value--;
 }
 
 function incrementPage() {
   if (currentPage.value >= totalPages.value) {
-    // disable increment button
+    // TODO disable increment button
     return;
+  } else {
+    // TODO enable increment button
   }
   currentPage.value++;
 }
@@ -57,9 +60,6 @@ window.addEventListener("resize", () => {
   const { width, height } = gridElement.value.getBoundingClientRect();
   columns.value = Math.floor(width / 260);
   rows.value = Math.floor(height / 370);
-
-  // console.log(currentPage.value, totalPages.value);
-
 });
 
 onBeforeMount(() => {
@@ -92,10 +92,8 @@ onMounted(() => {
     <button @click="decrementPage()">&lt;</button>
     <ul v-for="index in totalPages">
       <li>
-        <!-- <button :key="index" :ref="skipUnwrap.el" @click="handlePaginationButton($event)">{{ index }}</button> -->
         <button
           :key="index"
-          :ref="skipUnwrap.el"
           @click="handlePaginationButton($event, index)"
         >
           {{ index }}
