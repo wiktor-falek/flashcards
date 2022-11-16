@@ -18,14 +18,36 @@ const rows = ref();
 const totalFlashcards = computed(() => flashcardStore.flashcards.length);
 const maxFlashcardsPerPage = computed(() => columns.value * rows.value);
 
-const totalPages = computed(() =>
-  Math.ceil(totalFlashcards.value / maxFlashcardsPerPage.value)
-);
+const totalPages = computed(() => {
+  const total = Math.ceil(totalFlashcards.value / maxFlashcardsPerPage.value);
+  
+  // make sure currentPage is not bigger than the amount of pages
+  if (total !== NaN && currentPage.value >= totalPages.value) {
+    currentPage.value = total;
+  }
+  return total;
+});
 const currentPage = ref(1);
 
 function handlePaginationButton(event, index) {
   console.log(event.target, index);
   currentPage.value = index;
+}
+
+function decrementPage() {
+  if (currentPage.value <= 1) {
+    // disable decrement button
+    return;
+  }
+  currentPage.value--;
+}
+
+function incrementPage() {
+  if (currentPage.value >= totalPages.value) {
+    // disable increment button
+    return;
+  }
+  currentPage.value++;
 }
 
 window.addEventListener("resize", () => {
@@ -35,6 +57,9 @@ window.addEventListener("resize", () => {
   const { width, height } = gridElement.value.getBoundingClientRect();
   columns.value = Math.floor(width / 260);
   rows.value = Math.floor(height / 370);
+
+  // console.log(currentPage.value, totalPages.value);
+
 });
 
 onBeforeMount(() => {
@@ -50,27 +75,34 @@ onMounted(() => {
 });
 </script>
 <template>
-  <!-- <div class="">
-    <p>totalPages: {{totalPages}}, maxPerPage: {{maxFlashcardsPerPage}}</p>
-  </div> -->
   <div ref="gridElement" class="collection">
     <CardSlot
       class="card-slot"
       v-if="maxFlashcardsPerPage"
       v-for="i in maxFlashcardsPerPage"
-      :flashcard="flashcardStore.flashcards[i - 1 + (maxFlashcardsPerPage * (currentPage - 1))]"
+      :flashcard="
+        flashcardStore.flashcards[
+          i - 1 + maxFlashcardsPerPage * (currentPage - 1)
+        ]
+      "
     />
   </div>
 
   <div class="pagination" v-if="totalPages && totalPages > 1">
-    <button>&lt;</button>
+    <button @click="decrementPage()">&lt;</button>
     <ul v-for="index in totalPages">
       <li>
         <!-- <button :key="index" :ref="skipUnwrap.el" @click="handlePaginationButton($event)">{{ index }}</button> -->
-        <button :key="index" :ref="skipUnwrap.el" @click="handlePaginationButton($event, index)">{{ index }}</button>
+        <button
+          :key="index"
+          :ref="skipUnwrap.el"
+          @click="handlePaginationButton($event, index)"
+        >
+          {{ index }}
+        </button>
       </li>
     </ul>
-    <button>&gt;</button>
+    <button @click="incrementPage()">&gt;</button>
   </div>
 </template>
 
