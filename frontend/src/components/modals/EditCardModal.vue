@@ -19,7 +19,7 @@ watch(props, () => {
   // will contain data from previous flashcard prop
   front.value = props.flashcard.front;
   back.value = props.flashcard.back;
-  code.value = props.flashcard.value;
+  code.value = props.flashcard.code;
 })
 
 // const flashcardProp = computed(() => {
@@ -33,8 +33,8 @@ watch(props, () => {
 const editFlashcard = async () => {
   const id = props.flashcard._id;
   const f = front.value || "";
-  const b = front.value || "";
-  const c = front.value || "";
+  const b = back.value || "";
+  const c = code.value || "";
 
   const response = await updateFlashcard(id, f, b, c);
 

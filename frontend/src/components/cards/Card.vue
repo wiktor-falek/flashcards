@@ -34,8 +34,6 @@ const isAnswerTab = ref(true);
       </button>
     </div>
 
-    <p id="id">{{props.flashcard._id}}</p>
-
     <p class="card__content--front" v-if="isFrontSide">{{ flashcard.front }}</p>
 
     <p class="card__content--back" v-if="!isFrontSide && isAnswerTab">
