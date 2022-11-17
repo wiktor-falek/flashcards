@@ -1,10 +1,7 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { useFlashcardStore } from "../../stores/flashcardStore";
 import Card from "./Card.vue";
 
 const props = defineProps(["flashcard"]);
-
 </script>
 
 <template>
@@ -12,5 +9,3 @@ const props = defineProps(["flashcard"]);
     <Card v-if="flashcard" :flashcard="flashcard" />
   </div>
 </template>
-
-<style scoped></style>

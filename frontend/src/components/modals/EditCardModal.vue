@@ -1,6 +1,7 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { onMounted, ref } from "vue";
+import { computed } from "@vue/reactivity";
+import { ref } from "vue";
 import { deleteFlashcard, updateFlashcard } from "../../api/flashcardApi.js";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 
@@ -8,24 +9,19 @@ const isOpen = ref(false);
 
 const flashcardStore = useFlashcardStore();
 
-const props = defineProps(["id", "flashcard", "display"]);
+const props = defineProps(["flashcard"]);
+const id = props.flashcard._id;
 
-const front = ref("");
-const back = ref("");
-const code = ref("");
-
-onMounted(() => {
-  front.value = props.flashcard.front;
-  back.value = props.flashcard.back;
-  code.value = props.flashcard.code;
-});
+const front = computed(() => props.flashcard.front || "");
+const back = computed(() => props.flashcard.back || "");
+const code = computed(() => props.flashcard.code || "");
 
 const editFlashcard = async () => {
   const f = front.value;
   const b = back.value;
   const c = code.value;
 
-  const response = await updateFlashcard(props.id, f, b, c);
+  const response = await updateFlashcard(id, f, b, c);
 
   if (response.status !== 200) {
     // error msg
@@ -37,26 +33,26 @@ const editFlashcard = async () => {
 
   // TEMPORARY FIX
   // this component ideally should have a ref
-  // to flashcard from store at props.id to avoid
-  // possible issues like synchronizing data between both
+  // to flashcard from store at id to avoid
+  // issues like synchronizing data between both
   const idx = flashcardStore.flashcards.findIndex((flashcard) => {
-    return flashcard._id === props.id;
+    return flashcard._id === id;
   });
   flashcardStore.flashcards[idx] = result;
   isOpen.value = false;
 };
 
 const removeFlashcard = async () => {
-  if (!props.id) {
+  if (!id) {
     return;
   }
 
-  const response = await deleteFlashcard(props.id);
+  const response = await deleteFlashcard(id);
 
   if (response.status === 200) {
-    // const target = flashcardStore.findById(props.id);
-    // flashcardStore.deleteFlashcard(props.id);
-    flashcardStore.removeFlashcard(props.id);
+    // const target = flashcardStore.findById(id);
+    // flashcardStore.deleteFlashcard(id);
+    flashcardStore.removeFlashcard(id);
   }
   isOpen.value = false;
 };
@@ -77,6 +73,7 @@ const removeFlashcard = async () => {
       <div class="modal__container">
         <div class="modal__container__top">
           <h2>Edit</h2>
+          <p>{{props.flashcard._id}}</p>
           <button @click="isOpen = false">Close</button>
         </div>
         <label for="front">Front</label>

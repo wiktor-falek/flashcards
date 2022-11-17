@@ -9,7 +9,6 @@ const flashcardStore = useFlashcardStore();
 
 const gridElement = ref();
 
-
 const columns = ref();
 const rows = ref();
 
@@ -18,7 +17,7 @@ const maxFlashcardsPerPage = computed(() => columns.value * rows.value);
 
 const totalPages = computed(() => {
   const total = Math.ceil(totalFlashcards.value / maxFlashcardsPerPage.value);
-  
+
   // make sure currentPage is not bigger than the amount of pages
   if (total !== NaN && currentPage.value >= totalPages.value) {
     console.log(total);
@@ -51,6 +50,7 @@ function incrementPage() {
     // TODO enable increment button
   }
   currentPage.value++;
+  // rerender?
 }
 
 window.addEventListener("resize", () => {
@@ -93,7 +93,7 @@ onMounted(() => {
     <ul v-for="index in totalPages">
       <li>
         <button
-          :class="{ active: currentPage === index}"
+          :class="{ active: currentPage === index }"
           :key="index"
           @click="handlePaginationButton($event, index)"
         >
@@ -106,7 +106,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 .active {
   background-color: grey;
 }

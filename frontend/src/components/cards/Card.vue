@@ -34,6 +34,8 @@ const isAnswerTab = ref(true);
       </button>
     </div>
 
+    <p id="id">{{props.flashcard._id}}</p>
+
     <p class="card__content--front" v-if="isFrontSide">{{ flashcard.front }}</p>
 
     <p class="card__content--back" v-if="!isFrontSide && isAnswerTab">
@@ -54,7 +56,7 @@ const isAnswerTab = ref(true);
       </button>
       <p>Reviewed: {{ flashcard.reviewedCount }}</p>
 
-      <EditCardModal :id="props.flashcard._id" :flashcard="props.flashcard" />
+      <EditCardModal :flashcard="props.flashcard" />
     </div>
   </div>
 </template>
@@ -74,5 +76,9 @@ const isAnswerTab = ref(true);
 .selected:active,
 .selected:focus {
   outline: none;
+}
+
+#id {
+  font-size: 17px;
 }
 </style>

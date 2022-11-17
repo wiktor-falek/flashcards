@@ -11,6 +11,6 @@ const flashcard = ref(flashcardStore.getNextCard());
 <template>
   <button class="button">Go back</button>
   <div class="div" v-if="flashcard">
-    <Card :id="flashcard._id" :flashcard="flashcard" />
+    <Card :flashcard="flashcard" />
   </div>
 </template>
