@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Icon } from "@iconify/vue";
 import EditCardModal from "../modals/EditCardModal.vue";
 import TagBar from "./tags/TagBar.vue";
+import CardReviewedCount from "./CardReviewedCount.vue";
 
 const props = defineProps(["flashcard"]);
 
@@ -52,7 +53,8 @@ const isAnswerTab = ref(true);
           color="grey"
         />
       </button>
-      <p>Reviewed: {{ flashcard.reviewedCount }}</p>
+      <CardReviewedCount :flashcard="props.flashcard" :reviewedCount="props.flashcard.reviewedCount" />
+      <!-- <p>Reviewed: {{ flashcard.reviewedCount }}</p> -->
 
       <EditCardModal :flashcard="props.flashcard" />
     </div>

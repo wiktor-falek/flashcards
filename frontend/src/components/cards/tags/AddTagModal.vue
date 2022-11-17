@@ -16,7 +16,6 @@ const submitTag = async () => {
     return;
     // error
   }
-  console.log(tag);
   const response = await addTag(props.id, tag.value);
   if (response.status === 200) {
     // create tags array if it doesn't exist

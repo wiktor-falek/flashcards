@@ -20,7 +20,6 @@ const totalPages = computed(() => {
 
   // make sure currentPage is not bigger than the amount of pages
   if (total !== NaN && currentPage.value >= totalPages.value) {
-    console.log(total);
     currentPage.value = total;
   }
   return total;
@@ -28,7 +27,6 @@ const totalPages = computed(() => {
 const currentPage = ref(1);
 
 function handlePaginationButton(event, index) {
-  console.log(event.target, index);
   currentPage.value = index;
 }
 
