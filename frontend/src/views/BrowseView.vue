@@ -31,7 +31,7 @@ const isActiveCollection = ref(true);
     </nav>
     <div class="bottom">
       <ActiveCollection v-if="isActiveCollection" />
-      <MemorizedCollection v-else />
+      <MemorizedCollection v-if="!isActiveCollection" />
     </div>
   </main>
 </template>

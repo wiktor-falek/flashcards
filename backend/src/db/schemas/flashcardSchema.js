@@ -12,7 +12,7 @@ const flashcardSchema = Joi.object({
   reviewedCount: Joi.number()
   .min(0)
   .default(0),
-  tags: Joi.array().items(Joi.string())
+  tags: Joi.array().items(Joi.string().max(24))
   .default([]),
   creationTimestamp: Joi.number()
   .default(Date.now()),

@@ -8,7 +8,7 @@ const reviewedCount = computed(() => props.flashcard.reviewedCount);
 <template>
     <div class="card-reviewed-count" v-if="props.flashcard">
         <p class="card-reviewed-count__new" v-if="reviewedCount === 0">
-            New
+            New ✨
         </p>
         <p class="card-reviewed-count__memorized" v-else-if="reviewedCount === -1">
             Memorized
@@ -21,7 +21,7 @@ const reviewedCount = computed(() => props.flashcard.reviewedCount);
 
 <style scoped>
 .card-reviewed-count__new {
-    color: pink;
+    color: rgb(247, 216, 37);
 }
 
 .card-reviewed-count__memorized {

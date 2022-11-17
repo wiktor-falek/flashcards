@@ -1,9 +1,11 @@
 <script setup>
-import { onBeforeMount, onMounted, reactive, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 import authAndLoadFlashcards from "../../helpers/authAndLoadFlashcards";
 import CardSlot from "../cards/CardSlot.vue";
 import { computed } from "@vue/reactivity";
+
+// const props = defineProps(["flashcardCollection"]); // "flashcards" || "memorized"
 
 const flashcardStore = useFlashcardStore();
 

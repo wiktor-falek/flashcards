@@ -151,7 +151,15 @@ router.post(
       ]
     );
 
-    console.log(result);
+    // TEMPORARY, this will be included in the query above, if this is to stay
+    // set reviewedCount to 0
+    const filter = {
+      flashcards: {
+        $elemMatch: { _id: ObjectId(flashcardId) },
+      },
+    };
+    const update = { $set: { "flashcards.$.reviewedCount": 0 } };
+    const _ = await User.collection.updateOne(filter, update);
 
     res.status(200).json({ result });
   }
@@ -194,7 +202,15 @@ router.post(
       ]
     );
 
-    console.log(result);
+    // TEMPORARY, this will be included in the query above, if this is to stay
+    // set reviewedCount to -1
+    const filter = {
+      memorized: {
+        $elemMatch: { _id: ObjectId(flashcardId) },
+      },
+    };
+    const update = { $set: { "memorized.$.reviewedCount": -1 } };
+    const _ = await User.collection.updateOne(filter, update);
 
     res.status(200).json({ result });
   }
@@ -214,7 +230,7 @@ router.post(
     const tag = req.body.tag;
 
     // TODO tags length limit
-    
+
     const filter = {
       _id: userId,
       flashcards: {
@@ -249,7 +265,6 @@ router.post(
     const flashcardId = req.params.id;
     const tag = req.body.tag;
 
-
     const filter = {
       _id: userId,
       flashcards: {
@@ -258,11 +273,11 @@ router.post(
     };
 
     const update = {
-      $pull: { "flashcards.$.tags": tag }
+      $pull: { "flashcards.$.tags": tag },
     };
 
     const result = await User.collection.updateOne(filter, update);
-    
+
     if (result.modifiedCount === 0) {
       return res.status(400).json({ error: `Failed to remove tag ${tag}` });
     }
@@ -291,7 +306,8 @@ router.patch(
 
     const reviewedCount = parseInt(req.body.reviewedCount);
 
-    // im gonna go insane with this shit
+    // for some reason "tags.*" doesn't work, this is a temporary fix
+    // doesn't validate length of tags
     let tags = req.body.tags;
     if (typeof tags === "string") {
       try {
@@ -313,13 +329,6 @@ router.patch(
       }
     }
 
-    // if (!front && !back && !code && !reviewedCount && !tags) {
-    //   return res.status(400).json({
-    //     error:
-    //       "Body must contain at least one of fields ('front', 'back', 'code', 'reviewedCount', 'tags') to update flashcard.",
-    //   });
-    // }
-
     const fields = {
       "flashcards.$.front": front,
       "flashcards.$.back": back,
@@ -328,7 +337,7 @@ router.patch(
       "flashcards.$.tags": tags,
     };
 
-    // remove keys from fields where value is undefined or null or NaN
+    // remove keys from fields where value is undefined || null || NaN
     Object.keys(fields).forEach(
       (key) =>
         [undefined, null, NaN].includes(fields[key]) && delete fields[key]

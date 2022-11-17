@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, onBeforeMount } from "vue";
-import { increment } from "../api/flashcardApi";
+import { increment, moveFlashcardToMemorizedCollection } from "../api/flashcardApi";
 import Card from "../components/cards/Card.vue";
 import { useFlashcardStore } from "../stores/flashcardStore";
 import authAndLoadFlashcards from "../helpers/authAndLoadFlashcards";
@@ -50,7 +50,24 @@ const repeat = async () => {
   nextCard();
 };
 
-const memorized = () => {
+const memorized = async () => {
+  const id = currentFlashcard.value._id;
+  const response = await moveFlashcardToMemorizedCollection(id);
+  if (response.status !== 200) {
+    console.log("error");
+    return;
+  }
+
+  // move flashcard in flashcardStore from flashcards array to memorizedFlashcards array
+  const idx = flashcardStore.findIndexById(id);
+  if (idx === -1) {
+    console.log("What? How?");
+    return;
+  }
+  const flashcard = flashcardStore.flashcards.splice(idx, 1)[0];
+  flashcard.reviewedCount = -1;
+  flashcardStore.memorizedFlashcards.push(flashcard);
+
   removeCurrentCard();
   nextCard();
 };
