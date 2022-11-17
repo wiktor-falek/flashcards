@@ -1,7 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { computed } from "@vue/reactivity";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { deleteFlashcard, updateFlashcard } from "../../api/flashcardApi.js";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 
@@ -10,16 +9,32 @@ const isOpen = ref(false);
 const flashcardStore = useFlashcardStore();
 
 const props = defineProps(["flashcard"]);
-const id = props.flashcard._id;
 
-const front = computed(() => props.flashcard.front || "");
-const back = computed(() => props.flashcard.back || "");
-const code = computed(() => props.flashcard.code || "");
+const front = ref(props.flashcard.front || "");
+const back = ref(props.flashcard.back || "");
+const code = ref(props.flashcard.code || "");
+
+watch(props, () => {
+  // update when prop changes, otherwise front, back and code 
+  // will contain data from previous flashcard prop
+  front.value = props.flashcard.front;
+  back.value = props.flashcard.back;
+  code.value = props.flashcard.value;
+})
+
+// const flashcardProp = computed(() => {
+//   const newFlashcardProp = props.flashcard;
+//   front.value = newFlashcardProp.front;
+//   back.value = newFlashcardProp.back;
+//   code.value = newFlashcardProp.code;
+//   return newFlashcardProp;
+// });
 
 const editFlashcard = async () => {
-  const f = front.value;
-  const b = back.value;
-  const c = code.value;
+  const id = props.flashcard._id;
+  const f = front.value || "";
+  const b = front.value || "";
+  const c = front.value || "";
 
   const response = await updateFlashcard(id, f, b, c);
 
@@ -43,6 +58,7 @@ const editFlashcard = async () => {
 };
 
 const removeFlashcard = async () => {
+  const id = props.flashcard._id;
   if (!id) {
     return;
   }
@@ -50,8 +66,6 @@ const removeFlashcard = async () => {
   const response = await deleteFlashcard(id);
 
   if (response.status === 200) {
-    // const target = flashcardStore.findById(id);
-    // flashcardStore.deleteFlashcard(id);
     flashcardStore.removeFlashcard(id);
   }
   isOpen.value = false;
