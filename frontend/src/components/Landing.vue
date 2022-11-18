@@ -108,14 +108,13 @@ onMounted(() => {
 
 <style>
 #app {
-  overflow-y: scroll !important;
+  overflow-y: auto !important;
 }
 </style>
 
 <style scoped>
 main,
 header {
-  overflow: scroll;
   max-width: 800px;
   padding: 0px 20px;
   margin-left: auto;

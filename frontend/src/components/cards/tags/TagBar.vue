@@ -18,7 +18,7 @@ const props = defineProps(["tags", "id"]);
   display: flex;
   align-items: center;
   justify-content: start;
-  overflow-x: scroll;
+  overflow-x: auto;
   width: 100%;
   height: fit-content;
   padding-bottom: 12px;
