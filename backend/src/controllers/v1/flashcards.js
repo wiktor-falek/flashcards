@@ -123,45 +123,26 @@ router.post(
     const { userId } = res.locals;
     const flashcardId = req.params.id;
 
-    // atomically moves flashcard at flashcardId
-    // from memorized array field to flashcards array field
-
-    const result = await User.collection.updateOne(
-      {
-        _id: userId,
-        memorized: { $elemMatch: { _id: ObjectId(flashcardId) } },
-      },
-      [
-        {
-          $set: {
-            memorized: {
-              $filter: {
-                input: "$memorized",
-                cond: { $ne: ["$$this._id", ObjectId(flashcardId)] },
-              },
-            },
-            flashcards: {
-              $concatArrays: [
-                "$flashcards",
-                [extract("$memorized", ObjectId(flashcardId))],
-              ],
-            },
-          },
-        },
-      ]
-    );
-
-    // TEMPORARY, this will be included in the query above, if this is to stay
-    // set reviewedCount to 0
     const filter = {
+      _id: userId,
       flashcards: {
         $elemMatch: { _id: ObjectId(flashcardId) },
       },
     };
-    const update = { $set: { "flashcards.$.reviewedCount": 0 } };
-    const _ = await User.collection.updateOne(filter, update);
 
-    res.status(200).json({ result });
+    const update = {
+      $inc: { "flashcards.$.reviewedCount": 0 },
+    };
+
+    const result = await User.collection.updateOne(filter, update);
+
+    const success = result.modifiedCount !== 0;
+
+    if (!success) {
+      res.status(400).json({error: "failed to update flashcard"});
+    }
+
+    res.status(200).json({ reviewedCount: 0 });
   }
 );
 
@@ -177,42 +158,26 @@ router.post(
     const { userId } = res.locals;
     const flashcardId = req.params.id;
 
-    const result = await User.collection.updateOne(
-      {
-        _id: userId,
-        flashcards: { $elemMatch: { _id: ObjectId(flashcardId) } },
-      },
-      [
-        {
-          $set: {
-            flashcards: {
-              $filter: {
-                input: "$flashcards",
-                cond: { $ne: ["$$this._id", ObjectId(flashcardId)] },
-              },
-            },
-            memorized: {
-              $concatArrays: [
-                "$memorized",
-                [extract("$flashcards", ObjectId(flashcardId))],
-              ],
-            },
-          },
-        },
-      ]
-    );
-
-    // TEMPORARY, this will be included in the query above, if this is to stay
-    // set reviewedCount to -1
     const filter = {
-      memorized: {
+      _id: userId,
+      flashcards: {
         $elemMatch: { _id: ObjectId(flashcardId) },
       },
     };
-    const update = { $set: { "memorized.$.reviewedCount": -1 } };
-    const _ = await User.collection.updateOne(filter, update);
 
-    res.status(200).json({ result });
+    const update = {
+      $inc: { "flashcards.$.reviewedCount": -1 },
+    };
+
+    const result = await User.collection.updateOne(filter, update);
+
+    const success = result.modifiedCount !== 0;
+
+    if (!success) {
+      res.status(400).json({error: "failed to update flashcard"});
+    }
+
+    res.status(200).json({ reviewedCount: -1 });
   }
 );
 

@@ -14,10 +14,6 @@ export const useFlashcardStore = defineStore("flashcards", () => {
     memorizedFlashcards.value = _flashcards;
   };
 
-  const addFlashcard = (flashcard) => {
-    flashcards.value.push(flashcard);
-  };
-
   const removeFlashcard = (id) => {
     for (let i = 0; i < flashcards.value.length; i++) {
       const flashcard = flashcards.value[i];
@@ -27,9 +23,12 @@ export const useFlashcardStore = defineStore("flashcards", () => {
     }
   };
 
+  // searches both arrays and returns a flashcard
   const findById = (id) => {
     const flashcard =
-      flashcards.value.find((flashcard) => flashcard._id === id) || null;
+      [...flashcards.value, ...memorizedFlashcards.value].find(
+        (flashcard) => flashcard._id === id
+      ) || null;
     return flashcard;
   };
 
@@ -40,22 +39,24 @@ export const useFlashcardStore = defineStore("flashcards", () => {
       if (flashcard._id === id) {
         return i;
       }
-      
     }
     return -1;
     // return idx;
-  }
+  };
 
   return {
-    hasFetchedFlashcards,
+    // flashcards array
     flashcards,
     setFlashcards,
-    addFlashcard,
     removeFlashcard,
-    findById,
     findIndexById,
 
+    // memorizedFlashcards array
     memorizedFlashcards,
     setMemorizedFlashcards,
+
+    // works on both
+    findById,
+    hasFetchedFlashcards,
   };
 });
