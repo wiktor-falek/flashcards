@@ -28,6 +28,10 @@ const isActiveCollection = ref(true);
       >
         Memorized Collection
       </button>
+      <label for="sort-by">Sort By</label>
+      <select id="sort-by">
+        <option value="creation-date" selected>Creation Date</option>
+      </select>
     </nav>
     <div class="bottom">
       <ActiveCollection v-if="isActiveCollection" />

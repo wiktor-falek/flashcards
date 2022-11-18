@@ -1,7 +1,12 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import { ref, watch } from "vue";
-import { deleteFlashcard, updateFlashcard } from "../../api/flashcardApi.js";
+import {
+  deleteFlashcard,
+  moveFlashcardToActiveCollection,
+  moveFlashcardToMemorizedCollection,
+  updateFlashcard,
+} from "../../api/flashcardApi.js";
 import { useFlashcardStore } from "../../stores/flashcardStore";
 
 const isOpen = ref(false);
@@ -15,20 +20,12 @@ const back = ref(props.flashcard.back || "");
 const code = ref(props.flashcard.code || "");
 
 watch(props, () => {
-  // update when prop changes, otherwise front, back and code 
+  // update when prop changes, otherwise front, back and code
   // will contain data from previous flashcard prop
   front.value = props.flashcard.front;
   back.value = props.flashcard.back;
   code.value = props.flashcard.code;
-})
-
-// const flashcardProp = computed(() => {
-//   const newFlashcardProp = props.flashcard;
-//   front.value = newFlashcardProp.front;
-//   back.value = newFlashcardProp.back;
-//   code.value = newFlashcardProp.code;
-//   return newFlashcardProp;
-// });
+});
 
 const editFlashcard = async () => {
   const id = props.flashcard._id;
@@ -70,6 +67,42 @@ const removeFlashcard = async () => {
   }
   isOpen.value = false;
 };
+
+const toggleReviewedState = async () => {
+  const id = props.flashcard._id;
+  console.log(id);
+  const isMemorized = props.flashcard.reviewedCount === -1;
+
+  // this could be much cleaner
+  if (isMemorized) {
+    let response = await moveFlashcardToActiveCollection(id);
+    if (response.status !== 200) {
+      //error
+      return;
+    }
+    // memorized -> flashcards
+    const idx = flashcardStore.findMemorizedIndexById(id);
+    const flashcard = flashcardStore.memorizedFlashcards[idx];
+    flashcardStore.memorizedFlashcards.splice(idx, 1);
+    flashcard.reviewedCount = -1;
+    flashcardStore.flashcards.push(flashcard);
+
+  } else {
+    let response = await moveFlashcardToMemorizedCollection(id);
+
+    if (response.status !== 200) {
+      //error
+      return;
+    }
+    // flashcards -> memorized
+    const idx = flashcardStore.findIndexById(id);
+    const flashcard = flashcardStore.flashcards[idx];
+    flashcardStore.flashcards.splice(idx, 1);
+    flashcard.reviewedCount = -1;
+    flashcardStore.memorizedFlashcards.push(flashcard);
+  }
+  isOpen.value = false;
+};
 </script>
 
 <template>
@@ -81,13 +114,13 @@ const removeFlashcard = async () => {
       color="grey"
     />
   </button>
-  
+
   <Teleport to="body" v-if="isOpen">
     <div class="modal" @click.self="isOpen = false">
       <div class="modal__container">
         <div class="modal__container__top">
           <h2>Edit</h2>
-          <p>{{props.flashcard._id}}</p>
+          <p>{{ props.flashcard._id }}</p>
           <button @click="isOpen = false">Close</button>
         </div>
         <label for="front">Front</label>
@@ -102,6 +135,13 @@ const removeFlashcard = async () => {
         <button class="button" @click="editFlashcard">Update Flashcard</button>
         <button class="button" @click="removeFlashcard">
           Delete Flashcard
+        </button>
+        <button class="button" @click="toggleReviewedState">
+          {{
+            props.flashcard.reviewedCount === -1
+              ? "Set as active"
+              : "Set as memorized"
+          }}
         </button>
       </div>
     </div>

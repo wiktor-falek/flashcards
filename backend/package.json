@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production nodemon .",
-    "dev": "nodemon .",
+    "dev": "kill -9 $(lsof -i:3000 -t) & nodemon .",
     "db": "mongod"
   },
   "keywords": [],

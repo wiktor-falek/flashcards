@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { increment, moveFlashcardToMemorizedCollection } from "../api/flashcardApi";
 import Card from "../components/cards/Card.vue";
 import { useFlashcardStore } from "../stores/flashcardStore";

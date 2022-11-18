@@ -14,10 +14,20 @@ export default async function authAndLoadFlashcards() {
   if (response.status === 200) {
     const result = await response.json();
 
-    const flashcards = result.flashcards;
-    flashcardStore.setFlashcards(flashcards);
+    const allFlashcards = result.flashcards;
 
-    const memorizedFlashcards = result.memorized;
+    const flashcards = [];
+    const memorizedFlashcards = [];
+    for (let i = 0; i < allFlashcards.length; i++) {
+      const flashcard = allFlashcards[i];
+      if (flashcard.reviewedCount === -1) {
+        memorizedFlashcards.push(flashcard);
+        continue;
+      }
+      flashcards.push(flashcard);
+    }
+
+    flashcardStore.setFlashcards(flashcards);
     flashcardStore.setMemorizedFlashcards(memorizedFlashcards);
 
     flashcardStore.hasFetchedFlashcards = true;

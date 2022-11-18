@@ -24,8 +24,7 @@ const userSchema = Joi.object({
     sessionId: Joi.string()
       .default(null),
   }),
-  flashcards: Joi.array().default([]),
-  memorized: Joi.array().default([]),
+  flashcards: Joi.array().default([])
 });
 
 export default userSchema;
