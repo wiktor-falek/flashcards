@@ -50,23 +50,24 @@ router.post(
 
       // set to false if not in production to make it work with postman
       const cookieIsSecure = process.env.NODE_ENV !== "development";
+      const sameSite = process.env.NODE_ENV === "development" ? "strict" : "none";
 
       res.cookie("username", username, {
         httpOnly: true,
         secure: cookieIsSecure,
-        sameSite: "strict",
+        sameSite: sameSite,
       });
       // session id is split into two halves, this one is secure
       res.cookie("sessionId1", sessionId1, {
         httpOnly: true,
         secure: cookieIsSecure,
-        sameSite: "strict",
+        sameSite: sameSite,
       });
       // and this one is not secure, to allow client to log out
       res.cookie("sessionId2", sessionId2, {
         httpOnly: false,
         secure: cookieIsSecure,
-        sameSite: "strict",
+        sameSite: sameSite,
       });
       return res.json({ username, sessionId1, sessionId2 });
     }
