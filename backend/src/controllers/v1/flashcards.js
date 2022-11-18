@@ -38,7 +38,7 @@ router.post(
     let { userId } = res.locals;
     const { front, back, code } = req.body;
 
-    const flashcard = { front, back, code, reviewedCount: 0 };
+    const flashcard = { front, back, code, reviewedCount: 0, creationTimestamp: Date.now() };
 
     let validatedFlashcard;
     try {
