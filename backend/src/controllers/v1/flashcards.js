@@ -101,7 +101,6 @@ router.post(
       options
     );
 
-    console.log(result);
     if (result === null) {
       return res
         .status(400)
@@ -124,14 +123,13 @@ router.post(
     const flashcardId = req.params.id;
 
     const filter = {
-      _id: userId,
       flashcards: {
-        $elemMatch: { _id: ObjectId(flashcardId) },
+        $elemMatch: { _id: ObjectId(flashcardId), reviewedCount: -1 },
       },
     };
 
     const update = {
-      $inc: { "flashcards.$.reviewedCount": 0 },
+      $set: { "flashcards.$.reviewedCount": 0 },
     };
 
     const result = await User.collection.updateOne(filter, update);
@@ -139,7 +137,7 @@ router.post(
     const success = result.modifiedCount !== 0;
 
     if (!success) {
-      res.status(400).json({error: "failed to update flashcard"});
+      return res.status(400).json({ error: "failed to update flashcard" });
     }
 
     res.status(200).json({ reviewedCount: 0 });
@@ -161,12 +159,12 @@ router.post(
     const filter = {
       _id: userId,
       flashcards: {
-        $elemMatch: { _id: ObjectId(flashcardId) },
+        $elemMatch: { _id: ObjectId(flashcardId), reviewedCount: {$not: { $eq: -1 } } },
       },
     };
 
     const update = {
-      $inc: { "flashcards.$.reviewedCount": -1 },
+      $set: { "flashcards.$.reviewedCount": -1 },
     };
 
     const result = await User.collection.updateOne(filter, update);
@@ -174,7 +172,7 @@ router.post(
     const success = result.modifiedCount !== 0;
 
     if (!success) {
-      res.status(400).json({error: "failed to update flashcard"});
+      return res.status(400).json({ error: "failed to update flashcard" });
     }
 
     res.status(200).json({ reviewedCount: -1 });

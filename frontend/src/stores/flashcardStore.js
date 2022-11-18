@@ -33,7 +33,6 @@ export const useFlashcardStore = defineStore("flashcards", () => {
   };
 
   const findIndexById = (id) => {
-    // const idx = flashcards.value.findIndex((flashcard) => { flashcard._id === id });
     for (let i = 0; i < flashcards.value.length; i++) {
       const flashcard = flashcards.value[i];
       if (flashcard._id === id) {
@@ -41,7 +40,16 @@ export const useFlashcardStore = defineStore("flashcards", () => {
       }
     }
     return -1;
-    // return idx;
+  };
+
+  const findMemorizedIndexById = (id) => {
+    for (let i = 0; i < memorizedFlashcards.value.length; i++) {
+      const flashcard = memorizedFlashcards.value[i];
+      if (flashcard._id === id) {
+        return i;
+      }
+    }
+    return -1;
   };
 
   return {
@@ -54,9 +62,12 @@ export const useFlashcardStore = defineStore("flashcards", () => {
     // memorizedFlashcards array
     memorizedFlashcards,
     setMemorizedFlashcards,
+    findMemorizedIndexById,
 
     // works on both
     findById,
+    
+    // other
     hasFetchedFlashcards,
   };
 });
