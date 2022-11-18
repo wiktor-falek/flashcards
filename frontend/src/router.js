@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import HomeView from "./views/HomeView.vue";
 import SigninView from "./views/SigninView.vue";
 import PractiseView from "./views/PractiseView.vue";
@@ -6,7 +6,8 @@ import BrowseView from "./views/BrowseView.vue";
 import NotFound from "./views/NotFound.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
+  // history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
