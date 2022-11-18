@@ -1,3 +1,4 @@
+import { BASE_URL } from "../constants";
 import { post } from "./fetchWrapper";
 
 export const login = (username, password) => {
@@ -5,7 +6,7 @@ export const login = (username, password) => {
     username,
     password,
   };
-  return post("http://localhost:3000/auth/login", body, true);
+  return post(`${BASE_URL}/auth/login`, body, true);
 };
 
 export const register = (username, password, email) => {
@@ -14,5 +15,5 @@ export const register = (username, password, email) => {
     password,
     email,
   };
-  return post("http://localhost:3000/auth/register", body, true);
+  return post(`${BASE_URL}/auth/register`, body, true);
 };
