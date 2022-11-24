@@ -83,7 +83,7 @@ onMounted(() => {
             <p>Code snippets with highlighting.</p>
           </li>
           <!-- <li> -->
-            <!-- <p>Lorem ipsum dolor sit amet.</p> -->
+          <!-- <p>Lorem ipsum dolor sit amet.</p> -->
           <!-- </li> -->
         </ul>
       </section>
