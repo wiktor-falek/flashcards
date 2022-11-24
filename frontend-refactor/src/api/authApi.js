@@ -1,6 +1,12 @@
 import { BASE_URL } from "../constants";
 import { post } from "./fetchWrapper";
 
+/**
+ * 
+ * @param {string} input 
+ * @param {number} minLen 
+ * @param {number} maxLen 
+ */
 const validateString = (input, minLen, maxLen) => {
   if (!typeof input === "string") throw new Error("Input must be a string");
 
@@ -11,9 +17,13 @@ const validateString = (input, minLen, maxLen) => {
       `Length of input cannot be lesser than ${minLen} and greater than ${maxLen}} `
     );
 
-  return input;
+  return `${input}`; // template literal for return type hint
 };
 
+/**
+ * 
+ * @param {string} email 
+ */
 const validateEmail = (email) => {
   // call me a theist because only god knows if this works correctly, and I have to believe
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -22,6 +32,11 @@ const validateEmail = (email) => {
   return null;
 };
 
+/**
+ * 
+ * @param {string} username 
+ * @param {string} password 
+ */
 export const login = (username, password) => {
   const username = validateString(username, 6, 30);
   const password = validateString(password, 8, 100);
@@ -38,6 +53,12 @@ export const login = (username, password) => {
   return post(`${BASE_URL}/auth/login`, body);
 };
 
+/**
+ * 
+ * @param {string} username 
+ * @param {string} password 
+ * @param {string} email 
+ */
 export const register = (username, password, email) => {
   const username = validateString(username, 6, 30);
   const password = validateString(password, 8, 100);
