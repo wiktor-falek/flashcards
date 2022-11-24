@@ -3,6 +3,7 @@ import { computed } from '@vue/reactivity';
 
 const props = defineProps(["flashcard", "reviewedCount"]);
 const reviewedCount = computed(() => props.flashcard.reviewedCount);
+
 </script>
 
 <template>
