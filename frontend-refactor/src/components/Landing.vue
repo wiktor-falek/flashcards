@@ -9,8 +9,6 @@ onMounted(() => {
   const allSectionElements = allChildren.filter(
     (el) => el.tagName.toLowerCase() === "section"
   );
-  console.log(allChildren);
-  console.log(allSectionElements);
   const observer = new IntersectionObserver((allSectionElements) => {
     for (const entry of allSectionElements) {
       if (entry.isIntersecting) {
@@ -34,9 +32,7 @@ onMounted(() => {
     <article ref="articleElement">
       <section>
         <h1>Learn effectively with Flashcards</h1>
-        <p class="subheading">
-          Improve your study routine and retain information with ease
-        </p>
+        <h2>Improve your study routine and retain information with ease</h2>
 
         <RouterLink class="button" to="/signin">Get Started</RouterLink>
       </section>
@@ -81,20 +77,20 @@ onMounted(() => {
         <h1>Main Features</h1>
         <ul>
           <li>
+            <p>Grouping flashcards by your custom tags.</p>
+          </li>
+          <li>
             <p>Code snippets with highlighting.</p>
           </li>
-          <li>
-            <p>Sorting by your custom tags.</p>
-          </li>
-          <li>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </li>
+          <!-- <li> -->
+            <!-- <p>Lorem ipsum dolor sit amet.</p> -->
+          <!-- </li> -->
         </ul>
       </section>
 
       <section>
         <h1>Open source</h1>
-        <p class="subheading">This project is fully open source</p>
+        <h2>This project is fully open source under MIT license</h2>
 
         <p>
           Feel free to contribute to the project, fork it or maybe even self
@@ -109,23 +105,19 @@ onMounted(() => {
         >
       </section>
     </article>
-    <footer>Wiktor Falek - All rights reserved</footer>
+    <footer>
+      <a href="https://falek.dev">Wiktor Falek</a>
+      <p>&nbsp;- All rights reserved</p>
+    </footer>
   </main>
 </template>
-
-<style>
-#app {
-  overflow-y: auto !important;
-}
-</style>
 
 <style scoped>
 main,
 header {
   max-width: 800px;
   padding: 0px 20px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
 header {
@@ -135,19 +127,28 @@ header {
   height: 80px;
 }
 
-header > * {
-  margin: 0;
+h1 {
+  font-size: 1.6rem;
+  word-spacing: -3px;
+  color: #e05777;
 }
 
-.subheading {
-  font-size: 1.1rem;
-  color: #e44f71;
-  margin-top: -10px;
+h2 {
+  font-size: 1.2rem;
+  color: #e05777;
   margin-bottom: 30px;
 }
 
 a:not(.button) {
   color: var(--link-color);
+}
+
+ul {
+  padding: 0 20px;
+}
+
+li {
+  margin-bottom: 10px;
 }
 
 section {
@@ -163,24 +164,6 @@ footer {
   justify-content: center;
 }
 
-p {
-  margin-bottom: 1em;
-}
-
-h1,
-.subheading {
-  max-width: 800px;
-}
-
-h1 {
-  font-size: 1.6rem;
-  line-height: 1.3em;
-  word-spacing: -3px;
-  color: #ff7896;
-  margin-top: 30px;
-  margin-bottom: 15px;
-}
-
 @media screen and (min-width: 601px) {
   body {
     line-height: 1.6;
@@ -190,11 +173,10 @@ h1 {
     font-size: 1.2rem;
   }
   h1 {
-    font-size: 2.2rem;
+    font-size: 1.92rem;
   }
-  .subheading {
-    font-size: 1.6rem;
-    word-wrap: break-word;
+  h2 {
+    font-size: 1.44rem;
   }
 
   .padding-top {
@@ -207,12 +189,44 @@ section {
   transition: all 0.8s;
 }
 
+section p {
+  margin-top: 15px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 10px;
+  margin: 10px;
+  height: 55px;
+  width: 220px;
+  border: 2px solid #d33f64;
+  color: #d33f64;
+  background: transparent;
+  white-space: nowrap;
+  transition: all 0.05s linear;
+  font-size: 1.2rem;
+  font-weight: bold;
+  user-select: none;
+}
+
+.button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.button:active {
+  transform: scale(1);
+}
+
 .show {
   opacity: 1;
 }
 
 @media (prefers-reduced-motion) {
   section {
+    opacity: 1;
     transition: none;
   }
 }
