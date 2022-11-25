@@ -10,14 +10,14 @@ import { post } from "./fetchWrapper";
 const validateString = (input, minLen, maxLen) => {
   if (!typeof input === "string") throw new Error("Input must be a string");
 
-  const input = input.trim();
+  let _input = input.trim();
 
-  if (minLen > input.length > maxLen)
+  if (minLen > _input.length > maxLen)
     throw new Error(
       `Length of input cannot be lesser than ${minLen} and greater than ${maxLen}} `
     );
 
-  return `${input}`; // template literal for return type hint
+  return `${_input}`; // template literal for return type hint
 };
 
 /**
@@ -38,17 +38,17 @@ const validateEmail = (email) => {
  * @param {string} password 
  */
 export const login = (username, password) => {
-  const username = validateString(username, 6, 30);
-  const password = validateString(password, 8, 100);
+  let _username = validateString(username, 6, 30);
+  let _password = validateString(password, 8, 100);
 
-  if (!username)
+  if (!_username)
     throw new Error(`Validation error, invalid username parameter: ${username}`);
-  if (!password)
+  if (!_password)
     throw new Error(`Validation error, invalid password parameter: ${password}`);
 
   const body = {
-    username,
-    password,
+    username: _username,
+    password: _password,
   };
   return post(`${BASE_URL}/auth/login`, body);
 };
@@ -60,21 +60,21 @@ export const login = (username, password) => {
  * @param {string} email 
  */
 export const register = (username, password, email) => {
-  const username = validateString(username, 6, 30);
-  const password = validateString(password, 8, 100);
-  const email = validateEmail(validateString(email, 6, 254));
+  let _username = validateString(username, 6, 30);
+  let _password = validateString(password, 8, 100);
+  let _email = validateEmail(validateString(email, 6, 254));
 
-  if (!username)
-    throw new Error(`Validation error, invalid username parameter: ${username}`);
-  if (!password)
-    throw new Error(`Validation error, invalid password parameter: ${password}`);
-  if (!email)
-    throw new Error(`Validation error, invalid email parameter: ${email}`);
+  if (!_username)
+    throw new Error(`Validation error, invalid username parameter: ${_username}`);
+  if (!_password)
+    throw new Error(`Validation error, invalid password parameter: ${_password}`);
+  if (!_email)
+    throw new Error(`Validation error, invalid email parameter: ${_email}`);
 
   const body = {
-    username,
-    password,
-    email,
+    username: _username,
+    password: _password,
+    email: _email,
   };
   return post(`${BASE_URL}/auth/register`, body);
 };
