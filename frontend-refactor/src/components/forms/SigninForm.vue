@@ -48,10 +48,13 @@ const linkOnClick = (event) => {
       id="username"
       type="text"
       placeholder="username"
+      minlength="6"
+      maxlength="30"
+      autofocus
+
+      ref="usernameInput"
       :username="username"
       @input="(event) => (username = event.target.value)"
-      autofocus
-      ref="usernameInput"
       @focusin="usernameLabelIsVisible = true"
       @focusout="usernameLabelIsVisible = false"
     />
