@@ -8,14 +8,12 @@ import { computed } from "@vue/reactivity";
 const username = ref();
 const password = ref();
 
-const usernameLabelIsFocused = ref(false);
-const passwordLabelIsFocused = ref(false);
-
-const hideUsernameLabel = computed(() => usernameLabelIsFocused && username.value?.length > 0);
-const hidePasswordLabel = computed(() => passwordLabelIsFocused && password.value?.length > 0);
+const hideUsernameLabel = computed(() => username.value?.length === 0);
+const hidePasswordLabel = computed(() => password.value?.length === 0);
 
 const usernameInput = ref();
 onMounted(() => {
+  // make sure that the input is selected when component is reloaded 
   usernameInput.value.focus();
 });
 
@@ -59,8 +57,7 @@ const linkOnClick = (event) => {
       ref="usernameInput"
       :username="username"
       @input="(event) => (username = event.target.value)"
-      @focusin="usernameLabelIsFocused = true"
-      @focusout="usernameLabelIsFocused = false"
+
     />
 
     <label for="password" :class="{ hidden: hidePasswordLabel }"
@@ -70,6 +67,9 @@ const linkOnClick = (event) => {
       id="password"
       type="password"
       placeholder="password"
+      minlength="8"
+      maxlength="100"
+
       :password="password"
       @focusin="passwordLabelIsVisible = true"
       @focusout="passwordLabelIsVisible = false"

@@ -4,17 +4,13 @@ import { register } from "../../api/authApi";
 
 const emit = defineEmits(["signinViewToggle"]);
 
-const username = ref();
-const password = ref();
-const email = ref();
+const username = ref("");
+const password = ref("");
+const email = ref("");
 
-const usernameLabelIsFocused = ref(false);
-const passwordLabelIsFocused = ref(false);
-const emailLabelIsFocused = ref(false);
-
-const hideUsernameLabel = computed(() => usernameLabelIsFocused && username.value?.length > 0);
-const hidePasswordLabel = computed(() => passwordLabelIsFocused && password.value?.length > 0);
-const hideEmailLabel = computed(() => emailLabelIsFocused && email.value?.length > 0);
+const hideUsernameLabel = computed(() => username.value?.length === 0);
+const hidePasswordLabel = computed(() => password.value?.length === 0);
+const hideEmailLabel = computed(() => email.value?.length === 0);
 
 const usernameInput = ref();
 onMounted(() => {
@@ -54,8 +50,6 @@ const linkOnClick = (event) => {
       ref="usernameInput"
       :username="username"
       @input="(event) => (username = event.target.value)"
-      @focusin="usernameLabelIsVisible = true"
-      @focusout="usernameLabelIsVisible = false"
     />
 
     <label for="password" :class="{ hidden: hidePasswordLabel }">Password</label>
@@ -65,8 +59,6 @@ const linkOnClick = (event) => {
       placeholder="password"
       :password="password"
       @input="(event) => (password = event.target.value)"
-      @focusin="passwordLabelIsVisible = true"
-      @focusout="passwordLabelIsVisible = false"
     />
 
     <label for="email" :class="{ hidden: hideEmailLabel }">Email</label>
@@ -76,8 +68,6 @@ const linkOnClick = (event) => {
       placeholder="email"
       :email="email"
       @input="(event) => (email = event.target.value)"
-      @focusin="emailLabelIsVisible = true"
-      @focusout="emailLabelIsVisible = false"
     />
 
     <button type="submit" class="button button--dark">

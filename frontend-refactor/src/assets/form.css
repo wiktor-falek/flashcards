@@ -32,6 +32,10 @@ button {
   margin-bottom: 20px;
 }
 
+label {
+  line-height: normal;
+}
+
 .header {
   font-size: 2rem;
   line-height: normal;

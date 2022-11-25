@@ -19,11 +19,11 @@ const isSignInView = ref(true);
 
           <div class="panel__greeting center" v-if="isSignInView">
             <h1>Welcome back</h1>
-            <p class="subheading">Good to see you again</p>
+            <h2>Good to see you again</h2>
           </div>
           <div class="panel__greeting center" v-else>
             <h1>Learn with ease</h1>
-            <p class="subheading">Take your learning to the next level</p>
+            <h2 class="">Take your learning to the next level</h2>
           </div>
 
           <div class="panel__footer">flashcards.io</div>
@@ -66,7 +66,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 600px;
+  height: 500px;
   min-width: 300px;
   width: 90vw;
   max-width: 400px;
@@ -93,13 +93,6 @@ main {
   color: rgb(31, 28, 28);
 }
 
-.panel-right {
-}
-
-.panel-right .wrapper {
-  padding-top: 15px;
-}
-
 .panel-left {
   display: none;
   background-color: var(--color-primary);
@@ -118,17 +111,13 @@ main {
   .panel-right .panel__header {
     display: none;
   }
-
-  .panel-right .wrapper {
-    padding-top: 35px;
-  }
 }
 
 .panel__greeting {
   margin-bottom: 60px;
 }
 
-.subheading {
+h2 {
   font-size: 1.3rem;
 }
 
