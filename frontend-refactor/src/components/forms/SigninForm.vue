@@ -3,12 +3,16 @@ import { ref, onMounted } from "vue";
 import { useAuthStore } from "../../stores/authStore";
 import router from "../../router";
 import { login } from "../../api/authApi";
+import { computed } from "@vue/reactivity";
 
 const username = ref();
 const password = ref();
 
-const usernameLabelIsVisible = ref(false);
-const passwordLabelIsVisible = ref(false);
+const usernameLabelIsFocused = ref(false);
+const passwordLabelIsFocused = ref(false);
+
+const hideUsernameLabel = computed(() => usernameLabelIsFocused && username.value?.length > 0);
+const hidePasswordLabel = computed(() => passwordLabelIsFocused && password.value?.length > 0);
 
 const usernameInput = ref();
 onMounted(() => {
@@ -39,9 +43,9 @@ const linkOnClick = (event) => {
 
 <template>
 <form action="POST" @submit="onSubmit($event)">
-    <h1>Login</h1>
+    <h1 class="header">Login</h1>
 
-    <label for="username" :class="{ visible: usernameLabelIsVisible }"
+    <label for="username" :class="{ hidden: hideUsernameLabel }"
       >Username</label
     >
     <input
@@ -55,11 +59,11 @@ const linkOnClick = (event) => {
       ref="usernameInput"
       :username="username"
       @input="(event) => (username = event.target.value)"
-      @focusin="usernameLabelIsVisible = true"
-      @focusout="usernameLabelIsVisible = false"
+      @focusin="usernameLabelIsFocused = true"
+      @focusout="usernameLabelIsFocused = false"
     />
 
-    <label for="password" :class="{ visible: passwordLabelIsVisible }"
+    <label for="password" :class="{ hidden: hidePasswordLabel }"
       >Password</label
     >
     <input
@@ -72,11 +76,12 @@ const linkOnClick = (event) => {
       @input="(event) => (password = event.target.value)"
     />
 
-    <button class="link">Forgot password?</button>
+    <RouterLink to="" class="link">Forgot password?</RouterLink>
+    <!-- <button class="link left"">Forgot password?</button> -->
 
     <button type="submit" class="button button--dark">
-      Get Started&nbsp;&nbsp;>
-      <!-- this will be a svg ofc  -->
+      Get Started&nbsp>
+      <!-- TODO '>' svg  -->
     </button>
 
     <button

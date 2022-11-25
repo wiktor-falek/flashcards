@@ -46,7 +46,7 @@ onMounted(() => {
 
         <p>
           The goal of this app is to simplify the process of
-          <a href="https://simple.wikipedia.org/wiki/Spaced_repetition"
+          <a class="link" href="https://simple.wikipedia.org/wiki/Spaced_repetition"
             >spaced repetition</a
           >.
         </p>
@@ -99,6 +99,7 @@ onMounted(() => {
 
         <a
           class="button"
+          style="margin-top: 30px;"
           href="https://github.com/wiktor-falek/flashcards"
           target="_blank"
           >Github</a
@@ -106,7 +107,7 @@ onMounted(() => {
       </section>
     </article>
     <footer>
-      <a href="https://falek.dev">Wiktor Falek</a>
+      <a class="link" href="https://falek.dev">Wiktor Falek</a>
       <p>&nbsp;- All rights reserved</p>
     </footer>
   </main>
@@ -139,9 +140,6 @@ h2 {
   margin-bottom: 30px;
 }
 
-a:not(.button) {
-  color: var(--link-color);
-}
 
 ul {
   padding: 0 20px;
@@ -156,7 +154,7 @@ section {
 }
 
 footer {
-  margin-top: 200px;
+  margin-top: 150px;
   width: 100%;
   height: 60px;
   display: flex;
@@ -192,34 +190,6 @@ section {
 section p {
   margin-top: 15px;
 }
-
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  padding: 10px;
-  margin: 10px;
-  height: 55px;
-  width: 220px;
-  border: 2px solid #d33f64;
-  color: #d33f64;
-  background: transparent;
-  white-space: nowrap;
-  transition: all 0.05s linear;
-  font-size: 1.2rem;
-  font-weight: bold;
-  user-select: none;
-}
-
-.button:hover {
-  cursor: pointer;
-  transform: scale(1.05);
-}
-.button:active {
-  transform: scale(1);
-}
-
 .show {
   opacity: 1;
 }

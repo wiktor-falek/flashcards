@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { register } from "../../api/authApi";
 
 const emit = defineEmits(["signinViewToggle"]);
@@ -8,9 +8,13 @@ const username = ref();
 const password = ref();
 const email = ref();
 
-const usernameLabelIsVisible = ref(false);
-const passwordLabelIsVisible = ref(false);
-const emailLabelIsVisible = ref(false);
+const usernameLabelIsFocused = ref(false);
+const passwordLabelIsFocused = ref(false);
+const emailLabelIsFocused = ref(false);
+
+const hideUsernameLabel = computed(() => usernameLabelIsFocused && username.value?.length > 0);
+const hidePasswordLabel = computed(() => passwordLabelIsFocused && password.value?.length > 0);
+const hideEmailLabel = computed(() => emailLabelIsFocused && email.value?.length > 0);
 
 const usernameInput = ref();
 onMounted(() => {
@@ -37,8 +41,8 @@ const linkOnClick = (event) => {
 
 <template>
   <form action="POST" @submit="onSubmit($event)">
-    <h1>Register</h1>
-    <label for="username" :class="{ visible: usernameLabelIsVisible }">Username</label>
+    <h1 class="header">Register</h1>
+    <label for="username" :class="{ hidden: hideUsernameLabel }">Username</label>
     <input
       id="username"
       type="text"
@@ -54,7 +58,7 @@ const linkOnClick = (event) => {
       @focusout="usernameLabelIsVisible = false"
     />
 
-    <label for="password" :class="{ visible: passwordLabelIsVisible }">Password</label>
+    <label for="password" :class="{ hidden: hidePasswordLabel }">Password</label>
     <input
       id="password"
       type="password"
@@ -65,7 +69,7 @@ const linkOnClick = (event) => {
       @focusout="passwordLabelIsVisible = false"
     />
 
-    <label for="email" :class="{ visible: emailLabelIsVisible }">Email</label>
+    <label for="email" :class="{ hidden: hideEmailLabel }">Email</label>
     <input
       id="email"
       type="email"
@@ -77,8 +81,8 @@ const linkOnClick = (event) => {
     />
 
     <button type="submit" class="button button--dark">
-      Register&nbsp;&nbsp;>
-      <!-- this will be a svg ofc  -->
+      Register&nbsp;>
+      <!-- TODO '>' svg  -->
     </button>
 
     <button
@@ -95,8 +99,4 @@ const linkOnClick = (event) => {
 
 <style scoped>
 @import "../../assets/form.css";
-
-.center {
-  margin: 0 auto;
-}
 </style>

@@ -3,3 +3,38 @@
 #app {
   overflow-y: hidden !important;
 }
+
+button {
+  all: unset;
+}
+
+.link {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 5px;
+  padding-top: 8px;
+  width: 200px;
+  border: 2px solid #d33f64;
+  color: #d33f64;
+  background: transparent;
+  white-space: nowrap;
+  transition: all 0.05s linear;
+  font-size: 1.2rem;
+  font-weight: bold;
+  user-select: none;
+}
+
+.button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.button:active {
+  transform: scale(1);
+}
