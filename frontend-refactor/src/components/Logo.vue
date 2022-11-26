@@ -10,12 +10,10 @@
 .logo {
   display: flex !important;
   text-decoration: none !important; 
-  min-height: 80px;
+  height: 75px;
   width: 95px;
   align-items: center; 
-  padding-top: 5px;
   padding-left: 20px;
-  margin-right: -10px;
   outline: none;
 }
 

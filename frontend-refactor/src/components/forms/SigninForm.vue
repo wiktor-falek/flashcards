@@ -4,6 +4,9 @@ import { useAuthStore } from "../../stores/authStore";
 import router from "../../router";
 import { login } from "../../api/authApi";
 import { computed } from "@vue/reactivity";
+import { useToast, POSITION } from "vue-toastification";
+
+const toast = useToast();
 
 const username = ref();
 const password = ref();
@@ -13,6 +16,8 @@ const hidePasswordLabel = computed(() => password.value?.length === 0);
 
 const usernameInput = ref();
 onMounted(() => {
+  toast.clear();
+
   // make sure that the input is selected when component is reloaded 
   usernameInput.value.focus();
 });
@@ -20,18 +25,18 @@ onMounted(() => {
 const onSubmit = async (event) => {
   event.preventDefault();
 
-  const result = await login(username.value, password.value);
+  const response = await login(username.value, password.value);
 
-  const response = await result.json();
-
-  if (result.status === 401) {
-  }
+  const result = await response.json();
 
   const authStore = useAuthStore();
-  if (result.status === 200) {
-    authStore.setIsAuthenticated(true);
-    router.push("/");
+  if (response.status !== 200) {
+    toast.error(result.message, {position: POSITION.BOTTOM_CENTER});
+    return
   }
+
+  authStore.setIsAuthenticated(true);
+    router.push("/");
 };
 
 const linkOnClick = (event) => {

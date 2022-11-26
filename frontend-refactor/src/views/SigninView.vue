@@ -36,8 +36,11 @@ const isSignInView = ref(true);
             <p class="panel__header__text">Flashcards</p>
           </div>
           <!-- these components can toggle the isSignInView state with @signinViewToggle emit -->
-          <SigninForm v-if="isSignInView" @signinViewToggle="isSignInView = false" />
-          <SignupForm v-else @signinViewToggle="isSignInView = true"/>
+          <SigninForm
+            v-if="isSignInView"
+            @signinViewToggle="isSignInView = false"
+          />
+          <SignupForm v-else @signinViewToggle="isSignInView = true" />
         </div>
       </div>
     </div>
@@ -45,7 +48,6 @@ const isSignInView = ref(true);
 </template>
 
 <style scoped>
-
 main {
   width: 100vw;
   height: 100vh;
@@ -78,18 +80,24 @@ main {
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  padding: 30px 25px;
+  padding: 15px 25px;
 }
 
 .panel__header {
+  height: 50px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
+}
+
+.logo {
+  transform: scale(0.75);
 }
 
 .panel__header__text {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: rgb(31, 28, 28);
 }
 

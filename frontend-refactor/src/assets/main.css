@@ -1,7 +1,6 @@
 @import './base.css';
 
 #app {
-  overflow-y: hidden !important;
 }
 
 button {

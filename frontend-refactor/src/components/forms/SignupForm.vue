@@ -1,6 +1,9 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { register } from "../../api/authApi";
+import { useToast, POSITION } from "vue-toastification";
+
+const toast = useToast();
 
 const emit = defineEmits(["signinViewToggle"]);
 
@@ -14,19 +17,21 @@ const hideEmailLabel = computed(() => email.value?.length === 0);
 
 const usernameInput = ref();
 onMounted(() => {
+  toast.clear();
   usernameInput.value.focus();
 });
 
 const onSubmit = async (event) => {
   event.preventDefault();
+  const response = await register(username.value, password.value, email.value);
+  const result = await response.json();
 
-  const result = await register(username.value, password.value, email.value);
-
-  const response = await result.json();
-
-  if (result.status === 200) {
-    emit("signinViewToggle"); // 'redirect' to signin
+  if (response.status !== 200) {
+    toast.error(result.message, {position: POSITION.BOTTOM_CENTER});
+    return;
   }
+
+  emit("signinViewToggle"); // 'redirect' to signin
 };
 
 const linkOnClick = (event) => {
@@ -34,11 +39,12 @@ const linkOnClick = (event) => {
 };
 </script>
 
-
 <template>
   <form action="POST" @submit="onSubmit($event)">
     <h1 class="header">Register</h1>
-    <label for="username" :class="{ hidden: hideUsernameLabel }">Username</label>
+    <label for="username" :class="{ hidden: hideUsernameLabel }"
+      >Username</label
+    >
     <input
       id="username"
       type="text"
@@ -46,13 +52,14 @@ const linkOnClick = (event) => {
       minlength="6"
       maxlength="30"
       autofocus
-      
       ref="usernameInput"
       :username="username"
       @input="(event) => (username = event.target.value)"
     />
 
-    <label for="password" :class="{ hidden: hidePasswordLabel }">Password</label>
+    <label for="password" :class="{ hidden: hidePasswordLabel }"
+      >Password</label
+    >
     <input
       id="password"
       type="password"
