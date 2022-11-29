@@ -1,12 +1,10 @@
 import { useFlashcardStore } from "../stores/flashcardStore";
 import { useUserStore } from "../stores/userStore";
-import { getFlashcards, userStore } from "../api/flashcardApi";
+import { getFlashcards } from "../api/flashcardApi";
+import { getUser } from "../api/userApi";
 import logout from "./logout";
 
 export default async function authAndFetchData() {
-  const flashcardStore = useFlashcardStore();
-  const userStore = useUserStore();
-
   const fetchFlashcards = getFlashcards();
   const fetchUser = getUser();
 
@@ -18,13 +16,19 @@ export default async function authAndFetchData() {
   }
 
   const loadUserData = async () => {
+    const userStore = useUserStore();
+
     const result = await userResponse.json();
     const userData = result;
 
-    // TODO: set user data in userStore such as username, email
+    userStore.setUsername(userData.username);
+    userStore.setEmail(userData.email);
+    userStore.setHasConfirmedEmail(userData.hasConfirmedEmail);
   };
 
   const loadFlashcardsData = async () => {
+    const flashcardStore = useFlashcardStore();
+
     const result = await flashcardsResponse.json();
     const allFlashcards = result.flashcards;
 
@@ -46,5 +50,5 @@ export default async function authAndFetchData() {
   };
 
   loadUserData();
-  loadFlashcardsData()
+  loadFlashcardsData();
 }

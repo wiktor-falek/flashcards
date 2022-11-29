@@ -1,26 +1,28 @@
 <script setup>
 import { onBeforeMount } from "vue";
-import Logo from "../components/Logo.vue";
+
+import Header from "./Header.vue";
+
 // import CreateCardModal from "./modals/CreateCardModal.vue";
-// import authAndLoadFlashcards from "../helpers/authAndLoadFlashcards";
-// import { useFlashcardStore } from "../stores/flashcardStore";
-// import logout from "../helpers/logout";
 
-// const flashcardStore = useFlashcardStore();
+// TODO: put this inside a function, that check if data needs to be fetched
+import authAndFetchData from "../helpers/authAndFetchData";
+import { useFlashcardStore } from "../stores/flashcardStore";
 
-// onBeforeMount(() => {
-//   if (!flashcardStore.hasFetchedFlashcards) {
-//     authAndLoadFlashcards();
-//   }
-// });
+const flashcardStore = useFlashcardStore();
+
+onBeforeMount(() => {
+  // if (needsToFetch()) {
+  //   authAndFetchData();
+  // }
+  if (!flashcardStore.hasFetchedFlashcards) {
+    authAndFetchData();
+  }
+});
 </script>
 
 <template>
-  <header>
-    <Logo />
-    <button @click="logout()">Logout</button>
-  </header>
-
+  <Header />
   <main>
     <div class="menu">
       <!-- <CreateCardModal /> -->
