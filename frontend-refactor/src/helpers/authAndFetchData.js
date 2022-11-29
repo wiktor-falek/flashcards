@@ -19,33 +19,20 @@ export default async function authAndFetchData() {
     const userStore = useUserStore();
 
     const result = await userResponse.json();
-    const userData = result;
+    const { username, email, hasConfirmedEmail} = result;
 
-    userStore.setUsername(userData.username);
-    userStore.setEmail(userData.email);
-    userStore.setHasConfirmedEmail(userData.hasConfirmedEmail);
+    userStore.setUsername(username);
+    userStore.setEmail(email);
+    userStore.setHasConfirmedEmail(hasConfirmedEmail);
   };
 
   const loadFlashcardsData = async () => {
     const flashcardStore = useFlashcardStore();
 
     const result = await flashcardsResponse.json();
-    const allFlashcards = result.flashcards;
-
-    const flashcards = [];
-    const memorizedFlashcards = [];
-
-    for (let i = 0; i < allFlashcards.length; i++) {
-      const flashcard = allFlashcards[i];
-      if (flashcard.reviewedCount === -1) {
-        memorizedFlashcards.push(flashcard);
-        continue;
-      }
-      flashcards.push(flashcard);
-    }
+    const flashcards = result.flashcards;
 
     flashcardStore.setFlashcards(flashcards);
-    flashcardStore.setMemorizedFlashcards(memorizedFlashcards);
     flashcardStore.hasFetchedFlashcards = true;
   };
 

@@ -4,20 +4,10 @@ import { onBeforeMount } from "vue";
 import Header from "./Header.vue";
 
 // import CreateCardModal from "./modals/CreateCardModal.vue";
-
-// TODO: put this inside a function, that check if data needs to be fetched
-import authAndFetchData from "../helpers/authAndFetchData";
-import { useFlashcardStore } from "../stores/flashcardStore";
-
-const flashcardStore = useFlashcardStore();
+import fetchDataIfMissing from "../helpers/fetchDataIfMissing";
 
 onBeforeMount(() => {
-  // if (needsToFetch()) {
-  //   authAndFetchData();
-  // }
-  if (!flashcardStore.hasFetchedFlashcards) {
-    authAndFetchData();
-  }
+  fetchDataIfMissing();
 });
 </script>
 
