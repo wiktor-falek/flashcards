@@ -73,17 +73,17 @@
   font-weight: bold;
 }
 
-.logo--transparent > .logo__card::after {
+.logo-transparent > .logo__card::after {
   /* hardcoded background color cuz i don't know
   how to make it transparent without showing other cards */
   background-color: #19273c;
   color: #ddd;
 }
 
-.logo--transparent > .idx-3::after {
+.logo-transparent > .idx-3::after {
 }
 
-.logo--transparent > .logo__card {
+.logo-transparent > .logo__card {
   background-color: #19273c;
 }
 </style>
