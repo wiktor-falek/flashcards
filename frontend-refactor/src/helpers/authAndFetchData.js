@@ -1,6 +1,6 @@
 import { useFlashcardStore } from "../stores/flashcardStore";
 import { useUserStore } from "../stores/userStore";
-import { getFlashcards } from "../api/flashcardApi";
+import { getFlashcards, userStore } from "../api/flashcardApi";
 import logout from "./logout";
 
 export default async function authAndFetchData() {
