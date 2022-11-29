@@ -32,7 +32,7 @@ const onSubmit = async (event) => {
   const authStore = useAuthStore();
   if (response.status !== 200) {
     toast.error(result.message, {position: POSITION.BOTTOM_CENTER});
-    return
+    return;
   }
 
   authStore.setIsAuthenticated(true);
