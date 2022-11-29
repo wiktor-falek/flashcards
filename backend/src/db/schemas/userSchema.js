@@ -23,6 +23,8 @@ const userSchema = Joi.object({
       .default(Date.now()),
     sessionId: Joi.string()
       .default(null),
+    iconUrl: Joi.string()
+      .default("")
   }),
   flashcards: Joi.array().default([])
 });

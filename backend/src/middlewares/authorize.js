@@ -33,6 +33,8 @@ const authorize = async (req, res, next) => {
       projection: {
         "account.username": 1,
         "account.sessionId": 1,
+        "account.email": 1,
+        "account.confirmedEmail": 1,
       },
     }
   );
@@ -47,6 +49,11 @@ const authorize = async (req, res, next) => {
   res.locals.username = user.account.username;
   res.locals.sessionId = user.account.sessionId;
   res.locals.userId = user._id; // this is of type ObjectId not string!!!
+  res.locals.publicUserData = {
+    username: user.account.username,
+    email: user.account.email,
+    confirmedEmail: user.account.confirmedEmail,
+  }
 
   return next();
 };

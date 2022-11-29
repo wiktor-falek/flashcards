@@ -5,7 +5,6 @@ import User from "../../db/models/User.js";
 import flashcardSchema from "../../db/schemas/flashcardSchema.js";
 import logger from "../../../logger.js";
 import { ObjectId } from "mongodb";
-import extract from "../../db/utils/extract.js";
 
 const router = Router();
 
