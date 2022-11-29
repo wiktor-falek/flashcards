@@ -18,15 +18,15 @@ export default async function authAndFetchData() {
   }
 
   const loadUserData = async () => {
-    const userResult = await userResponse.json();
-    const userData = userResult;
+    const result = await userResponse.json();
+    const userData = result;
 
     // TODO: set user data in userStore such as username, email
   };
 
   const loadFlashcardsData = async () => {
-    const flashcardsResult = await flashcardsResponse.json();
-    const allFlashcards = flashcardsResult.flashcards;
+    const result = await flashcardsResponse.json();
+    const allFlashcards = result.flashcards;
 
     const flashcards = [];
     const memorizedFlashcards = [];
