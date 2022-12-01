@@ -18,11 +18,10 @@
 }
 
 .logo__card {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45px;
+  min-width: 45px;
   height: 60px;
   background-color: transparent;
   border-width: 10px; 
@@ -76,7 +75,7 @@
 .logo-transparent > .logo__card::after {
   /* hardcoded background color cuz i don't know
   how to make it transparent without showing other cards */
-  background-color: #19273c;
+  background-color: transparent;
   color: #ddd;
 }
 
