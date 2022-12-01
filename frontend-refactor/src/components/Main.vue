@@ -33,13 +33,13 @@ main {
 }
 .menu {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 10px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 800px;
+  width: max(300px, 25%);
 }
 
 .menu > a {
@@ -62,9 +62,10 @@ main {
 }
 
 #add {
+  grid-column: span 2;
 }
 
 #practise {
-  grid-column: span 3;
+  grid-column: span 2;
 }
 </style>
